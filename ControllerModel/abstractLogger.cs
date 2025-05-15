@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ControllerModel
 {
-    internal class Model
+    abstract class AbstractLogger
     {
+        public abstract void GenerateLog<T>(T obj);
     }
 }

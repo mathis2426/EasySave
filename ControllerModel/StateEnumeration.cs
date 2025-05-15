@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ControllerModel;
 
-namespace View
+namespace ControllerModel
 {
-    internal class Program
+    enum StateEnumeration
     {
-        static void Main(string[] args)
-        {
-        }
+        inactive,
+        active,
+        error,
+        in_progress,
+        end,
     }
 }
-
