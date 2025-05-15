@@ -17,6 +17,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Lang.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Lang.fr.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Lang.fr.resx</DependentUpon>
+    </Compile>
     <Compile Update="Ressources\Lang.fr.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -33,6 +38,10 @@
     <EmbeddedResource Update="Resources\Lang.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Lang.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Lang.fr.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Lang.fr.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Ressources\Lang.fr.resx">
       <Generator>ResXFileCodeGenerator</Generator>

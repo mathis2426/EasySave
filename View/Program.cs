@@ -18,7 +18,7 @@ namespace program
         public static JobManager jobManager = new JobManager();
         static void Main(string[] args)
         {
-            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US"); 
+            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("fr"); 
 
             // Application Tagline
             string[] logoLines = new string[]
