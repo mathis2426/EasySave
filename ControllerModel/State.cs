@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using LibrairieJsonHelper;
 using Microsoft.Extensions.Configuration;
 
 namespace ControllerModel
@@ -37,8 +38,8 @@ namespace ControllerModel
 
         public override void GenerateLog<T>(T stateObject)
         {
-            JSONHelper jsonHelper = new JSONHelper();
-            jsonHelper.write(pathToLog, stateObject);
+            ILoggerWriter jsonState = jsonFactory.CreateLogger();
+            jsonState.WriteLog(pathToLog, stateObject);
         }
 
         public bool verifyState(StateEnumeration state)

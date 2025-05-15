@@ -2,7 +2,7 @@
 {
     public class JsonHelperFactory
     {
-        public static ILoggerWriter CreateLogger()
+        public ILoggerWriter CreateLogger()
         {      
             return new JsonHelperClassLogger();   
         }

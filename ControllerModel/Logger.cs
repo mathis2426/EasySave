@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Microsoft.Extensions.Configuration;
 using System;
+using LibrairieJsonHelper;
 
 namespace ControllerModel
 {
@@ -35,8 +36,9 @@ namespace ControllerModel
 
         public override void GenerateLog<T>(T logObject)
         {
-            JSONHelper jsonHelper = new JSONHelper();
-            jsonHelper.write(pathToLog, logObject);
+            pathToLog = "C://Bureau";
+            ILoggerWriter jsonLog = jsonFactory.CreateLogger();
+            jsonLog.WriteLog(pathToLog, logObject);
         }
     }
 }
