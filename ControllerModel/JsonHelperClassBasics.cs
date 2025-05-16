@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.IO;
+using System.Text.Json;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 
@@ -22,17 +23,35 @@ namespace LibrairieJsonHelper
             }
         }
 
-        public List<T> ReadJsonList<T>(string name )
+        public void CreateJsonList<T>(string name, List<T> obj)
         {
-            string json = File.ReadAllText(name);
             try
             {
-                List<T> obj = JsonSerializer.Deserialize<List<T>>(json);
-                return obj;
+                string json = JsonSerializer.Serialize(obj, new JsonSerializerOptions { WriteIndented = true });
+
+                File.WriteAllText(name, json);
+
+                Console.WriteLine("Fichier JSON créé !");
             }
-            catch (Exception e) { 
-                throw e;
+            catch (Exception ex)
+            {
+                throw ex;
             }
+        }
+
+        public List<T> ReadJsonList<T>(string path )
+        {
+
+            if (!File.Exists(path))
+                return new List<T>();
+
+            string json = File.ReadAllText(path);
+
+            if (string.IsNullOrWhiteSpace(json))
+                return new List<T>();
+            List<T> obj = JsonSerializer.Deserialize<List<T>>(json);
+            return obj;
+
         }
         public T ReadJson<T>(string name)
         {

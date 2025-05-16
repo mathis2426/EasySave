@@ -5,17 +5,14 @@ using Microsoft.Extensions.Configuration.Json;
 namespace LibrairieJsonHelper
 {
 
-    public class JsonHelperClassLogger : ILoggerWriter
+    public class JsonHelperClassLoggerDaily : ILoggerWriter
     {
         JsonHelperClassBasics jsonHelperClassBasicsForLogger = new();
         public void WriteLog<T> (string path,T obj)
         {
-            jsonHelperClassBasicsForLogger.CreateJson<T>(path, obj);
+            List<T> ListObject = jsonHelperClassBasicsForLogger.ReadJsonList<T>(path);
+            ListObject.Add (obj);
+            jsonHelperClassBasicsForLogger.CreateJsonList<T>(path, ListObject);
         }   
     }
-
-
-
-
-   
 }
