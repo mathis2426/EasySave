@@ -2,9 +2,13 @@
 {
     public class JsonHelperFactory
     {
-        public ILoggerWriter CreateLogger()
+        public static ILoggerWriter CreateLoggerDaily()
         {      
-            return new JsonHelperClassLogger();   
+            return new JsonHelperClassLoggerDaily();   
+        }
+        public static ILoggerWriter CreateLoggerStatus()
+        {
+            return new JsonHelperClassLoggerStatus();
         }
         public static JsonHelperClassJsonUpdate CreateJsonUpdate()
         {     
