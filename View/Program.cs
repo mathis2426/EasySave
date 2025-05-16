@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using ControllerModel;
 using System.Resources;
 using System.Reflection;
+using System.Globalization;
+using System.Net.NetworkInformation;
 
 namespace program
 {
@@ -16,6 +18,9 @@ namespace program
         public static ResourceManager resManager = new ResourceManager("View.Resources.Lang", Assembly.GetExecutingAssembly());
 
         public static JobManager jobManager = new JobManager();
+
+        public static LanguageManager languageManager = new LanguageManager();
+
         static void Main(string[] args)
         {
             Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("fr"); 
@@ -234,23 +239,25 @@ namespace program
         public static void ChangeLanguage()
         {
             Console.WriteLine(resManager.GetString("enter_country_code"));
-            string countryCode = Console.ReadLine();
-            switch (countryCode)
+            string cultureCode = Console.ReadLine();
+
+            switch (cultureCode)
             {
                 case "en":
-                    countryCode = "en-US";
+                    cultureCode = "en-US";
+                    languageManager.SetLanguage(cultureCode);
                     Console.WriteLine(resManager.GetString("langauge_application_english"));
                     break;
                 case "fr":
-                    countryCode = "fr-FR";
+                    cultureCode = "fr-FR";
+                    languageManager.SetLanguage(cultureCode);
                     Console.WriteLine(resManager.GetString("language_application_français"));
                     break;
                 default:
-                    countryCode = "en-US";
-                    Console.WriteLine(resManager.GetString("invalid_input"));
+                    Console.WriteLine(resManager.GetString("invalid_language_code"));
                     break;
             }
-            Console.WriteLine(resManager.GetString("language_changed"));
+            
             Console.WriteLine(resManager.GetString("press_return"));
             Console.ReadKey();
             Console.Clear();
