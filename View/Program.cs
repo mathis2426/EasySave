@@ -104,7 +104,7 @@ namespace program
                     case "4":
                         Console.Clear();
                         Console.WriteLine(resManager.GetString("change_language"));
-
+                        ChangeLanguage();
                         break;
                     case "5":
                         Console.Clear();
@@ -226,6 +226,31 @@ namespace program
             }
             jobManager.LaunchBackup(jobNum);
             Console.WriteLine(resManager.GetString("job_executed"));
+            Console.WriteLine(resManager.GetString("press_return"));
+            Console.ReadKey();
+            Console.Clear();
+        }
+
+        public static void ChangeLanguage()
+        {
+            Console.WriteLine(resManager.GetString("enter_country_code"));
+            string countryCode = Console.ReadLine();
+            switch (countryCode)
+            {
+                case "en":
+                    countryCode = "en-US";
+                    Console.WriteLine(resManager.GetString("langauge_application_english"));
+                    break;
+                case "fr":
+                    countryCode = "fr-FR";
+                    Console.WriteLine(resManager.GetString("language_application_français"));
+                    break;
+                default:
+                    countryCode = "en-US";
+                    Console.WriteLine(resManager.GetString("invalid_input"));
+                    break;
+            }
+            Console.WriteLine(resManager.GetString("language_changed"));
             Console.WriteLine(resManager.GetString("press_return"));
             Console.ReadKey();
             Console.Clear();
