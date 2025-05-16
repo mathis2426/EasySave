@@ -39,9 +39,8 @@ namespace LibrairieJsonHelper
             }
         }
 
-        public List<T> ReadJsonList<T>(string path )
+        public List<T> ReadJsonList<T>(string path)
         {
-
             if (!File.Exists(path))
                 return new List<T>();
 
@@ -49,9 +48,26 @@ namespace LibrairieJsonHelper
 
             if (string.IsNullOrWhiteSpace(json))
                 return new List<T>();
-            List<T> obj = JsonSerializer.Deserialize<List<T>>(json);
-            return obj;
 
+            Console.WriteLine(json);
+            json = json.Trim();
+
+            var options = new JsonSerializerOptions
+            {
+                IncludeFields = true
+            };
+
+            if (json.StartsWith("["))
+            {
+                
+                var list = JsonSerializer.Deserialize<List<T>>(json, options);
+                return list ?? new List<T>();
+            }
+            else
+            {
+                T single = JsonSerializer.Deserialize<T>(json, options)!;
+                return new List<T> { single };
+            }
         }
         public T ReadJson<T>(string name)
         {

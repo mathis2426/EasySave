@@ -1,4 +1,7 @@
-﻿using System.Text.Json;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.InteropServices.Marshalling;
+using System.Text.Json;
 using ControllerModel;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
@@ -11,9 +14,11 @@ namespace LibrairieJsonHelper
         JsonHelperClassBasics jsonHelperClassBasicsForLogger = new();
         public void WriteLog<T> (string path,T obj)
         {
-            List<LogObject> ListObject = jsonHelperClassBasicsForLogger.ReadJsonList<LogObject>(path);
-            //ListObject.Add (obj);
-            //jsonHelperClassBasicsForLogger.CreateJsonList<T>(path, ListObject);
-        }   
+            List<T> ListObject = jsonHelperClassBasicsForLogger.ReadJsonList<T>(path);
+            ListObject.Add (obj);
+            jsonHelperClassBasicsForLogger.CreateJsonList<T>(path, ListObject);
+        }
+
     }
+   
 }

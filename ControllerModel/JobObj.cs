@@ -12,12 +12,12 @@
         public string _targetPath { get;}
         public jobType _type { get;}
 
-        public JobObj(string name, string sourcePath, string targetPath, jobType type)
+        public JobObj(string _name, string _sourcePath, string _targetPath, jobType _type)
         {
-            _name = name;
-            _sourcePath = sourcePath;
-            _targetPath = targetPath;
-            _type = type;
+            this._name = _name;
+            this._sourcePath = _sourcePath;
+            this._targetPath = _targetPath;
+            this._type = _type;
         }
 
     }

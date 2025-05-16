@@ -31,7 +31,7 @@ namespace ControllerModel
             // Lire la valeur
             pathToLog = config["pathToLog"];
 */
-            LogObject logObject = new LogObject(name, fileSource, fileTarget, _pathToLog, fileSize, fileTransferTime, time);
+            LogObject logObject = new LogObject(name, fileSource, fileTarget, _pathToLog, fileSize, fileTransferTime.ElapsedMilliseconds, time);
             logObject.getLog();
             GenerateLog(logObject);
         }
