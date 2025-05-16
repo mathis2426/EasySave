@@ -67,24 +67,16 @@ namespace ControllerModel
             }
             foreach (var file in System.IO.Directory.GetFiles(sourcePath))
             {
+                
                 string fileName = System.IO.Path.GetFileName(file);
                 string targetFile = System.IO.Path.Combine(targetPath, fileName);
                 System.IO.File.Copy(file, targetFile, true);
-                int progression = (int)(((double)(totalFiles - totalFilesLeft) / totalFiles) * 100);
-                state.sendParamToLog(
-                    name,
-                    sourcePath,
-                    targetPath,
-                    StateEnumeration.in_progress,
-                    totalFiles,
-                    totalFileSize, 
-                    totalFilesLeft,
-                    progression
-                );
+
                 totalFilesLeft--;
-            }
-            int progression2 = (int)(((double)(totalFiles - totalFilesLeft) / totalFiles) * 100);
-            state.sendParamToLog(
+
+                int progression = (int)(((double)(totalFiles - totalFilesLeft) / totalFiles) * 100);
+
+                state.sendParamToLog(
                     name,
                     sourcePath,
                     targetPath,
@@ -92,8 +84,10 @@ namespace ControllerModel
                     totalFiles,
                     totalFileSize,
                     totalFilesLeft,
-                    progression2
+                    progression
                 );
+            }
+
         }
         public void DifferentialBackup(string name, string sourcePath, string targetPath, int totalFiles, long totalFileSize, int totalFilesLeft)
         {
@@ -107,6 +101,7 @@ namespace ControllerModel
                 {
                     File.Copy(sourceFilePath, destFilePath, true);
                 }
+                totalFilesLeft--;
                 int progression = (int)(((double)(totalFiles - totalFilesLeft) / totalFiles) * 100);
                 state.sendParamToLog(
                     name,
