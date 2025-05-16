@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ControllerModel
 {
-    enum StateEnumeration
+    public enum StateEnumeration
     {
         inactive,
         active,

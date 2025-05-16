@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace ControllerModel
 {
-    abstract class AbstractLogger
+    public abstract class AbstractLogger
     {
-        protected JsonHelperFactory jsonFactory = new JsonHelperFactory();
         public abstract void GenerateLog<T>(T obj);
     }
 }

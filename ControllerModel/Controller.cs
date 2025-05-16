@@ -17,7 +17,12 @@
         }
         public void LaunchBackup(int jobNum)
         {
-            _executeBackup.ExecuteJob(_jobList[jobNum]);
+            if( jobNum == 0)
+            {
+                _executeBackup.ExecuteJobAll(_jobList);
+                return;
+            }
+            _executeBackup.ExecuteJob(_jobList[jobNum-1]);
         }
         public void ReadJson()
         {

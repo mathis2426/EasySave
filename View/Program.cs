@@ -18,7 +18,7 @@ namespace program
         public static JobManager jobManager = new JobManager();
         static void Main(string[] args)
         {
-            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("fr"); 
+            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en");
 
             // Application Tagline
             string[] logoLines = new string[]
@@ -173,16 +173,11 @@ namespace program
             {
                 // Display the list of jobs
                 Console.WriteLine(resManager.GetString("list_jobs"));
-                jobManager._jobList.ForEach(job =>
-                    Console.WriteLine("{0}: {1} | {2}: {3} | {4}: {5} | {6}: {7}",
-                        resManager.GetString("job_name"),
-                        job._name,
-                        resManager.GetString("job_source"),
-                        job._sourcePath,
-                        resManager.GetString("job_target"),
-                        job._targetPath,
-                        resManager.GetString("job_type"),
-                        job._type)
+                int jobIndex = 0;
+                jobManager._jobList.ForEach(job => {
+                    Console.WriteLine($"{jobIndex}: {resManager.GetString("job_name")}: {job._name} | {resManager.GetString("job_source")}: {job._sourcePath} | {resManager.GetString("job_target")}: {job._targetPath} | {resManager.GetString("job_type")}: {job._type}");
+                    jobIndex++;
+                }
                 );
                 Console.WriteLine(resManager.GetString("enter_job_number_delete"));
                 int jobNum = int.Parse(Console.ReadLine());
@@ -206,20 +201,17 @@ namespace program
         {
             // Display the list of jobs
             Console.WriteLine(resManager.GetString("list_jobs"));
+            Console.WriteLine($"0: {resManager.GetString("Execute_All_Job")}");
+            int jobIndex = 0;
             jobManager._jobList.ForEach(job =>
-                Console.WriteLine("{0}: {1} | {2}: {3} | {4}: {5} | {6}: {7}",
-                    resManager.GetString("job_name"),
-                    job._name,
-                    resManager.GetString("job_source"),
-                    job._sourcePath,
-                    resManager.GetString("job_target"),
-                    job._targetPath,
-                    resManager.GetString("job_type"),
-                    job._type)
+            {
+                jobIndex++;
+                Console.WriteLine($"{jobIndex}: {resManager.GetString("job_name")}: {job._name} | {resManager.GetString("job_source")}: {job._sourcePath} | {resManager.GetString("job_target")}: {job._targetPath} | {resManager.GetString("job_type")}: {job._type}");
+            }
             );
             Console.WriteLine(resManager.GetString("enter_job_number_execute"));
             int jobNum = int.Parse(Console.ReadLine());
-            while (jobNum < 0 || jobNum >= jobManager._jobList.Count())
+            while (jobNum < 0 || jobNum > jobManager._jobList.Count())
             {
                 Console.WriteLine(resManager.GetString("invalid_job"));
                 jobNum = int.Parse(Console.ReadLine());

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.Marshalling;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using LibrairieJsonHelper;
@@ -9,37 +11,39 @@ using Microsoft.Extensions.Configuration;
 
 namespace ControllerModel
 {
-    class State : AbstractLogger
+    public class State : AbstractLogger
     {
-        private string pathToLog;
-        public void getParam(
+        public string _pathToLog;
+        public void sendParamToLog(
             string name,
             string fileSource,
             string fileTarget,
             StateEnumeration state,
             int totalFileToCopy,
-            double totalFileSize,
+            long totalFileSize,
             int filesLeftToDo,
-            float progression,
-            string desPath)
+            float progression)
         {
             verifyState(state);
             // Charger le fichier JSON
-            var config = new ConfigurationBuilder()
+            /*var config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json") // Ensure the Microsoft.Extensions.Configuration.Json package is installed
                 .Build();
 
             // Lire la valeur
-            pathToLog = config["pathToLog"];
+            pathToLog = config["pathToLog"];*/
 
-            StateObject stateObject = new StateObject(name, fileSource, fileTarget, state, totalFileToCopy, totalFileSize, filesLeftToDo, progression, desPath);
+            StateObject stateObject = new StateObject(name, fileSource, fileTarget, state, totalFileToCopy, totalFileSize, filesLeftToDo, progression, _pathToLog);
+            stateObject.getLog();
             GenerateLog(stateObject);
         }
 
         public override void GenerateLog<T>(T stateObject)
         {
-            ILoggerWriter jsonState = jsonFactory.CreateLogger();
-            jsonState.WriteLog(pathToLog, stateObject);
+            _pathToLog = "C:\\ProjectCSharp\\StateProjectCSharp\\StateLog.json";
+            ILoggerWriter jsonState = JsonHelperFactory.CreateLoggerStatus();
+            Console.WriteLine(JsonSerializer.Serialize(stateObject));
+            jsonState.WriteLog(_pathToLog, stateObject);
         }
 
         public bool verifyState(StateEnumeration state)

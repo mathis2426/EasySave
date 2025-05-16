@@ -7,38 +7,41 @@ using System.Xml.Linq;
 using Microsoft.Extensions.Configuration;
 using System;
 using LibrairieJsonHelper;
+using System.Diagnostics;
+using System.Text.Json;
 
 namespace ControllerModel
 {
-    class Logger : AbstractLogger
+    public class Daily : AbstractLogger
     {
-        private string pathToLog;
-        public void getParam(
+        public string _pathToLog;
+        public void sendParamToLog(
             string name,
             string fileSource,
             string fileTarget,
-            string desPath,
-            double fileSize,
-            float fileTransfer,
+            long fileSize,
+            Stopwatch fileTransferTime,
             DateTime time)
         {
             // Charger le fichier JSON
-            var config = new ConfigurationBuilder()
+            /*var config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json") // Ensure the Microsoft.Extensions.Configuration.Json package is installed
                 .Build();
 
             // Lire la valeur
             pathToLog = config["pathToLog"];
-
-            LogObject logObject = new LogObject(name, fileSource, fileTarget, desPath, fileSize, fileTransfer, time);
+*/
+            LogObject logObject = new LogObject(name, fileSource, fileTarget, _pathToLog, fileSize, fileTransferTime, time);
+            logObject.getLog();
             GenerateLog(logObject);
         }
 
         public override void GenerateLog<T>(T logObject)
         {
-            pathToLog = "C://Bureau";
-            ILoggerWriter jsonLog = jsonFactory.CreateLogger();
-            jsonLog.WriteLog(pathToLog, logObject);
+            _pathToLog = "C:/ProjectCSharp/LogProjectCSharp/LogDaily.json";
+            ILoggerWriter jsonLog = JsonHelperFactory.CreateLoggerDaily();
+            Console.WriteLine(JsonSerializer.Serialize(logObject));
+            jsonLog.WriteLog(_pathToLog, logObject);
         }
     }
 }

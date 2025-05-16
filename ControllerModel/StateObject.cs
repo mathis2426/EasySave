@@ -8,15 +8,15 @@ namespace ControllerModel
 {
     class StateObject
     {
-        private string _name { get; set; }
-        private string _fileSource { get; set; }
-        private string _fileTarget { get; set; }
-        private StateEnumeration _state { get; set; }
-        private int _totalFileToCopy { get; set; }
-        private double _totalFileSize { get; set; }
-        private int _filesLeftToDo { get; set; }
-        private float _progression { get; set; }
-        private string _desPath { get; set; }
+        public string _name { get; set; }
+        public string _fileSource { get; set; }
+        public string _fileTarget { get; set; }
+        public StateEnumeration _state { get; set; }
+        public int _totalFileToCopy { get; set; }
+        public double _totalFileSize { get; set; }
+        public int _filesLeftToDo { get; set; }
+        public float _progression { get; set; }
+        public string _desPath { get; set; }
     
         public StateObject(string name, string fileSource, string fileTarget, StateEnumeration state, int totalFileToCopy, double totalFileSize, int filesLeftToDo, float progression, string desPath)
         {

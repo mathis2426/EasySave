@@ -222,4 +222,7 @@
   <data name="invalid_job" xml:space="preserve">
     <value>Invalid job number. Please try again.</value>
   </data>
+  <data name="Execute_All_Job" xml:space="preserve">
+    <value>Execute all job</value>
+  </data>
 </root>
