@@ -19,6 +19,11 @@ namespace program
         static void Main(string[] args)
         {
             Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en");
+            // If specified args
+            if (args.Length == 1)
+            {
+               jobManager.LaunchBackupCommandLine(args[0]);
+            }
 
             // Application Tagline
             string[] logoLines = new string[]

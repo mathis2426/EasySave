@@ -13,7 +13,7 @@
         public void JobDeletion(int jobNum)
         {
             _jobList.RemoveAt(jobNum);
-            _backupJob.deleteJob(_jobList);
+            _backupJob.deleteJob(_jobList[jobNum]);
         }
         public void LaunchBackup(int jobNum)
         {
@@ -24,8 +24,18 @@
             }
             _executeBackup.ExecuteJob(_jobList[jobNum-1]);
         }
-        public void ReadJson()
+        public void LaunchBackupCommandLine(string job)
         {
+            int indexJob = _jobList.FindIndex(x => x._name == job);
+            if (indexJob == -1)
+            {
+                Console.WriteLine("Job not found");
+                return;
+            }
+            else
+            {
+                _executeBackup.ExecuteJob(_jobList[indexJob]);
+            }
         }
     }
 }
