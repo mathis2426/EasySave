@@ -11,6 +11,16 @@ namespace LibrairieJsonHelper
         public void WriteLog<T> (string path,T obj)
         {
             jsonHelperClassBasicsForLogger.CreateJson<T>(path, obj);
-        }   
+        }
+        public void WriteLogList<T>(string path, List<T> obj)
+        {
+            jsonHelperClassBasicsForLogger.CreateJsonList<T>(path, obj);
+        }
+
+        public List<T> ReadLogStatus<T>(string path)
+        {
+            List<T> ListObject = jsonHelperClassBasicsForLogger.ReadJsonList<T>(path);
+            return ListObject;
+        }
     }
 }

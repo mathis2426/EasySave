@@ -19,6 +19,9 @@ namespace LibrairieJsonHelper
             jsonHelperClassBasicsForLogger.CreateJsonList<T>(path, ListObject);
         }
 
+        public void WriteLogList<T>(string path, List<T> list)
+        { 
+        }
     }
    
 }

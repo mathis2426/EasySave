@@ -3,6 +3,7 @@
     public interface ILoggerWriter
     {
         void WriteLog<T>(string path, T obj);
+        void WriteLogList<T>(string path, List<T> list);
 
     }
 }
