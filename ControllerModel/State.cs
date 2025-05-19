@@ -46,6 +46,14 @@ namespace ControllerModel
             jsonState.WriteLog(_pathToLog, stateObject);
         }
 
+        public void stateModification()
+        {
+            // TODO : A implementer
+            // recuperer la liste des objets (liste des states)
+            // Prendre l'objet envoyer par bounty et modifier la liste en fonction
+            // puis renvoyer la liste a theBlackShade
+        }
+
         public bool verifyState(StateEnumeration state)
         {
             return Enum.IsDefined(typeof(StateEnumeration), state);
