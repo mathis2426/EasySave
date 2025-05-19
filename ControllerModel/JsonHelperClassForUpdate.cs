@@ -13,6 +13,11 @@ namespace LibrairieJsonHelper
         {
             jsonHelperClassBasicsForUpdate.CreateJsonList<T>(PathToFileToUpdate, ListObj);
         }
-        
+
+        public void UpdateSingleObj<T>(string PathToFileToUpdate, T Obj)
+        {
+            jsonHelperClassBasicsForUpdate.CreateJson<T>(PathToFileToUpdate, Obj);
+        }
+
     }   
 }
