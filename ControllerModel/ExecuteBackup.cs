@@ -65,7 +65,7 @@ namespace ControllerModel
             {
                 File.Delete(file);
             }
-            foreach (var file in System.IO.Directory.GetFiles(sourcePath))
+             foreach (var file in System.IO.Directory.GetFiles(sourcePath))
             {
                 string fileName = System.IO.Path.GetFileName(file);
                 string targetFile = System.IO.Path.Combine(targetPath, fileName);
