@@ -17,6 +17,7 @@ namespace ControllerModel
 
         public void ExecuteJobAll(List<JobObj> jobList)
         {
+
             foreach (var job in jobList)
             {
                 ExecuteJob(job);
@@ -53,7 +54,7 @@ namespace ControllerModel
                 sourcePath,
                 targetPath,
                 totalFileSize,
-                stopwatch,
+                stopwatch.ElapsedMilliseconds,
                 DateTime.Now
             );
 

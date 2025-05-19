@@ -222,7 +222,19 @@
   <data name="invalid_job" xml:space="preserve">
     <value>Numéro de travail invalide. Veuillez réessayer.</value>
   </data>
-  <data name="Execute_All_Job" xml:space="preserve">
-    <value>Executer tous les traveaux</value>
+  <data name="enter_country_code" xml:space="preserve">
+    <value>Entrer le code pays</value>
+  </data>
+  <data name="langauge_application_english" xml:space="preserve">
+    <value>Langue de l'application anglais</value>
+  </data>
+  <data name="language_application_français" xml:space="preserve">
+    <value>Langue de l'application français</value>
+  </data>
+  <data name="language_changed" xml:space="preserve">
+    <value>Langue de l'application changé </value>
+  </data>
+  <data name="invalid_language_code" xml:space="preserve">
+    <value>Code de langue invalide</value>
   </data>
 </root>

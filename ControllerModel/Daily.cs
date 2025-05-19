@@ -20,7 +20,7 @@ namespace ControllerModel
             string fileSource,
             string fileTarget,
             long fileSize,
-            Stopwatch fileTransferTime,
+            long fileTransferTime,
             DateTime time)
         {
             // Charger le fichier JSON
@@ -31,7 +31,7 @@ namespace ControllerModel
             // Lire la valeur
             pathToLog = config["pathToLog"];
 */
-            LogObject logObject = new LogObject(name, fileSource, fileTarget, _pathToLog, fileSize, fileTransferTime.ElapsedMilliseconds, time);
+            LogObject logObject = new LogObject(name, fileSource, fileTarget, _pathToLog, fileSize, fileTransferTime, time);
             logObject.getLog();
             GenerateLog(logObject);
         }

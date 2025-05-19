@@ -115,6 +115,15 @@ namespace View.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Enter the code of country.
+        /// </summary>
+        internal static string enter_country_code {
+            get {
+                return ResourceManager.GetString("enter_country_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Enter the job number to delete:.
         /// </summary>
         internal static string enter_job_number_delete {
@@ -196,6 +205,15 @@ namespace View.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Language code is invalid.
+        /// </summary>
+        internal static string invalid_language_code {
+            get {
+                return ResourceManager.GetString("invalid_language_code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Invalid option. Please try again..
         /// </summary>
         internal static string invalid_option {
@@ -264,6 +282,33 @@ namespace View.Resources {
         internal static string job_type {
             get {
                 return ResourceManager.GetString("job_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Language of the application english.
+        /// </summary>
+        internal static string langauge_application_english {
+            get {
+                return ResourceManager.GetString("langauge_application_english", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Language of the application french.
+        /// </summary>
+        internal static string language_application_français {
+            get {
+                return ResourceManager.GetString("language_application_français", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Language has been changed.
+        /// </summary>
+        internal static string language_changed {
+            get {
+                return ResourceManager.GetString("language_changed", resourceCulture);
             }
         }
         
