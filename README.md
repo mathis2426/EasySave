@@ -21,7 +21,7 @@
 
 - Installation folder: `C:\Program Files\ProSoft\EasySave`  
 - Configuration file: `config.json` in the application directory  
-- Logs: `C:\Users\<YourUsername>\Documents\EasySave\Logs`
+- Logs files: `logDaily.json` or `logState.json` in the application directory
 
 ## EasySave launching page
 
@@ -46,13 +46,19 @@
 
 1. Launch EasySave.
 2. Select one or all job you want to run.
-3. Check the log folder for results and errors.
+![image](https://github.com/user-attachments/assets/1403bda5-af93-47c1-9357-a7f04475c53a)
+
+4. Check the log folder for results and errors.
+Exemple of state log json
+![image](https://github.com/user-attachments/assets/490d4a9e-6619-4f80-a07d-f3ecce27addc)
+
 
 ## Delete a job
 
 1. Launch EasySave.
 2. Select one or all job you want to delete.
-3. Check the log folder for results and errors.
+![image](https://github.com/user-attachments/assets/691f94d4-3084-4f41-bb4e-fcb79f9159ab)
+
 
 ## Change application language
 
