@@ -12,9 +12,7 @@ namespace program
 {
     public class Program
     {
-
-        public static ResourceManager resManager = new ResourceManager("View.Resources.Lang", Assembly.GetExecutingAssembly());
-
+        public static LanguageManager languageManager = new LanguageManager();
         public static JobManager jobManager = new JobManager();
         static void Main(string[] args)
         {
@@ -68,10 +66,10 @@ namespace program
             Console.ResetColor();
 
             // Application Description
-            Console.WriteLine(resManager.GetString("welcome"));
-            Console.WriteLine(resManager.GetString("description1"));
-            Console.WriteLine(resManager.GetString("description2"));
-            Console.WriteLine(resManager.GetString("continue"));
+            Console.WriteLine(languageManager.resManager.GetString("welcome"));
+            Console.WriteLine(languageManager.resManager.GetString("description1"));
+            Console.WriteLine(languageManager.resManager.GetString("description2"));
+            Console.WriteLine(languageManager.resManager.GetString("continue"));
             Console.ReadKey();
             Console.Clear();
 
@@ -79,47 +77,56 @@ namespace program
             while (isValidInput == false)
             {
                 // Main Menu
-                Console.WriteLine(resManager.GetString("main_menu"));
-                Console.WriteLine(resManager.GetString("option1"));
-                Console.WriteLine(resManager.GetString("option2"));
-                Console.WriteLine(resManager.GetString("option3"));
-                Console.WriteLine(resManager.GetString("option4"));
-                Console.WriteLine(resManager.GetString("option5"));
-                Console.Write(resManager.GetString("select_option"));
+                Console.WriteLine(languageManager.resManager.GetString("main_menu"));
+                Console.WriteLine(languageManager.resManager.GetString("option1"));
+                Console.WriteLine(languageManager.resManager.GetString("option2"));
+                Console.WriteLine(languageManager.resManager.GetString("option3"));
+                Console.WriteLine(languageManager.resManager.GetString("option4"));
+                Console.WriteLine(languageManager.resManager.GetString("option5"));
+                Console.WriteLine(languageManager.resManager.GetString("option6"));
+                Console.Write(languageManager.resManager.GetString("select_option"));
 
                 switch (Console.ReadLine())
                 {
                     case "1":
 
                         Console.Clear();
-                        Console.WriteLine(resManager.GetString("create_job"));
+                        Console.WriteLine(languageManager.resManager.GetString("create_job"));
                         CreateJob();
 
                         break;
                     case "2":
                         Console.Clear();
-                        Console.WriteLine(resManager.GetString("delete_job"));
+                        Console.WriteLine(languageManager.resManager.GetString("delete_job"));
                         DeleteJob();
                         break;
                     case "3":
                         Console.Clear();
-                        Console.WriteLine(resManager.GetString("execute_job"));
+                        Console.WriteLine(languageManager.resManager.GetString("execute_job"));
                         LaunchJob();
                         break;
                     case "4":
                         Console.Clear();
-                        Console.WriteLine(resManager.GetString("change_language"));
+                        Console.WriteLine(languageManager.resManager.GetString("change_language"));
+                        ChangeLanguage();
+
 
                         break;
                     case "5":
                         Console.Clear();
+                        Console.WriteLine(languageManager.resManager.GetString("Path_To_Log"));
+                        ChangePathToLog();
+
+                        break;
+                    case "6":
+                        Console.Clear();
                         isValidInput = true;
-                        Console.WriteLine(resManager.GetString("exiting"));
+                        Console.WriteLine(languageManager.resManager.GetString("exiting"));
                         Environment.Exit(0);
                         break;
                     default:
                         Console.Clear();
-                        Console.WriteLine(resManager.GetString("invalid_option"));
+                        Console.WriteLine(languageManager.resManager.GetString("invalid_option"));
                         break;
                 }
             }
@@ -129,13 +136,13 @@ namespace program
             bool isValid = false;
             while (!isValid)
             {
-                Console.WriteLine(resManager.GetString("enter_name"));
+                Console.WriteLine(languageManager.resManager.GetString("enter_name"));
                 string name = Console.ReadLine();
-                Console.WriteLine(resManager.GetString("enter_source"));
+                Console.WriteLine(languageManager.resManager.GetString("enter_source"));
                 string sourcePath = Console.ReadLine();
-                Console.WriteLine(resManager.GetString("enter_target"));
+                Console.WriteLine(languageManager.resManager.GetString("enter_target"));
                 string targetPath = Console.ReadLine();
-                Console.WriteLine(resManager.GetString("select_type"));
+                Console.WriteLine(languageManager.resManager.GetString("select_type"));
                 string typeInput = Console.ReadLine();
                 jobType type = jobType.Full;
                 if (typeInput == "1")
@@ -150,14 +157,14 @@ namespace program
                 }
                 else
                 {
-                    Console.WriteLine(resManager.GetString("invalid_input"));
+                    Console.WriteLine(languageManager.resManager.GetString("invalid_input"));
                     isValid = false;
                 }
                 if (isValid)
                 {
                     jobManager.JobCreation(name, sourcePath, targetPath, type);
-                    Console.WriteLine(resManager.GetString("job_created"));
-                    Console.WriteLine(resManager.GetString("continue"));
+                    Console.WriteLine(languageManager.resManager.GetString("job_created"));
+                    Console.WriteLine(languageManager.resManager.GetString("continue"));
                     Console.ReadKey();
                     Console.Clear();
                 }
@@ -167,8 +174,8 @@ namespace program
         {
             if (jobManager._jobList.Count() == 0)
             {
-                Console.WriteLine(resManager.GetString("no_jobs"));
-                Console.WriteLine(resManager.GetString("press_return"));
+                Console.WriteLine(languageManager.resManager.GetString("no_jobs"));
+                Console.WriteLine(languageManager.resManager.GetString("press_return"));
                 Console.ReadKey();
                 Console.Clear();
                 return;
@@ -177,18 +184,18 @@ namespace program
             while (!isValid)
             {
                 // Display the list of jobs
-                Console.WriteLine(resManager.GetString("list_jobs"));
+                Console.WriteLine(languageManager.resManager.GetString("list_jobs"));
                 int jobIndex = 0;
                 jobManager._jobList.ForEach(job => {
-                    Console.WriteLine($"{jobIndex}: {resManager.GetString("job_name")}: {job._name} | {resManager.GetString("job_source")}: {job._sourcePath} | {resManager.GetString("job_target")}: {job._targetPath} | {resManager.GetString("job_type")}: {job._type}");
+                    Console.WriteLine($"{jobIndex}: {languageManager.resManager.GetString("job_name")}: {job._name} | {languageManager.resManager.GetString("job_source")}: {job._sourcePath} | {languageManager.resManager.GetString("job_target")}: {job._targetPath} | {languageManager.resManager.GetString("job_type")}: {job._type}");
                     jobIndex++;
                 }
                 );
-                Console.WriteLine(resManager.GetString("enter_job_number_delete"));
+                Console.WriteLine(languageManager.resManager.GetString("enter_job_number_delete"));
                 int jobNum = int.Parse(Console.ReadLine());
                 if (jobNum < 0 || jobNum >= jobManager._jobList.Count())
                 {
-                    Console.WriteLine(resManager.GetString("invalid_job"));
+                    Console.WriteLine(languageManager.resManager.GetString("invalid_job"));
                 }
                 else
                 {
@@ -197,35 +204,62 @@ namespace program
                 }
 
             }
-            Console.WriteLine(resManager.GetString("job_deleted"));
-            Console.WriteLine(resManager.GetString("press_return"));
+            Console.WriteLine(languageManager.resManager.GetString("job_deleted"));
+            Console.WriteLine(languageManager.resManager.GetString("press_return"));
             Console.ReadKey();
             Console.Clear();
         }
         public static void LaunchJob()
         {
             // Display the list of jobs
-            Console.WriteLine(resManager.GetString("list_jobs"));
-            Console.WriteLine($"0: {resManager.GetString("Execute_All_Job")}");
+            Console.WriteLine(languageManager.resManager.GetString("list_jobs"));
+            Console.WriteLine($"0: {languageManager.resManager.GetString("Execute_All_Job")}");
             int jobIndex = 0;
             jobManager._jobList.ForEach(job =>
             {
                 jobIndex++;
-                Console.WriteLine($"{jobIndex}: {resManager.GetString("job_name")}: {job._name} | {resManager.GetString("job_source")}: {job._sourcePath} | {resManager.GetString("job_target")}: {job._targetPath} | {resManager.GetString("job_type")}: {job._type}");
+                Console.WriteLine($"{jobIndex}: {languageManager.resManager.GetString("job_name")}: {job._name} | {languageManager.resManager.GetString("job_source")}: {job._sourcePath} | {languageManager.resManager.GetString("job_target")}: {job._targetPath} | {languageManager.resManager.GetString("job_type")}: {job._type}");
             }
             );
-            Console.WriteLine(resManager.GetString("enter_job_number_execute"));
+            Console.WriteLine(languageManager.resManager.GetString("enter_job_number_execute"));
             int jobNum = int.Parse(Console.ReadLine());
             while (jobNum < 0 || jobNum > jobManager._jobList.Count())
             {
-                Console.WriteLine(resManager.GetString("invalid_job"));
+                Console.WriteLine(languageManager.resManager.GetString("invalid_job"));
                 jobNum = int.Parse(Console.ReadLine());
             }
             jobManager.LaunchBackup(jobNum);
-            Console.WriteLine(resManager.GetString("job_executed"));
-            Console.WriteLine(resManager.GetString("press_return"));
+            Console.WriteLine(languageManager.resManager.GetString("job_executed"));
+            Console.WriteLine(languageManager.resManager.GetString("press_return"));
             Console.ReadKey();
             Console.Clear();
+        }
+        public static void ChangePathToLog()
+        {
+            Console.WriteLine(languageManager.resManager.GetString("enter_path"));
+            string path = Console.ReadLine();
+
+            while (path == null || path == "")
+            {
+                Console.WriteLine(languageManager.resManager.GetString("invalid_path"));
+                path = Console.ReadLine();
+            }
+
+            jobManager.ChangeLogPath(path);
+
+            Console.WriteLine(languageManager.resManager.GetString("path_changed"));
+            Console.WriteLine(languageManager.resManager.GetString("press_return"));
+            Console.ReadKey();
+            Console.Clear();  
+        }
+        public static void ChangeLanguage()
+        {
+            Console.WriteLine(languageManager.resManager.GetString("select_language"));
+            Console.WriteLine(languageManager.resManager.GetString("language_en"));
+            Console.WriteLine(languageManager.resManager.GetString("language_fr"));
+
+            string lg = Console.ReadLine();
+            languageManager.SetLanguage(lg);
         }
     }
 }

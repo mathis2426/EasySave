@@ -15,7 +15,6 @@ namespace LibrairieJsonHelper
 
                 File.WriteAllText(name, json);
 
-                Console.WriteLine("Fichier JSON créé !");
             }
             catch (Exception ex) 
             {
@@ -31,7 +30,6 @@ namespace LibrairieJsonHelper
 
                 File.WriteAllText(name, json);
 
-                Console.WriteLine("Fichier JSON créé !");
             }
             catch (Exception ex)
             {
@@ -48,8 +46,6 @@ namespace LibrairieJsonHelper
 
             if (string.IsNullOrWhiteSpace(json))
                 return new List<T>();
-
-            Console.WriteLine(json);
             json = json.Trim();
 
             var options = new JsonSerializerOptions

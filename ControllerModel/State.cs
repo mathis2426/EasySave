@@ -16,11 +16,11 @@ namespace ControllerModel
         public string _pathToLog;
         public List<StateObject> _stateObjList = new List<StateObject>();
 
-        public State() 
+        public State(string pathToLog) 
         {
-            _pathToLog = "C:\\ProjectCSharp\\StateProjectCSharp\\StateLog.json";
             JsonHelperClassLoggerStatus jsonList = JsonHelperFactory.CreateLoggerStatus();
-            _stateObjList = jsonList.ReadLogStatus<StateObject>(_pathToLog);
+            _stateObjList = jsonList.ReadLogStatus<StateObject>(pathToLog);
+            this._pathToLog = pathToLog;
         }
         public void sendParamToLog(
             string name,

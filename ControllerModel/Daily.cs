@@ -17,9 +17,9 @@ namespace ControllerModel
     {
         public string _pathToLog;
         LogObject _logObject;
-        public Daily()
+        public Daily(string pathToLog)
         {
-            _pathToLog = "C:/ProjectCSharp/LogProjectCSharp/LogDaily.json";  
+            this._pathToLog = pathToLog;
         }
         public void sendParamToLog(
             string name,
