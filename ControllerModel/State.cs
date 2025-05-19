@@ -14,6 +14,7 @@ namespace ControllerModel
     public class State : AbstractLogger
     {
         public string _pathToLog;
+        public List<StateObject> _stateObjList = new List<StateObject>();
         public void sendParamToLog(
             string name,
             string fileSource,
@@ -46,9 +47,19 @@ namespace ControllerModel
             jsonState.WriteLog(_pathToLog, stateObject);
         }
 
+        public void stateAddDelete(JobObj jobObj)
+        {
+            // TODO : A implementer
+
+            // recuperer la liste des objets (liste des states)
+            // Prendre l'objet envoyer par bounty et ajouter à la liste
+            // puis renvoyer la liste a theBlackShade
+        }
+
         public void stateModification()
         {
             // TODO : A implementer
+
             // recuperer la liste des objets (liste des states)
             // Prendre l'objet envoyer par bounty et modifier la liste en fonction
             // puis renvoyer la liste a theBlackShade

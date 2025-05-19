@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ControllerModel
 {
-    class StateObject
+    public class StateObject
     {
         public string _name { get; set; }
         public string _fileSource { get; set; }
