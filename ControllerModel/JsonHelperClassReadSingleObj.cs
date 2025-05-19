@@ -15,8 +15,7 @@ namespace LibrairieJsonHelper
         {
             if (!File.Exists(PathToFileToRead))
             {
-                Assembly asm = Assembly.GetExecutingAssembly();
-                string binPath = Path.GetDirectoryName(asm.Location);
+                string binPath = Path.GetDirectoryName(AppContext.BaseDirectory);
 
                 SaveConfig saveConfig = new SaveConfig(Path.Combine(binPath, "daily.json"), Path.Combine(binPath, "state.json"), "en-US");
                 string json = JsonSerializer.Serialize(saveConfig, new JsonSerializerOptions { WriteIndented = true });

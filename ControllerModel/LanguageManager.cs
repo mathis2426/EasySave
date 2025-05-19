@@ -19,10 +19,9 @@ namespace ControllerModel
         public string binPathGlobal;
         public LanguageManager()
         {
-            Assembly asm = Assembly.GetExecutingAssembly();
-            string binPath = Path.GetDirectoryName(asm.Location);
+            string binPath = Path.GetDirectoryName(AppContext.BaseDirectory);
             binPathGlobal = binPath;
-            
+
             SaveConfig SaveConfig = jsonHelperClassJsonReadSingleObj.ReadSingleObj<SaveConfig>(Path.Combine(binPath, "config.json"));
             saveConfigObj = SaveConfig;
             SetLanguage(SaveConfig._language);

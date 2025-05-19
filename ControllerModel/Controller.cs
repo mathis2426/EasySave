@@ -19,14 +19,9 @@ namespace ControllerModel
         public string _pathToConfig = "";
         public JobManager() 
         {
-            Assembly asm = Assembly.GetExecutingAssembly();
-            string binPath = Path.GetDirectoryName(asm.Location);
+            string binPath = Path.GetDirectoryName(AppContext.BaseDirectory);
 
-            _pathToJob = Path.Combine(binPath, "job.json");
-
-            JsonHelperClassJsonReadSingleObj jsonHelperClassJsonReadSingleObj = JsonHelperFactory.CreateJsonReadSingleObj();
-            SaveConfig SaveConfig = jsonHelperClassJsonReadSingleObj.ReadSingleObj<SaveConfig>(Path.Combine(binPath, "config.json"));
-            saveConfigObj = SaveConfig;
+            this._pathToJob = Path.Combine(binPath, "job.json");
             this._pathToConfig = Path.Combine(binPath, "config.json");
             JsonHelperClassJsonReadMultipleObj jsonHelperClassJsonReadMultipleObj = new JsonHelperClassJsonReadMultipleObj();
             _jobList = jsonHelperClassJsonReadMultipleObj.ReadMultipleObj<JobObj>(this._pathToJob);
@@ -65,12 +60,6 @@ namespace ControllerModel
             {
                 _executeBackup.ExecuteJob(_jobList[indexJob]);
             }
-        }
-        public void ChangeLogPath(string path)
-        {
-            this.saveConfigObj._pathTologStatus = Path.Combine(path, "state.json");
-            this.saveConfigObj._pathToLogDaily = Path.Combine(path, "daily.json");
-            jsonHelperClassJsonUpdate.UpdateSingleObj<SaveConfig>(this._pathToConfig, saveConfigObj);
         }
     }
 }

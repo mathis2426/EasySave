@@ -12,17 +12,11 @@ namespace ControllerModel
     public class ExecuteBackup
     {
         // Properties
-        public Daily logDaily;
-        public State state;
+        public Daily logDaily = new Daily();
+        public State state = new State();
 
-        public ExecuteBackup(string pathToLogDaily, string pathToLogState)
-        {
-            logDaily = new Daily(pathToLogDaily);
-            state = new State(pathToLogState);
-        }
         public void ExecuteJobAll(List<JobObj> jobList)
         {
-
 
             foreach (var job in jobList)
             {

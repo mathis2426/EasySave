@@ -9,7 +9,6 @@ namespace ControllerModel
 {
     public class BackupJob
     {
-
         public State state = new State();
         public JobObj createJob(string name, string sourcePath, string targetPath, jobType type)
         {

@@ -16,11 +16,22 @@ namespace program
         public static JobManager jobManager = new JobManager();
         static void Main(string[] args)
         {
-            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en");
             // If specified args
             if (args.Length == 1)
             {
-               jobManager.LaunchBackupCommandLine(args[0]);
+                if (args[0] == "AllJob")
+                {
+                    jobManager.LaunchBackup(0);
+                    Console.WriteLine(languageManager.resManager.GetString("All_job_executed"));
+                }
+                else
+                {
+                    jobManager.LaunchBackupCommandLine(args[0]);
+                    Console.WriteLine(languageManager.resManager.GetString("job_executed"));
+                }
+
+                
+                Environment.Exit(0);
             }
 
             // Application Tagline
@@ -83,7 +94,6 @@ namespace program
                 Console.WriteLine(languageManager.resManager.GetString("option3"));
                 Console.WriteLine(languageManager.resManager.GetString("option4"));
                 Console.WriteLine(languageManager.resManager.GetString("option5"));
-                Console.WriteLine(languageManager.resManager.GetString("option6"));
                 Console.Write(languageManager.resManager.GetString("select_option"));
 
                 switch (Console.ReadLine())
@@ -109,16 +119,8 @@ namespace program
                         Console.Clear();
                         Console.WriteLine(languageManager.resManager.GetString("change_language"));
                         ChangeLanguage();
-
-
                         break;
                     case "5":
-                        Console.Clear();
-                        Console.WriteLine(languageManager.resManager.GetString("Path_To_Log"));
-                        ChangePathToLog();
-
-                        break;
-                    case "6":
                         Console.Clear();
                         isValidInput = true;
                         Console.WriteLine(languageManager.resManager.GetString("exiting"));
@@ -133,6 +135,14 @@ namespace program
         }
         public static void CreateJob()
         {
+            if (jobManager._jobList.Count() == 5)
+            {
+                Console.WriteLine(languageManager.resManager.GetString("max_jobs"));
+                Console.WriteLine(languageManager.resManager.GetString("press_return"));
+                Console.ReadKey();
+                Console.Clear();
+                return;
+            }
             bool isValid = false;
             while (!isValid)
             {
@@ -233,24 +243,6 @@ namespace program
             Console.WriteLine(languageManager.resManager.GetString("press_return"));
             Console.ReadKey();
             Console.Clear();
-        }
-        public static void ChangePathToLog()
-        {
-            Console.WriteLine(languageManager.resManager.GetString("enter_path"));
-            string path = Console.ReadLine();
-
-            while (path == null || path == "")
-            {
-                Console.WriteLine(languageManager.resManager.GetString("invalid_path"));
-                path = Console.ReadLine();
-            }
-
-            jobManager.ChangeLogPath(path);
-
-            Console.WriteLine(languageManager.resManager.GetString("path_changed"));
-            Console.WriteLine(languageManager.resManager.GetString("press_return"));
-            Console.ReadKey();
-            Console.Clear();  
         }
         public static void ChangeLanguage()
         {

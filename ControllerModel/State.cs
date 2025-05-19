@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices.Marshalling;
 using System.Text;
 using System.Text.Json;
@@ -14,13 +15,17 @@ namespace ControllerModel
     public class State : AbstractLogger
     {
         public string _pathToLog;
-        public List<StateObject> _stateObjList = new List<StateObject>();
+        public static List<StateObject> _stateObjList = new List<StateObject>();
 
-        public State(string pathToLog) 
+        public State() 
         {
+            string binPath = Path.GetDirectoryName(AppContext.BaseDirectory);
+            this._pathToLog = Path.Combine(binPath,"logState.json");
             JsonHelperClassLoggerStatus jsonList = JsonHelperFactory.CreateLoggerStatus();
-            _stateObjList = jsonList.ReadLogStatus<StateObject>(pathToLog);
-            this._pathToLog = pathToLog;
+            _stateObjList = jsonList.ReadLogStatus<StateObject>(this._pathToLog);
+            JsonHelperClassJsonReadMultipleObj jsonHelperClassJsonReadMultipleObj = new JsonHelperClassJsonReadMultipleObj();
+            List<JobObj> _jobList = jsonHelperClassJsonReadMultipleObj.ReadMultipleObj<JobObj>(Path.Combine(binPath, "job.json"));
+
         }
         public void sendParamToLog(
             string name,
@@ -33,15 +38,7 @@ namespace ControllerModel
             float progression)
         {
             verifyState(state);
-            // Charger le fichier JSON
-            /*var config = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json") // Ensure the Microsoft.Extensions.Configuration.Json package is installed
-                .Build();
-
-            // Lire la valeur
-            pathToLog = config["pathToLog"];*/
-
-            StateObject stateObject = new StateObject(name, fileSource, fileTarget, state, totalFileToCopy, totalFileSize, filesLeftToDo, progression, _pathToLog);
+            StateObject stateObject = new StateObject(name, fileSource, fileTarget, state, totalFileToCopy, totalFileSize, filesLeftToDo, progression, this._pathToLog);
             stateObject.getLog();
             stateModification(stateObject);
         }
@@ -49,8 +46,7 @@ namespace ControllerModel
         public override void GenerateLog()
         {
             ILoggerWriter jsonState = JsonHelperFactory.CreateLoggerStatus();
-            Console.WriteLine(JsonSerializer.Serialize(_stateObjList));
-            jsonState.WriteLogList(_pathToLog, _stateObjList);
+            jsonState.WriteLogList(this._pathToLog, _stateObjList);
         }
 
         public void stateAddDelete(JobObj jobObj)
@@ -72,7 +68,7 @@ namespace ControllerModel
                     0,                       
                     0,                        
                     0,                       
-                    _pathToLog                
+                    this._pathToLog                
                 );
                 _stateObjList.Add(newState);
             }
@@ -84,8 +80,8 @@ namespace ControllerModel
             var stateToModify = _stateObjList.FirstOrDefault(item => item._name == stateObject._name);
             if (stateToModify != null)
             {
-                _stateObjList.Remove(stateToModify);
-                _stateObjList.Add(stateObject);
+               _stateObjList.Remove(stateToModify);
+               _stateObjList.Add(stateObject);
             }
             GenerateLog();
         }
