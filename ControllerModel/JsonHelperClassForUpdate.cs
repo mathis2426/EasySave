@@ -9,11 +9,10 @@ namespace LibrairieJsonHelper
     public class JsonHelperClassJsonUpdate
     {
         JsonHelperClassBasics jsonHelperClassBasicsForUpdate = new();
-        public void Update<T> (string PathToFileToUpdate, T obj)
+        public void Update<T> (string PathToFileToUpdate, List<T> ListObj)
         {
-            List<T> ListObject = jsonHelperClassBasicsForUpdate.ReadJsonList<T>(PathToFileToUpdate);
-            ListObject.Add(obj);
-            jsonHelperClassBasicsForUpdate.CreateJsonList<T>(PathToFileToUpdate, ListObject);
-        }   
+            jsonHelperClassBasicsForUpdate.CreateJsonList<T>(PathToFileToUpdate, ListObj);
+        }
+        
     }   
 }
