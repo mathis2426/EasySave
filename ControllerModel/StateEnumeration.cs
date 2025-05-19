@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace ControllerModel
 {
-    internal class Model
+    public enum StateEnumeration
     {
+        inactive,
+        active,
+        error,
+        in_progress,
+        end,
     }
 }
