@@ -15,6 +15,13 @@ namespace ControllerModel
     {
         public string _pathToLog;
         public List<StateObject> _stateObjList = new List<StateObject>();
+
+        public State() 
+        {
+            _pathToLog = "C:\\ProjectCSharp\\StateProjectCSharp\\StateLog.json";
+            JsonHelperClassLoggerStatus jsonList = JsonHelperFactory.CreateLoggerStatus();
+            _stateObjList = jsonList.ReadLogStatus<StateObject>(_pathToLog);
+        }
         public void sendParamToLog(
             string name,
             string fileSource,
@@ -36,33 +43,51 @@ namespace ControllerModel
 
             StateObject stateObject = new StateObject(name, fileSource, fileTarget, state, totalFileToCopy, totalFileSize, filesLeftToDo, progression, _pathToLog);
             stateObject.getLog();
-            GenerateLog(stateObject);
+            stateModification(stateObject);
         }
 
-        public override void GenerateLog<T>(T stateObject)
+        public override void GenerateLog()
         {
-            _pathToLog = "C:\\ProjectCSharp\\StateProjectCSharp\\StateLog.json";
             ILoggerWriter jsonState = JsonHelperFactory.CreateLoggerStatus();
-            Console.WriteLine(JsonSerializer.Serialize(stateObject));
-            jsonState.WriteLog(_pathToLog, stateObject);
+            Console.WriteLine(JsonSerializer.Serialize(_stateObjList));
+            jsonState.WriteLogList(_pathToLog, _stateObjList);
         }
 
         public void stateAddDelete(JobObj jobObj)
         {
-            // TODO : A implementer
+            var existing = _stateObjList.FirstOrDefault(state => state._name == jobObj._name);
 
-            // recuperer la liste des objets (liste des states)
-            // Prendre l'objet envoyer par bounty et ajouter à la liste
-            // puis renvoyer la liste a theBlackShade
+            if (existing != null)
+            {
+                _stateObjList.Remove(existing);
+            }
+            else
+            {
+                StateObject newState = new StateObject(
+                    jobObj._name,
+                    jobObj._sourcePath,
+                    jobObj._targetPath,
+                    StateEnumeration.inactive,
+                    0,                        
+                    0,                       
+                    0,                        
+                    0,                       
+                    _pathToLog                
+                );
+                _stateObjList.Add(newState);
+            }
+            GenerateLog();
         }
 
-        public void stateModification()
+        public void stateModification<T>(T stateObject) where T : StateObject
         {
-            // TODO : A implementer
-
-            // recuperer la liste des objets (liste des states)
-            // Prendre l'objet envoyer par bounty et modifier la liste en fonction
-            // puis renvoyer la liste a theBlackShade
+            var stateToModify = _stateObjList.FirstOrDefault(item => item._name == stateObject._name);
+            if (stateToModify != null)
+            {
+                _stateObjList.Remove(stateToModify);
+                _stateObjList.Add(stateObject);
+            }
+            GenerateLog();
         }
 
         public bool verifyState(StateEnumeration state)

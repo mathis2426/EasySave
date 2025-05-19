@@ -6,7 +6,7 @@
         {      
             return new JsonHelperClassLoggerDaily();   
         }
-        public static ILoggerWriter CreateLoggerStatus()
+        public static JsonHelperClassLoggerStatus CreateLoggerStatus()
         {
             return new JsonHelperClassLoggerStatus();
         }
