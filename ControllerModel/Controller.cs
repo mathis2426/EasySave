@@ -13,7 +13,7 @@
         public void JobDeletion(int jobNum)
         {
             _jobList.RemoveAt(jobNum);
-            _backupJob.deleteJob(_jobList);
+            _backupJob.deleteJob(_jobList[jobNum]);
         }
         public void LaunchBackup(int jobNum)
         {
