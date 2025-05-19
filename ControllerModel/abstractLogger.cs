@@ -9,6 +9,6 @@ namespace ControllerModel
 {
     public abstract class AbstractLogger
     {
-        public abstract void GenerateLog<T>(T obj);
+        public abstract void GenerateLog();
     }
 }

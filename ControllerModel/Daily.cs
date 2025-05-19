@@ -9,12 +9,18 @@ using System;
 using LibrairieJsonHelper;
 using System.Diagnostics;
 using System.Text.Json;
+using System.Runtime.InteropServices.Marshalling;
 
 namespace ControllerModel
 {
     public class Daily : AbstractLogger
     {
         public string _pathToLog;
+        LogObject _logObject;
+        public Daily()
+        {
+            _pathToLog = "C:/ProjectCSharp/LogProjectCSharp/LogDaily.json";  
+        }
         public void sendParamToLog(
             string name,
             string fileSource,
@@ -31,17 +37,16 @@ namespace ControllerModel
             // Lire la valeur
             pathToLog = config["pathToLog"];
 */
-            LogObject logObject = new LogObject(name, fileSource, fileTarget, _pathToLog, fileSize, fileTransferTime, time);
-            logObject.getLog();
-            GenerateLog(logObject);
+            LogObject _logObject = new LogObject(name, fileSource, fileTarget, _pathToLog, fileSize, fileTransferTime, time);
+            _logObject.getLog();
+            GenerateLog();
         }
 
-        public override void GenerateLog<T>(T logObject)
+        public override void GenerateLog()
         {
-            _pathToLog = "C:/ProjectCSharp/LogProjectCSharp/LogDaily.json";
             ILoggerWriter jsonLog = JsonHelperFactory.CreateLoggerDaily();
-            Console.WriteLine(JsonSerializer.Serialize(logObject));
-            jsonLog.WriteLog(_pathToLog, logObject);
+            Console.WriteLine(JsonSerializer.Serialize(_logObject));
+            jsonLog.WriteLog(_pathToLog, _logObject);
         }
     }
 }
