@@ -24,7 +24,7 @@ namespace ControllerModel
             }
 
         }
-        public void ExecuteJob(JobObj job)
+        public int ExecuteJob(JobObj job)
         {
             // Simulate file transfer
             string sourcePath = job._sourcePath;
@@ -34,6 +34,8 @@ namespace ControllerModel
             // Timer
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
+            if (!Directory.Exists(sourcePath)) { return 1; }
+            if (!Directory.Exists(targetPath)) { return 1; }
             int totalFiles = System.IO.Directory.GetFiles(sourcePath).Length;
             int totalFilesLeft = totalFiles;
             long totalFileSize = new DirectoryInfo(job._sourcePath).GetFiles().Sum(f => f.Length);
@@ -58,7 +60,7 @@ namespace ControllerModel
                 stopwatch.ElapsedMilliseconds,
                 DateTime.Now
             );
-
+            return 0;
         }
         // Backup methods
         public void FullBackup(string name, string sourcePath, string targetPath, int totalFiles, long totalFileSize, int totalFilesLeft)

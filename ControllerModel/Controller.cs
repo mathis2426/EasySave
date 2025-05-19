@@ -34,19 +34,24 @@ namespace ControllerModel
         }
         public void JobDeletion(int jobNum)
         {
+            _backupJob.deleteJob(_jobList[jobNum]);
             _jobList.RemoveAt(jobNum);
             jsonHelperClassJsonUpdate.Update(this._pathToJob, _jobList);
-            _backupJob.deleteJob(_jobList[jobNum]);
+            
 
         }
-        public void LaunchBackup(int jobNum)
+        public int LaunchBackup(int jobNum)
         {
             if( jobNum == 0)
             {
                 _executeBackup.ExecuteJobAll(_jobList);
-                return;
+                return 0;
             }
-            _executeBackup.ExecuteJob(_jobList[jobNum-1]);
+            int jobexit = _executeBackup.ExecuteJob(_jobList[jobNum-1]);
+            if(jobexit == 0) { return 0; }
+            else { return 1; }
+
+
         }
         public void LaunchBackupCommandLine(string job)
         {

@@ -232,14 +232,28 @@ namespace program
             }
             );
             Console.WriteLine(languageManager.resManager.GetString("enter_job_number_execute"));
-            int jobNum = int.Parse(Console.ReadLine());
+            int jobNum = -1;
             while (jobNum < 0 || jobNum > jobManager._jobList.Count())
             {
+
+                string input = Console.ReadLine();
+                if (int.TryParse(input, out jobNum) && jobNum >= 0 && jobNum <= jobManager._jobList.Count())
+                {
+                    
+                    int jobExit = jobManager.LaunchBackup(jobNum);
+                    if (jobExit == 0)
+                    {
+                        Console.WriteLine(languageManager.resManager.GetString("job_executed"));
+                    }
+                    else
+                    {
+                        Console.WriteLine(languageManager.resManager.GetString("job_invalid"));
+                    }
+                    break;
+                }
                 Console.WriteLine(languageManager.resManager.GetString("invalid_job"));
-                jobNum = int.Parse(Console.ReadLine());
             }
-            jobManager.LaunchBackup(jobNum);
-            Console.WriteLine(languageManager.resManager.GetString("job_executed"));
+            
             Console.WriteLine(languageManager.resManager.GetString("press_return"));
             Console.ReadKey();
             Console.Clear();
@@ -252,6 +266,10 @@ namespace program
 
             string lg = Console.ReadLine();
             languageManager.SetLanguage(lg);
+            Console.WriteLine(languageManager.resManager.GetString("language_sucessfull"));
+            Console.WriteLine(languageManager.resManager.GetString("press_return"));
+            Console.ReadKey();
+            Console.Clear();
         }
     }
 }

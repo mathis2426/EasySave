@@ -258,4 +258,19 @@
   <data name="All_job_executed" xml:space="preserve">
     <value>All Job have been executed successfully!</value>
   </data>
+  <data name="job_invalid" xml:space="preserve">
+    <value>Error when starting the job</value>
+  </data>
+  <data name="select_language" xml:space="preserve">
+    <value>Please select language:</value>
+  </data>
+  <data name="language_en" xml:space="preserve">
+    <value>| en-US</value>
+  </data>
+  <data name="language_fr" xml:space="preserve">
+    <value>| fr</value>
+  </data>
+  <data name="language_sucessfull" xml:space="preserve">
+    <value>Language successfully changed</value>
+  </data>
 </root>
