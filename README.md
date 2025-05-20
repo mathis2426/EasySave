@@ -4,6 +4,11 @@
 **Product**: EasySave Backup Software  
 **Version**: 1.0
 
+## Pseudo -> Name
+* Xxolin -> Mathis Gramage
+* The black shade -> Aymerick Boussot
+* mathis2426 -> Mathis Cucherat
+* lunaleen -> Maëlice Jandl
 ## Features
 
 - Backup job creation and management  
