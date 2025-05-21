@@ -1,4 +1,4 @@
-﻿using ControllerModel.Logs;
+﻿using ControllerModel.Logs2;
 
 namespace ControllerModel.JsonHelper
 {

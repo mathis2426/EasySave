@@ -1,5 +1,5 @@
 ﻿using System.Text.Json;
-using ControllerModel.Logs;
+using ControllerModel.Logs2;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 

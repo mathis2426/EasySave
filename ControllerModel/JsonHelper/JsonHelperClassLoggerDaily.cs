@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices.Marshalling;
 using System.Text.Json;
 using ControllerModel;
-using ControllerModel.Logs;
+using ControllerModel.Logs2;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 

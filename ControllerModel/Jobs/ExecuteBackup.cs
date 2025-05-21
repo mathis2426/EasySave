@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System;
 using System.IO;
 using System.Diagnostics;
-using ControllerModel.Logs;
+using ControllerModel.Logs2;
 
 namespace ControllerModel.Jobs
 {
