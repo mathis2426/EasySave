@@ -16,9 +16,25 @@ namespace LibrairieJsonHelper
                 File.WriteAllText(name, json);
 
             }
-            catch (Exception ex) 
+            catch (DirectoryNotFoundException ex)
             {
-                throw ex;
+                // Le dossier spécifié dans le chemin n'existe pas ou n'a pas pu être trouvé
+                throw new Exception("Le chemin vers ce dossier n'existe pas", ex);
+            }
+            catch (JsonException ex)
+            {
+                // Le contenu JSON est invalide ou ne correspond pas à la structure attendue
+                throw new Exception("Erreur dans la sérialisation ou la désérialisation des données", ex);
+            }
+            catch (IOException ex)
+            {
+                // Le fichier est inaccessible : peut être utilisé par un autre processus, verrouillé, ou problème d'I/O (disque plein)
+                throw new Exception("Erreur, le fichier n'est pas accessible pour le moment", ex);
+            }
+            catch (Exception ex)
+            {
+                // Toute autre erreur
+                throw new Exception("Une erreur innatendue est survenue :", ex);
             }
         }
 
@@ -31,9 +47,25 @@ namespace LibrairieJsonHelper
                 File.WriteAllText(name, json);
 
             }
+            catch (DirectoryNotFoundException ex)
+            {
+                // Le dossier spécifié dans le chemin n'existe pas ou n'a pas pu être trouvé
+                throw new Exception("Le chemin vers ce dossier n'existe pas", ex);
+            }
+            catch (JsonException ex)
+            {
+                // Le contenu JSON est invalide ou ne correspond pas à la structure attendue
+                throw new Exception("Erreur dans la sérialisation ou la désérialisation des données", ex);
+            }
+            catch (IOException ex)
+            {
+                // Le fichier est inaccessible : peut être utilisé par un autre processus, verrouillé, ou problème d'I/O (disque plein)
+                throw new Exception("Erreur, le fichier n'est pas accessible pour le moment", ex);
+            }
             catch (Exception ex)
             {
-                throw ex;
+                // Toute autre erreur
+                throw new Exception("Une erreur innatendue est survenue :", ex);
             }
         }
 
@@ -73,9 +105,20 @@ namespace LibrairieJsonHelper
                 T obj = JsonSerializer.Deserialize<T>(json);
                 return obj;
             }
-            catch (Exception e)
+            catch (JsonException ex)
             {
-                throw e;
+                // Format JSON incorrect
+                throw new Exception($"Erreur JSON : {ex.Message}");
+            }
+            catch (NotSupportedException ex)
+            {
+                // Type T non supporté
+                throw new Exception($"Type non supporté : {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                // Toute autre erreur
+                throw new Exception($"Erreur inattendue : {ex.Message}");
             }
         }
 
