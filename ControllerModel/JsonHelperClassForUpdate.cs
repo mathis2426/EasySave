@@ -8,15 +8,15 @@ namespace LibrairieJsonHelper
 
     public class JsonHelperClassJsonUpdate
     {
-        JsonHelperClassBasics jsonHelperClassBasicsForUpdate = new();
+        private readonly JsonHelperClassBasics _jsonHelperClassBasicsForUpdate = new();
         public void Update<T> (string PathToFileToUpdate, List<T> ListObj)
         {
-            jsonHelperClassBasicsForUpdate.CreateJsonList<T>(PathToFileToUpdate, ListObj);
+            _jsonHelperClassBasicsForUpdate.CreateJsonList<T>(PathToFileToUpdate, ListObj);
         }
 
         public void UpdateSingleObj<T>(string PathToFileToUpdate, T Obj)
         {
-            jsonHelperClassBasicsForUpdate.CreateJson<T>(PathToFileToUpdate, Obj);
+            _jsonHelperClassBasicsForUpdate.CreateJson<T>(PathToFileToUpdate, Obj);
         }
 
     }   

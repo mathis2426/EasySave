@@ -27,7 +27,7 @@ namespace ControllerModel
             List<JobObj> _jobList = jsonHelperClassJsonReadMultipleObj.ReadMultipleObj<JobObj>(Path.Combine(binPath, "job.json"));
 
         }
-        public void sendParamToLog(
+        public void SendParamToLog(
             string name,
             string fileSource,
             string fileTarget,
@@ -37,10 +37,10 @@ namespace ControllerModel
             int filesLeftToDo,
             float progression)
         {
-            verifyState(state);
+            VerifyState(state);
             StateObject stateObject = new StateObject(name, fileSource, fileTarget, state, totalFileToCopy, totalFileSize, filesLeftToDo, progression, this._pathToLog);
-            stateObject.getLog();
-            stateModification(stateObject);
+            stateObject.GetLog();
+            StateModification(stateObject);
         }
 
         public override void GenerateLog()
@@ -49,9 +49,9 @@ namespace ControllerModel
             jsonState.WriteLogList(this._pathToLog, _stateObjList);
         }
 
-        public void stateAddDelete(JobObj jobObj)
+        public void StateAddDelete(JobObj jobObj)
         {
-            var existing = _stateObjList.FirstOrDefault(state => state._name == jobObj._name);
+            var existing = _stateObjList.FirstOrDefault(state => state.Name == jobObj._name);
 
             if (existing != null)
             {
@@ -75,9 +75,9 @@ namespace ControllerModel
             GenerateLog();
         }
 
-        public void stateModification<T>(T stateObject) where T : StateObject
+        public void StateModification<T>(T stateObject) where T : StateObject
         {
-            var stateToModify = _stateObjList.FirstOrDefault(item => item._name == stateObject._name);
+            var stateToModify = _stateObjList.FirstOrDefault(item => item.Name == stateObject.Name);
             if (stateToModify != null)
             {
                _stateObjList.Remove(stateToModify);
@@ -86,7 +86,7 @@ namespace ControllerModel
             GenerateLog();
         }
 
-        public bool verifyState(StateEnumeration state)
+        public bool VerifyState(StateEnumeration state)
         {
             return Enum.IsDefined(typeof(StateEnumeration), state);
         }

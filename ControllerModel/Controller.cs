@@ -29,12 +29,12 @@ namespace ControllerModel
         }
         public void JobCreation(string name, string sourcePath, string targetPath, jobType type)
         {
-            _jobList.Add(_backupJob.createJob(name, sourcePath, targetPath, type));
+            _jobList.Add(_backupJob.CreateJob(name, sourcePath, targetPath, type));
             jsonHelperClassJsonUpdate.Update(this._pathToJob, _jobList);
         }
         public void JobDeletion(int jobNum)
         {
-            _backupJob.deleteJob(_jobList[jobNum]);
+            _backupJob.DeleteJob(_jobList[jobNum]);
             _jobList.RemoveAt(jobNum);
             jsonHelperClassJsonUpdate.Update(this._pathToJob, _jobList);
             

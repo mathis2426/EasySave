@@ -7,11 +7,11 @@ namespace LibrairieJsonHelper
 
     public class JsonHelperClassJsonReadMultipleObj
     {
-        JsonHelperClassBasics jsonHelperClassBasicsReadMultipleObj = new();
+        private readonly JsonHelperClassBasics _jsonHelperClassBasicsReadMultipleObj = new();
 
         public List<T> ReadMultipleObj<T> (string PathToFileToUpdate)
         {
-            return jsonHelperClassBasicsReadMultipleObj.ReadJsonList<T>(PathToFileToUpdate);
+            return _jsonHelperClassBasicsReadMultipleObj.ReadJsonList<T>(PathToFileToUpdate);
         }   
     }   
 }

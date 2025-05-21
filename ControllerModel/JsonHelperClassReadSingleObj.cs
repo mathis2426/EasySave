@@ -9,7 +9,7 @@ namespace LibrairieJsonHelper
 
     public class JsonHelperClassJsonReadSingleObj
     {
-        JsonHelperClassBasics jsonHelperClassBasicsReadSingleObj = new();
+        private readonly JsonHelperClassBasics _jsonHelperClassBasicsReadSingleObj = new();
 
         public T ReadSingleObj<T> (string PathToFileToRead)
         {
@@ -20,10 +20,10 @@ namespace LibrairieJsonHelper
                 SaveConfig saveConfig = new SaveConfig(Path.Combine(binPath, "daily.json"), Path.Combine(binPath, "state.json"), "en-US");
                 string json = JsonSerializer.Serialize(saveConfig, new JsonSerializerOptions { WriteIndented = true });
                 T save = JsonSerializer.Deserialize<T>(json);
-                jsonHelperClassBasicsReadSingleObj.CreateJson<T>(PathToFileToRead, save);
+                _jsonHelperClassBasicsReadSingleObj.CreateJson<T>(PathToFileToRead, save);
                 return save;
             }
-            return jsonHelperClassBasicsReadSingleObj.ReadJson<T>(PathToFileToRead);
+            return _jsonHelperClassBasicsReadSingleObj.ReadJson<T>(PathToFileToRead);
         }   
     }   
 }

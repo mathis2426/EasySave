@@ -80,7 +80,7 @@ namespace ControllerModel
 
                 int progression = (int)(((double)(totalFiles - totalFilesLeft) / totalFiles) * 100);
 
-                state.sendParamToLog(
+                state.SendParamToLog(
                     name,
                     sourcePath,
                     targetPath,
@@ -107,7 +107,7 @@ namespace ControllerModel
                 }
                 totalFilesLeft--;
                 int progression = (int)(((double)(totalFiles - totalFilesLeft) / totalFiles) * 100);
-                state.sendParamToLog(
+                state.SendParamToLog(
                     name,
                     sourcePath,
                     targetPath,

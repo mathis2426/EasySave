@@ -11,12 +11,12 @@ namespace LibrairieJsonHelper
 
     public class JsonHelperClassLoggerDaily : ILoggerWriter
     {
-        JsonHelperClassBasics jsonHelperClassBasicsForLogger = new();
+        private readonly JsonHelperClassBasics _jsonHelperClassBasicsForLogger = new();
         public void WriteLog<T> (string path,T obj)
         {
-            List<T> ListObject = jsonHelperClassBasicsForLogger.ReadJsonList<T>(path);
+            List<T> ListObject = _jsonHelperClassBasicsForLogger.ReadJsonList<T>(path);
             ListObject.Add (obj);
-            jsonHelperClassBasicsForLogger.CreateJsonList<T>(path, ListObject);
+            _jsonHelperClassBasicsForLogger.CreateJsonList<T>(path, ListObject);
         }
 
         public void WriteLogList<T>(string path, List<T> list)
