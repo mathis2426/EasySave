@@ -1,0 +1,31 @@
+﻿<Page x:Class="WPFApp.Page1"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WPFApp"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Page1">
+
+    <Grid RenderTransformOrigin="0.481,0.464" Background="White">
+        <Button Content="Start Job" HorizontalAlignment="Left" Margin="37,269,0,0" VerticalAlignment="Top" Height="40" Width="114"/>
+        <Button Content="Pause Job" HorizontalAlignment="Left" Margin="440,269,0,0" VerticalAlignment="Top" Height="40" Width="114" RenderTransformOrigin="0.886,-0.4"/>
+        <Button Content="Resume Job" HorizontalAlignment="Left" Margin="238,269,0,0" VerticalAlignment="Top" Height="40" Width="115"/>
+        <Button x:Name="Exit" Content="Exit" HorizontalAlignment="Left" Margin="619,356,0,0" VerticalAlignment="Top" Height="32" Width="133" Click="buttonLeave_Click"/>
+        <TextBox x:Name="outputBox" HorizontalAlignment="Left" Margin="37,345,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="517" Height="53"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="224" Margin="37,10,0,0" VerticalAlignment="Top" Width="543"Width="517"/>
+        <ProgressBar HorizontalAlignment="Left" Height="42" Margin="220,55,0,0" VerticalAlignment="Top" Width="322"/>
+        <TextBlock HorizontalAlignment="Left" Margin="48,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="41" Width="167"><Run Text="Percentage"/><Run Language="fr-fr" Text=" completed"/></TextBlock>
+        <TextBox HorizontalAlignment="Left" Margin="220,112,0,0" TextWrapping="Wrap" Text="Input file : " VerticalAlignment="Top" Width="142"/>
+        <TextBlock HorizontalAlignment="Left" Margin="48,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Text="Input file :"/>
+        <TextBox HorizontalAlignment="Left" Margin="220,142,0,0" TextWrapping="Wrap" Text="Output file : " VerticalAlignment="Top" Width="142"/>
+        <TextBlock HorizontalAlignment="Left" Margin="48,142,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"><Run Language="fr-fr" Text="Output"/><Run Text=" file :"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="48,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"><Run Language="fr-fr" Text="Priority Files :"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="48,206,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"><Run Language="fr-fr" Text="Type of backup : "/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="51,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"><Run Language="fr-fr" Text="Job name :"/></TextBlock>
+        <ComboBox HorizontalAlignment="Left" Margin="662,26,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Margin="585,26,0,0" TextWrapping="Wrap" Text="Language" VerticalAlignment="Top" Width="72" TextChanged="TextBox_TextChanged" Height="20"/>
+        <Button Content="Global parameter" HorizontalAlignment="Left" Margin="734,72,0,0" VerticalAlignment="Top" Height="48" Width="48"/>
+    </Grid>
+</Page>
