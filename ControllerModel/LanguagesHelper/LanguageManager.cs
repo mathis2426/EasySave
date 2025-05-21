@@ -36,7 +36,10 @@ namespace ControllerModel.LanguagesHelper
         /// <param name="cultureCode">Code de la culture (ex. : "en-US", "fr-FR").</param>
         public void SetLanguage(string cultureCode)
         {
-
+            if(cultureCode == null && cultureCode == "")
+            {
+                cultureCode = "en-US";
+            }
             SaveConfig SaveConfig = jsonHelperClassJsonReadSingleObj.ReadSingleObj<SaveConfig>(Path.Combine(binPathGlobal, "config.json"));
             SaveConfig.Language = cultureCode;
             jsonHelperClassJsonUpdate.UpdateSingleObj(Path.Combine(binPathGlobal, "config.json"), SaveConfig);
