@@ -1,4 +1,6 @@
-﻿namespace LibrairieJsonHelper
+﻿using ControllerModel.Logs;
+
+namespace ControllerModel.JsonHelper
 {
     public class JsonHelperFactory
     {

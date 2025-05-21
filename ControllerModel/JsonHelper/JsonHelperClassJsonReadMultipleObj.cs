@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 
-namespace LibrairieJsonHelper
+namespace ControllerModel.JsonHelper
 {
 
     public class JsonHelperClassJsonReadMultipleObj

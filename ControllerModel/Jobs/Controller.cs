@@ -1,23 +1,23 @@
 ﻿using System.Reflection;
 using System.Runtime.ConstrainedExecution;
-using LibrairieJsonHelper;
+using ControllerModel.JsonHelper;
 
-namespace ControllerModel
+namespace ControllerModel.Jobs
 {
     public class JobManager
     {
         /// <summary>
         /// Liste des jobs de sauvegarde actuellement chargés.
         /// </summary>
-        public List<JobObj> jobList = new();
+        public List<JobObj> JobList = new();
 
         private readonly BackupJob _backupJob = new();
         private readonly ExecuteBackup _executeBackup = new();
 
         public JsonHelperFactory JsonHelperFactory = new();
-        public JsonHelperClassJsonUpdate jsonHelperClassJsonUpdate = JsonHelperFactory.CreateJsonUpdate();
+        public JsonHelperClassJsonUpdate JsonHelperClassJsonUpdate = JsonHelperFactory.CreateJsonUpdate();
 
-        public SaveConfig saveConfigObj;
+        public SaveConfig SaveConfigObj;
         
         private readonly string _pathToJob = "";
         private readonly string _pathToConfig = "";
@@ -30,10 +30,10 @@ namespace ControllerModel
         {
             string binPath = Path.GetDirectoryName(AppContext.BaseDirectory);
 
-            this._pathToJob = Path.Combine(binPath, "job.json");
-            this._pathToConfig = Path.Combine(binPath, "config.json");
+            _pathToJob = Path.Combine(binPath, "job.json");
+            _pathToConfig = Path.Combine(binPath, "config.json");
             JsonHelperClassJsonReadMultipleObj jsonHelperClassJsonReadMultipleObj = new JsonHelperClassJsonReadMultipleObj();
-            jobList = jsonHelperClassJsonReadMultipleObj.ReadMultipleObj<JobObj>(this._pathToJob);
+            JobList = jsonHelperClassJsonReadMultipleObj.ReadMultipleObj<JobObj>(_pathToJob);
             
         }
 
@@ -47,8 +47,8 @@ namespace ControllerModel
         /// <param name="type">Type de job.</param>
         public void JobCreation(string name, string sourcePath, string targetPath, JobType type)
         {
-            jobList.Add(_backupJob.CreateJob(name, sourcePath, targetPath, type));
-            jsonHelperClassJsonUpdate.Update(this._pathToJob, jobList);
+            JobList.Add(_backupJob.CreateJob(name, sourcePath, targetPath, type));
+            JsonHelperClassJsonUpdate.Update(_pathToJob, JobList);
         }
 
         /// <summary>
@@ -58,9 +58,9 @@ namespace ControllerModel
         /// <param name="jobNum">Index du job à supprimer.</param>
         public void JobDeletion(int jobNum)
         {
-            _backupJob.DeleteJob(jobList[jobNum]);
-            jobList.RemoveAt(jobNum);
-            jsonHelperClassJsonUpdate.Update(this._pathToJob, jobList);
+            _backupJob.DeleteJob(JobList[jobNum]);
+            JobList.RemoveAt(jobNum);
+            JsonHelperClassJsonUpdate.Update(_pathToJob, JobList);
             
 
         }
@@ -75,10 +75,10 @@ namespace ControllerModel
         {
             if( jobNum == 0)
             {
-                _executeBackup.ExecuteJobAll(jobList);
+                _executeBackup.ExecuteJobAll(JobList);
                 return 0;
             }
-            int jobexit = _executeBackup.ExecuteJob(jobList[jobNum-1]);
+            int jobexit = _executeBackup.ExecuteJob(JobList[jobNum-1]);
             if(jobexit == 0) { return 0; }
             else { return 1; }
 
@@ -92,7 +92,7 @@ namespace ControllerModel
         /// <param name="job">Nom du job à exécuter.</param>
         public void LaunchBackupCommandLine(string job)
         {
-            int indexJob = jobList.FindIndex(x => x.Name == job);
+            int indexJob = JobList.FindIndex(x => x.Name == job);
             if (indexJob == -1)
             {
                 Console.WriteLine("Job not found");
@@ -100,7 +100,7 @@ namespace ControllerModel
             }
             else
             {
-                _executeBackup.ExecuteJob(jobList[indexJob]);
+                _executeBackup.ExecuteJob(JobList[indexJob]);
             }
         }
     }

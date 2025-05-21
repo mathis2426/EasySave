@@ -1,4 +1,4 @@
-﻿namespace ControllerModel
+﻿namespace ControllerModel.Jobs
 {
     public enum JobType : byte
     {

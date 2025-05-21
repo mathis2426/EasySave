@@ -1,8 +1,9 @@
 ﻿using System.Text.Json;
+using ControllerModel.Logs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 
-namespace LibrairieJsonHelper
+namespace ControllerModel.JsonHelper
 {
 
     public class JsonHelperClassLoggerStatus : ILoggerWriter
@@ -17,7 +18,7 @@ namespace LibrairieJsonHelper
         /// <param name="obj">Objet à écrire.</param>
         public void WriteLog<T> (string path,T obj)
         {
-            jsonHelperClassBasicsForLogger.CreateJson<T>(path, obj);
+            jsonHelperClassBasicsForLogger.CreateJson(path, obj);
         }
 
         /// <summary>
@@ -28,7 +29,7 @@ namespace LibrairieJsonHelper
         /// <param name="obj">Liste d'objets à écrire.</param>
         public void WriteLogList<T>(string path, List<T> obj)
         {
-            jsonHelperClassBasicsForLogger.CreateJsonList<T>(path, obj);
+            jsonHelperClassBasicsForLogger.CreateJsonList(path, obj);
         }
 
         /// <summary>

@@ -3,7 +3,7 @@ using System.Text.Json;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 
-namespace LibrairieJsonHelper
+namespace ControllerModel.JsonHelper
 {
 
     public class JsonHelperClassJsonUpdate
@@ -19,7 +19,7 @@ namespace LibrairieJsonHelper
         /// <param name="ListObj">Liste d'objets à écrire dans le fichier.</param>
         public void Update<T> (string PathToFileToUpdate, List<T> ListObj)
         {
-            _jsonHelperClassBasicsForUpdate.CreateJsonList<T>(PathToFileToUpdate, ListObj);
+            _jsonHelperClassBasicsForUpdate.CreateJsonList(PathToFileToUpdate, ListObj);
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace LibrairieJsonHelper
         /// <param name="Obj">Objet à écrire dans le fichier.</param>
         public void UpdateSingleObj<T>(string PathToFileToUpdate, T Obj)
         {
-            _jsonHelperClassBasicsForUpdate.CreateJson<T>(PathToFileToUpdate, Obj);
+            _jsonHelperClassBasicsForUpdate.CreateJson(PathToFileToUpdate, Obj);
         }
 
     }   

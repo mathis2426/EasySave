@@ -3,7 +3,7 @@ using System.Text.Json;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 
-namespace LibrairieJsonHelper
+namespace ControllerModel.JsonHelper
 {
     /// <summary>
     /// Classe utilitaire pour la gestion basique de la sérialisation et désérialisation JSON.

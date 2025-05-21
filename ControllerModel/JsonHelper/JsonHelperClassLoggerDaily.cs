@@ -3,10 +3,12 @@ using System.Diagnostics;
 using System.Runtime.InteropServices.Marshalling;
 using System.Text.Json;
 using ControllerModel;
+using ControllerModel.Logs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 
-namespace LibrairieJsonHelper
+
+namespace ControllerModel.JsonHelper
 {
 
     public class JsonHelperClassLoggerDaily : ILoggerWriter
@@ -24,7 +26,7 @@ namespace LibrairieJsonHelper
         {
             List<T> ListObject = _jsonHelperClassBasicsForLogger.ReadJsonList<T>(path);
             ListObject.Add (obj);
-            _jsonHelperClassBasicsForLogger.CreateJsonList<T>(path, ListObject);
+            _jsonHelperClassBasicsForLogger.CreateJsonList(path, ListObject);
         }
 
         /// <summary>

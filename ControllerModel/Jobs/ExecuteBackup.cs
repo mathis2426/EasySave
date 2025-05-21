@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 using System;
 using System.IO;
 using System.Diagnostics;
+using ControllerModel.Logs;
 
-namespace ControllerModel
+namespace ControllerModel.Jobs
 {
     public class ExecuteBackup
     {
@@ -18,11 +19,11 @@ namespace ControllerModel
         /// <summary>
         /// Exécute la sauvegarde pour tous les jobs présents dans la liste.
         /// </summary>
-        /// <param name="jobList">Liste des jobs de sauvegarde à exécuter.</param>
-        public void ExecuteJobAll(List<JobObj> jobList)
+        /// <param name="JobList">Liste des jobs de sauvegarde à exécuter.</param>
+        public void ExecuteJobAll(List<JobObj> JobList)
         {
 
-            foreach (var job in jobList)
+            foreach (var job in JobList)
             {
                 ExecuteJob(job);
             }
@@ -48,7 +49,7 @@ namespace ControllerModel
             stopwatch.Start();
             if (!Directory.Exists(sourcePath)) { return 1; }
             if (!Directory.Exists(targetPath)) { return 1; }
-            int totalFiles = System.IO.Directory.GetFiles(sourcePath).Length;
+            int totalFiles = Directory.GetFiles(sourcePath).Length;
             int totalFilesLeft = totalFiles;
             long totalFileSize = new DirectoryInfo(job.SourcePath).GetFiles().Sum(f => f.Length);
 
@@ -89,20 +90,20 @@ namespace ControllerModel
         /// <param name="totalFilesLeft">Nombre de fichiers restant à traiter.</param>
         public void FullBackup(string name, string sourcePath, string targetPath, int totalFiles, long totalFileSize, int totalFilesLeft)
         {
-            foreach (string file in System.IO.Directory.GetFiles(targetPath))
+            foreach (string file in Directory.GetFiles(targetPath))
             {
                 File.Delete(file);
             }
-             foreach (var file in System.IO.Directory.GetFiles(sourcePath))
+             foreach (var file in Directory.GetFiles(sourcePath))
             {
                 
-                string fileName = System.IO.Path.GetFileName(file);
-                string targetFile = System.IO.Path.Combine(targetPath, fileName);
-                System.IO.File.Copy(file, targetFile, true);
+                string fileName = Path.GetFileName(file);
+                string targetFile = Path.Combine(targetPath, fileName);
+                File.Copy(file, targetFile, true);
 
                 totalFilesLeft--;
 
-                int progression = (int)(((double)(totalFiles - totalFilesLeft) / totalFiles) * 100);
+                int progression = (int)((double)(totalFiles - totalFilesLeft) / totalFiles * 100);
 
                 _state.SendParamToLog(
                     name,
@@ -141,7 +142,7 @@ namespace ControllerModel
                     File.Copy(sourceFilePath, destFilePath, true);
                 }
                 totalFilesLeft--;
-                int progression = (int)(((double)(totalFiles - totalFilesLeft) / totalFiles) * 100);
+                int progression = (int)((double)(totalFiles - totalFilesLeft) / totalFiles * 100);
                 _state.SendParamToLog(
                     name,
                     sourcePath,
