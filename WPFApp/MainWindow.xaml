@@ -7,11 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="AddJob" Content="Add Job" HorizontalAlignment="Left" Margin="591,127,0,0" VerticalAlignment="Top" Click="Button_Click" Height="33" Width="133"/>
-        <Button x:Name="DeleteJob" Content="Delete Job" HorizontalAlignment="Left" Margin="591,0,0,0" VerticalAlignment="Center" Click="Button_Click" Height="33" Width="133"/>
+        <Button x:Name="AddJob" Content="Add Job" HorizontalAlignment="Left" Margin="591,91,0,0" VerticalAlignment="Top" Click="Button_Click" Height="33" Width="133"/>
+        <Button x:Name="DeleteJob" Content="Delete Job" HorizontalAlignment="Left" Margin="591,169,0,0" VerticalAlignment="Top" Click="Button_Click" Height="33" Width="133"/>
         <Button x:Name="Exit" Content="Exit" HorizontalAlignment="Left" Margin="619,356,0,0" VerticalAlignment="Top" Height="32" Width="133" Click="buttonLeave_Click"/>
-        <Button x:Name="ManageJob" Content="Manage Job" HorizontalAlignment="Left" Margin="591,277,0,0" VerticalAlignment="Top" Click="Button_Click" Height="33" Width="133"/>
-        <ListView x:Name="TaskList" Margin="37,36,504,104" SelectionChanged="TaskList_SelectionChanged">
+        <Button x:Name="ManageJob" Content="Manage Job" HorizontalAlignment="Left" Margin="591,252,0,0" VerticalAlignment="Top" Click="Button_Click" Height="33" Width="133"/>
+        <ListView x:Name="TaskList" Margin="37,50,246,104" SelectionChanged="TaskList_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding Name}"/>
