@@ -11,6 +11,13 @@ namespace LibrairieJsonHelper
     {
         private readonly JsonHelperClassBasics _jsonHelperClassBasicsReadSingleObj = new();
 
+        /// <summary>
+        /// Lit un objet depuis un fichier JSON.
+        /// Si le fichier n'existe pas, crée un fichier avec une instance par défaut de <see cref="SaveConfig"/>.
+        /// </summary>
+        /// <typeparam name="T">Type de l'objet à lire.</typeparam>
+        /// <param name="PathToFileToRead">Chemin du fichier JSON à lire.</param>
+        /// <returns>Objet désérialisé de type <typeparamref name="T"/>.</returns>
         public T ReadSingleObj<T> (string PathToFileToRead)
         {
             if (!File.Exists(PathToFileToRead))

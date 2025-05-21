@@ -6,17 +6,26 @@ namespace ControllerModel
 {
     public class JobManager
     {
-        public List<JobObj> _jobList = new List<JobObj>();
-        private BackupJob _backupJob = new BackupJob();
-        private ExecuteBackup _executeBackup = new ExecuteBackup();
+        /// <summary>
+        /// Liste des jobs de sauvegarde actuellement chargés.
+        /// </summary>
+        public List<JobObj> jobList = new();
 
-        public JsonHelperFactory JsonHelperFactory = new JsonHelperFactory();
+        private readonly BackupJob _backupJob = new();
+        private readonly ExecuteBackup _executeBackup = new();
+
+        public JsonHelperFactory JsonHelperFactory = new();
         public JsonHelperClassJsonUpdate jsonHelperClassJsonUpdate = JsonHelperFactory.CreateJsonUpdate();
 
         public SaveConfig saveConfigObj;
         
-        public string _pathToJob = "";
-        public string _pathToConfig = "";
+        private readonly string _pathToJob = "";
+        private readonly string _pathToConfig = "";
+
+        /// <summary>
+        /// Initialise un nouveau gestionnaire de jobs,
+        /// charge les jobs existants depuis le fichier JSON.
+        /// </summary>
         public JobManager() 
         {
             string binPath = Path.GetDirectoryName(AppContext.BaseDirectory);
@@ -24,38 +33,66 @@ namespace ControllerModel
             this._pathToJob = Path.Combine(binPath, "job.json");
             this._pathToConfig = Path.Combine(binPath, "config.json");
             JsonHelperClassJsonReadMultipleObj jsonHelperClassJsonReadMultipleObj = new JsonHelperClassJsonReadMultipleObj();
-            _jobList = jsonHelperClassJsonReadMultipleObj.ReadMultipleObj<JobObj>(this._pathToJob);
+            jobList = jsonHelperClassJsonReadMultipleObj.ReadMultipleObj<JobObj>(this._pathToJob);
             
         }
-        public void JobCreation(string name, string sourcePath, string targetPath, jobType type)
+
+        /// <summary>
+        /// Crée un nouveau job avec les paramètres fournis, l'ajoute à la liste,
+        /// puis met à jour le fichier JSON des jobs.
+        /// </summary>
+        /// <param name="name">Nom du job.</param>
+        /// <param name="sourcePath">Chemin source pour la sauvegarde.</param>
+        /// <param name="targetPath">Chemin cible pour la sauvegarde.</param>
+        /// <param name="type">Type de job.</param>
+        public void JobCreation(string name, string sourcePath, string targetPath, JobType type)
         {
-            _jobList.Add(_backupJob.CreateJob(name, sourcePath, targetPath, type));
-            jsonHelperClassJsonUpdate.Update(this._pathToJob, _jobList);
+            jobList.Add(_backupJob.CreateJob(name, sourcePath, targetPath, type));
+            jsonHelperClassJsonUpdate.Update(this._pathToJob, jobList);
         }
+
+        /// <summary>
+        /// Supprime un job identifié par son index dans la liste,
+        /// met à jour la liste et le fichier JSON correspondant.
+        /// </summary>
+        /// <param name="jobNum">Index du job à supprimer.</param>
         public void JobDeletion(int jobNum)
         {
-            _backupJob.DeleteJob(_jobList[jobNum]);
-            _jobList.RemoveAt(jobNum);
-            jsonHelperClassJsonUpdate.Update(this._pathToJob, _jobList);
+            _backupJob.DeleteJob(jobList[jobNum]);
+            jobList.RemoveAt(jobNum);
+            jsonHelperClassJsonUpdate.Update(this._pathToJob, jobList);
             
 
         }
+
+        /// <summary>
+        /// Lance la sauvegarde d'un job spécifique ou de tous les jobs.
+        /// Si jobNum vaut 0, exécute tous les jobs.
+        /// </summary>
+        /// <param name="jobNum">Index du job à exécuter (1-based), ou 0 pour tous les jobs.</param>
+        /// <returns>Retourne 0 si la sauvegarde s'est bien déroulée, sinon 1.</returns>
         public int LaunchBackup(int jobNum)
         {
             if( jobNum == 0)
             {
-                _executeBackup.ExecuteJobAll(_jobList);
+                _executeBackup.ExecuteJobAll(jobList);
                 return 0;
             }
-            int jobexit = _executeBackup.ExecuteJob(_jobList[jobNum-1]);
+            int jobexit = _executeBackup.ExecuteJob(jobList[jobNum-1]);
             if(jobexit == 0) { return 0; }
             else { return 1; }
 
 
         }
+
+        /// <summary>
+        /// Lance la sauvegarde d'un job par son nom depuis la ligne de commande.
+        /// Affiche un message si le job n'est pas trouvé.
+        /// </summary>
+        /// <param name="job">Nom du job à exécuter.</param>
         public void LaunchBackupCommandLine(string job)
         {
-            int indexJob = _jobList.FindIndex(x => x._name == job);
+            int indexJob = jobList.FindIndex(x => x.Name == job);
             if (indexJob == -1)
             {
                 Console.WriteLine("Job not found");
@@ -63,7 +100,7 @@ namespace ControllerModel
             }
             else
             {
-                _executeBackup.ExecuteJob(_jobList[indexJob]);
+                _executeBackup.ExecuteJob(jobList[indexJob]);
             }
         }
     }

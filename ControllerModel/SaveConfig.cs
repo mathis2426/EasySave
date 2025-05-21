@@ -12,6 +12,13 @@ namespace ControllerModel
         public string _language { get; set; }
         public string _pathTologStatus { get; set; }
 
+
+        /// <summary>
+        /// Initialise une nouvelle instance de la classe <see cref="SaveConfig"/>.
+        /// </summary>
+        /// <param name="_pathTologDaily">Chemin du log journalier.</param>
+        /// <param name="_pathTologStatus">Chemin du log de statut.</param>
+        /// <param name="_language">Code de langue (culture).</param>
         public SaveConfig(string _pathTologDaily, string _pathTologStatus, string _language) 
         { 
             this._pathToLogDaily = _pathTologDaily;

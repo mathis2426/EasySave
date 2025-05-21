@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace ControllerModel
 {
-    public enum StateEnumeration
+    /// <summary>
+    /// Représente les différents états possibles d'une tâche (Job).
+    /// </summary>
+    public enum StateEnumeration : byte
     {
-        inactive,
-        active,
-        error,
-        in_progress,
-        end,
+        Inactive,
+        Active,
+        Error,
+        In_progress,
+        End,
     }
 }

@@ -17,6 +17,10 @@ namespace ControllerModel
         public JsonHelperClassJsonUpdate jsonHelperClassJsonUpdate = JsonHelperFactory.CreateJsonUpdate();
         public SaveConfig saveConfigObj;
         public string binPathGlobal;
+
+        /// <summary>
+        /// Initialise une nouvelle instance de la classe <see cref="LanguageManager"/> et configure la langue.
+        /// </summary>
         public LanguageManager()
         {
             string binPath = Path.GetDirectoryName(AppContext.BaseDirectory);
@@ -26,6 +30,11 @@ namespace ControllerModel
             saveConfigObj = SaveConfig;
             SetLanguage(SaveConfig._language);
         }
+
+        /// <summary>
+        /// Définit la langue de l'application et met à jour le fichier de configuration.
+        /// </summary>
+        /// <param name="cultureCode">Code de la culture (ex. : "en-US", "fr-FR").</param>
         public void SetLanguage(string cultureCode)
         {
 
@@ -34,10 +43,13 @@ namespace ControllerModel
             jsonHelperClassJsonUpdate.UpdateSingleObj<SaveConfig>(Path.Combine(binPathGlobal, "config.json"), SaveConfig);
 
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(cultureCode);
-
-
         }
 
+        /// <summary>
+        /// Récupère une chaîne localisée à partir des ressources.
+        /// </summary>
+        /// <param name="key">Clé de la ressource.</param>
+        /// <returns>Chaîne localisée correspondant à la clé.</returns>
         public string Get(string key)
         {
             return resManager.GetString(key);

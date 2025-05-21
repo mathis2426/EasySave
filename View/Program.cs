@@ -12,8 +12,8 @@ namespace program
 {
     public class Program
     {
-        public static LanguageManager languageManager = new LanguageManager();
-        public static JobManager jobManager = new JobManager();
+        private readonly static LanguageManager languageManager = new LanguageManager();
+        private readonly static JobManager jobManager = new JobManager();
         static void Main(string[] args)
         {
             // If specified args
@@ -135,7 +135,7 @@ namespace program
         }
         public static void CreateJob()
         {
-            if (jobManager._jobList.Count() == 5)
+            if (jobManager.jobList.Count() == 5)
             {
                 Console.WriteLine(languageManager.resManager.GetString("max_jobs"));
                 Console.WriteLine(languageManager.resManager.GetString("press_return"));
@@ -154,15 +154,15 @@ namespace program
                 string targetPath = Console.ReadLine();
                 Console.WriteLine(languageManager.resManager.GetString("select_type"));
                 string typeInput = Console.ReadLine();
-                jobType type = jobType.Full;
+                JobType type = JobType.Full;
                 if (typeInput == "1")
                 {
-                    type = jobType.Full;
+                    type = JobType.Full;
                     isValid = true;
                 }
                 else if (typeInput == "2")
                 {
-                    type = jobType.Differential;
+                    type = JobType.Differential;
                     isValid = true;
                 }
                 else
@@ -182,7 +182,7 @@ namespace program
         }
         public static void DeleteJob()
         {
-            if (jobManager._jobList.Count() == 0)
+            if (jobManager.jobList.Count() == 0)
             {
                 Console.WriteLine(languageManager.resManager.GetString("no_jobs"));
                 Console.WriteLine(languageManager.resManager.GetString("press_return"));
@@ -196,14 +196,14 @@ namespace program
                 // Display the list of jobs
                 Console.WriteLine(languageManager.resManager.GetString("list_jobs"));
                 int jobIndex = 0;
-                jobManager._jobList.ForEach(job => {
-                    Console.WriteLine($"{jobIndex}: {languageManager.resManager.GetString("job_name")}: {job._name} | {languageManager.resManager.GetString("job_source")}: {job._sourcePath} | {languageManager.resManager.GetString("job_target")}: {job._targetPath} | {languageManager.resManager.GetString("job_type")}: {job._type}");
+                jobManager.jobList.ForEach(job => {
+                    Console.WriteLine($"{jobIndex}: {languageManager.resManager.GetString("job_name")}: {job.Name} | {languageManager.resManager.GetString("job_source")}: {job.SourcePath} | {languageManager.resManager.GetString("job_target")}: {job.TargetPath} | {languageManager.resManager.GetString("job_type")}: {job.Type}");
                     jobIndex++;
                 }
                 );
                 Console.WriteLine(languageManager.resManager.GetString("enter_job_number_delete"));
                 int jobNum = int.Parse(Console.ReadLine());
-                if (jobNum < 0 || jobNum >= jobManager._jobList.Count())
+                if (jobNum < 0 || jobNum >= jobManager.jobList.Count())
                 {
                     Console.WriteLine(languageManager.resManager.GetString("invalid_job"));
                 }
@@ -225,19 +225,19 @@ namespace program
             Console.WriteLine(languageManager.resManager.GetString("list_jobs"));
             Console.WriteLine($"0: {languageManager.resManager.GetString("Execute_All_Job")}");
             int jobIndex = 0;
-            jobManager._jobList.ForEach(job =>
+            jobManager.jobList.ForEach(job =>
             {
                 jobIndex++;
-                Console.WriteLine($"{jobIndex}: {languageManager.resManager.GetString("job_name")}: {job._name} | {languageManager.resManager.GetString("job_source")}: {job._sourcePath} | {languageManager.resManager.GetString("job_target")}: {job._targetPath} | {languageManager.resManager.GetString("job_type")}: {job._type}");
+                Console.WriteLine($"{jobIndex}: {languageManager.resManager.GetString("job_name")}: {job.Name} | {languageManager.resManager.GetString("job_source")}: {job.SourcePath} | {languageManager.resManager.GetString("job_target")}: {job.TargetPath} | {languageManager.resManager.GetString("job_type")}: {job.Type}");
             }
             );
             Console.WriteLine(languageManager.resManager.GetString("enter_job_number_execute"));
             int jobNum = -1;
-            while (jobNum < 0 || jobNum > jobManager._jobList.Count())
+            while (jobNum < 0 || jobNum > jobManager.jobList.Count())
             {
 
                 string input = Console.ReadLine();
-                if (int.TryParse(input, out jobNum) && jobNum >= 0 && jobNum <= jobManager._jobList.Count())
+                if (int.TryParse(input, out jobNum) && jobNum >= 0 && jobNum <= jobManager.jobList.Count())
                 {
                     
                     int jobExit = jobManager.LaunchBackup(jobNum);

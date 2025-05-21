@@ -17,7 +17,8 @@ namespace ControllerModel
         public int FilesLeftToDo { get; set; }
         public float Progression { get; set; }
         public string DesPath { get; set; }
-    
+
+        // Constructeur principal
         public StateObject(string Name, string FileSource, string FileTarget, StateEnumeration State, int TotalFileToCopy, double TotalFileSize, int FilesLeftToDo, float Progression, string DesPath)
         {
             this.Name = Name;
@@ -31,6 +32,10 @@ namespace ControllerModel
             this.DesPath = DesPath;
         }
 
+        /// <summary>
+        /// Renvoie cette instance (utile si tu souhaites forcer une interface commune ou une méthode fluide)
+        /// </summary>
+        /// <returns>Cette instance de StateObject</returns>
         public StateObject GetLog()
         {
             return this;

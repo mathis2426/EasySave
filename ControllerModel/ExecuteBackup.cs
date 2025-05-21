@@ -12,9 +12,13 @@ namespace ControllerModel
     public class ExecuteBackup
     {
         // Properties
-        public Daily logDaily = new Daily();
-        public State state = new State();
+        private readonly Daily _logDaily = new();
+        private readonly State _state = new();
 
+        /// <summary>
+        /// Exécute la sauvegarde pour tous les jobs présents dans la liste.
+        /// </summary>
+        /// <param name="jobList">Liste des jobs de sauvegarde à exécuter.</param>
         public void ExecuteJobAll(List<JobObj> jobList)
         {
 
@@ -24,35 +28,43 @@ namespace ControllerModel
             }
 
         }
+
+        /// <summary>
+        /// Exécute une sauvegarde pour un job donné.
+        /// Vérifie l'existence des chemins source et cible, mesure le temps d'exécution,
+        /// et loggue les informations liées au job.
+        /// </summary>
+        /// <param name="job">Le job de sauvegarde à exécuter.</param>
+        /// <returns>0 si la sauvegarde a réussi, 1 sinon (ex : chemin non valide).</returns>
         public int ExecuteJob(JobObj job)
         {
             // Simulate file transfer
-            string sourcePath = job._sourcePath;
-            string targetPath = job._targetPath;
-            string name = job._name;
+            string sourcePath = job.SourcePath;
+            string targetPath = job.TargetPath;
+            string name = job.Name;
 
             // Timer
-            Stopwatch stopwatch = new Stopwatch();
+            Stopwatch stopwatch = new();
             stopwatch.Start();
             if (!Directory.Exists(sourcePath)) { return 1; }
             if (!Directory.Exists(targetPath)) { return 1; }
             int totalFiles = System.IO.Directory.GetFiles(sourcePath).Length;
             int totalFilesLeft = totalFiles;
-            long totalFileSize = new DirectoryInfo(job._sourcePath).GetFiles().Sum(f => f.Length);
+            long totalFileSize = new DirectoryInfo(job.SourcePath).GetFiles().Sum(f => f.Length);
 
             // transfer files
-            switch (job._type)
+            switch (job.Type)
             {
-                case jobType.Full:
+                case JobType.Full:
                     FullBackup(name, sourcePath, targetPath, totalFiles, totalFileSize, totalFilesLeft);
                     break;
-                case jobType.Differential:
+                case JobType.Differential:
                     DifferentialBackup(name, sourcePath, targetPath, totalFiles, totalFileSize, totalFilesLeft);
                     break;
             }
             stopwatch.Stop();
 
-            logDaily.sendParamToLog(
+            _logDaily.sendParamToLog(
                 name,
                 sourcePath,
                 targetPath,
@@ -63,6 +75,18 @@ namespace ControllerModel
             return 0;
         }
         // Backup methods
+
+        /// <summary>
+        /// Effectue une sauvegarde complète : supprime tous les fichiers dans la cible
+        /// et copie tous les fichiers du source vers la cible.
+        /// Met à jour la progression dans l'état.
+        /// </summary>
+        /// <param name="name">Nom du job.</param>
+        /// <param name="sourcePath">Chemin source des fichiers à sauvegarder.</param>
+        /// <param name="targetPath">Chemin cible pour la sauvegarde.</param>
+        /// <param name="totalFiles">Nombre total de fichiers à sauvegarder.</param>
+        /// <param name="totalFileSize">Taille totale des fichiers à sauvegarder en octets.</param>
+        /// <param name="totalFilesLeft">Nombre de fichiers restant à traiter.</param>
         public void FullBackup(string name, string sourcePath, string targetPath, int totalFiles, long totalFileSize, int totalFilesLeft)
         {
             foreach (string file in System.IO.Directory.GetFiles(targetPath))
@@ -80,11 +104,11 @@ namespace ControllerModel
 
                 int progression = (int)(((double)(totalFiles - totalFilesLeft) / totalFiles) * 100);
 
-                state.SendParamToLog(
+                _state.SendParamToLog(
                     name,
                     sourcePath,
                     targetPath,
-                    StateEnumeration.in_progress,
+                    StateEnumeration.In_progress,
                     totalFiles,
                     totalFileSize,
                     totalFilesLeft,
@@ -93,6 +117,17 @@ namespace ControllerModel
             }
 
         }
+
+        /// <summary>
+        /// Effectue une sauvegarde différentielle : copie uniquement les fichiers modifiés ou nouveaux.
+        /// Met à jour la progression dans l'état.
+        /// </summary>
+        /// <param name="name">Nom du job.</param>
+        /// <param name="sourcePath">Chemin source des fichiers à sauvegarder.</param>
+        /// <param name="targetPath">Chemin cible pour la sauvegarde.</param>
+        /// <param name="totalFiles">Nombre total de fichiers à analyser.</param>
+        /// <param name="totalFileSize">Taille totale des fichiers à analyser en octets.</param>
+        /// <param name="totalFilesLeft">Nombre de fichiers restant à traiter.</param>
         public void DifferentialBackup(string name, string sourcePath, string targetPath, int totalFiles, long totalFileSize, int totalFilesLeft)
         {
             foreach (string sourceFilePath in Directory.GetFiles(sourcePath))
@@ -107,11 +142,11 @@ namespace ControllerModel
                 }
                 totalFilesLeft--;
                 int progression = (int)(((double)(totalFiles - totalFilesLeft) / totalFiles) * 100);
-                state.SendParamToLog(
+                _state.SendParamToLog(
                     name,
                     sourcePath,
                     targetPath,
-                    StateEnumeration.in_progress,
+                    StateEnumeration.In_progress,
                     totalFiles,
                     totalFileSize,
                     totalFilesLeft,
