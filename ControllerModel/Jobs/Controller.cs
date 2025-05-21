@@ -103,5 +103,9 @@ namespace ControllerModel.Jobs
                 _executeBackup.ExecuteJob(JobList[indexJob]);
             }
         }
+        public void SetBlockingProcess(string process)
+        {
+            _executeBackup.SetBlockingProcess(process);
+        }
     }
 }

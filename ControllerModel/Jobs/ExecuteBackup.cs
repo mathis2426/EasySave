@@ -7,6 +7,7 @@ using System;
 using System.IO;
 using System.Diagnostics;
 using ControllerModel.Logs2;
+using ControllerModel.JsonHelper;
 
 namespace ControllerModel.Jobs
 {
@@ -16,15 +17,37 @@ namespace ControllerModel.Jobs
         private readonly Daily _logDaily = new();
         private readonly State _state = new();
 
+        public JsonHelperClassJsonUpdate JsonHelperClassJsonUpdate = JsonHelperFactory.CreateJsonUpdate();
+        public JsonHelperClassJsonReadSingleObj jsonHelperClassJsonReadSingleObj = JsonHelperFactory.CreateJsonReadSingleObj();
+        private SaveConfig _saveConfig;
+
+        public ExecuteBackup()
+        {
+            string binPath = Path.GetDirectoryName(AppContext.BaseDirectory);
+            SaveConfig SaveConfig = jsonHelperClassJsonReadSingleObj.ReadSingleObj<SaveConfig>(Path.Combine(binPath, "config.json"));
+            this._saveConfig = SaveConfig;
+        }
         /// <summary>
         /// Exécute la sauvegarde pour tous les jobs présents dans la liste.
         /// </summary>
         /// <param name="JobList">Liste des jobs de sauvegarde à exécuter.</param>
         public void ExecuteJobAll(List<JobObj> JobList)
         {
-
+            
             foreach (var job in JobList)
             {
+                if (_saveConfig.BlockingProcess != null && _saveConfig.BlockingProcess != "")
+                {
+                    Process[] processes = Process.GetProcessesByName(_saveConfig.BlockingProcess);
+                    if (processes.Length > 0)
+                    {
+                        Console.WriteLine($"Fermer le process {_saveConfig.BlockingProcess}");
+                        while(processes.Length > 0)
+                        {
+                            processes = Process.GetProcessesByName(_saveConfig.BlockingProcess);
+                        }
+                    }
+                }
                 ExecuteJob(job);
             }
 
@@ -39,6 +62,7 @@ namespace ControllerModel.Jobs
         /// <returns>0 si la sauvegarde a réussi, 1 sinon (ex : chemin non valide).</returns>
         public int ExecuteJob(JobObj job)
         {
+            Console.WriteLine("Execute job");
             // Simulate file transfer
             string sourcePath = job.SourcePath;
             string targetPath = job.TargetPath;
@@ -154,6 +178,12 @@ namespace ControllerModel.Jobs
                     progression
                 );
             }
+        }
+        public void SetBlockingProcess(string process)
+        {
+            _saveConfig.BlockingProcess = process;
+            string binPath = Path.GetDirectoryName(AppContext.BaseDirectory);
+            JsonHelperClassJsonUpdate.UpdateSingleObj(Path.Combine(binPath, "config.json"), _saveConfig);
         }
     }
 }

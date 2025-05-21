@@ -127,6 +127,12 @@ namespace program
                         Console.WriteLine(languageManager.ResManager.GetString("exiting"));
                         Environment.Exit(0);
                         break;
+                    case "6":
+                        Console.Clear();
+                        string process = Console.ReadLine();
+                        jobManager.SetBlockingProcess(process);
+
+                        break;
                     default:
                         Console.Clear();
                         Console.WriteLine(languageManager.ResManager.GetString("invalid_option"));
