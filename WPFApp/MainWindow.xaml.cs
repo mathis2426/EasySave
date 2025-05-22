@@ -26,10 +26,23 @@ namespace WPFApp
 
         }
 
-        private void buttonLeave_Click(object sender, RoutedEventArgs e)
+        private void ButtonLeave_Click(object sender, RoutedEventArgs e)
         {
 
         }
+        private void ButtonAddJob_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void ButtonDeleteJob_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void ButtonManageJob_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {

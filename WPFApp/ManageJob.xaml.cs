@@ -20,9 +20,13 @@ namespace WPFApp
     /// </summary>
     public partial class ManageJob : Page
     {
-        public ManageJob()
+        private void ButtonLeave_ClickManageJob(object sender, RoutedEventArgs e)
         {
-            InitializeComponent();
+
+        }
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }
