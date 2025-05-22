@@ -88,7 +88,6 @@ namespace program
             bool isValidInput = false;
             while (isValidInput == false)
             {
-                Console.WriteLine("CACA");
                 // Main Menu
                 Console.WriteLine(languageManager.ResManager.GetString("main_menu"));
                 Console.WriteLine(languageManager.ResManager.GetString("option1"));
