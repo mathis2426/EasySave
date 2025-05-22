@@ -11,13 +11,13 @@
     <Grid Background="White">
         <TextBox x:Name="JobName" HorizontalAlignment="Left" Margin="37,74,0,0" TextWrapping="Wrap" Text="Enter the name of the job" VerticalAlignment="Top" Width="396" Height="35"/>
         <TextBox x:Name="TypeBackup" HorizontalAlignment="Left" Margin="37,145,0,0" TextWrapping="Wrap" Text="Type of backup" VerticalAlignment="Top" Width="396" Height="25"/>
-        <TextBox x:Name="TargetPath" HorizontalAlignment="Left" Margin="37,199,0,0" TextWrapping="Wrap" Text="Select a source path" VerticalAlignment="Top" Width="396" Height="26"/>
-        <TextBox x:Name="SourcePath" HorizontalAlignment="Left" Margin="37,264,0,0" TextWrapping="Wrap" Text="Type of backup" VerticalAlignment="Top" Width="396" Height="25"/>
+        <TextBox x:Name="SourcePath" HorizontalAlignment="Left" Margin="37,199,0,0" TextWrapping="Wrap" Text="Select a source path" VerticalAlignment="Top" Width="396" Height="26"/>
+        <TextBox x:Name="TargetPath" HorizontalAlignment="Left" Margin="37,264,0,0" TextWrapping="Wrap" Text="Select a target path" VerticalAlignment="Top" Width="396" Height="25"/>
         <TextBox x:Name="outputBox" HorizontalAlignment="Left" Margin="37,345,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="517" Height="53"/>
         <ComboBox HorizontalAlignment="Left" Margin="632,20,0,0" VerticalAlignment="Top" Width="120"/>
         <TextBox HorizontalAlignment="Left" Margin="555,20,0,0" TextWrapping="Wrap" Text="Language" VerticalAlignment="Top" Width="72" TextChanged="TextBox_TextChanged" Height="20"/>
         <Button x:Name="ExitJobManagement" Content="Exit" HorizontalAlignment="Left" Margin="619,356,0,0" VerticalAlignment="Top" Height="32" Width="133" Click="ButtonLeave_ClickJobCreation"/>
-        <Button Content="Select path" HorizontalAlignment="Left" Margin="459,202,0,0" VerticalAlignment="Top"/>
-        <Button Content="Select path" HorizontalAlignment="Left" Margin="461,267,0,0" VerticalAlignment="Top"/>
+        <Button Content="Select source path" HorizontalAlignment="Left" Margin="459,202,0,0" VerticalAlignment="Top" Click="ButtonSourcePath_ClickJobCreation"/>
+        <Button Content="Select target path" HorizontalAlignment="Left" Margin="461,267,0,0" VerticalAlignment="Top" Click="ButtonTargetPath_ClickJobCreation" />
     </Grid>
 </Page>

@@ -22,28 +22,7 @@
         <StackPanel Grid.Row="1" Orientation="Horizontal">
             <!-- Boutons, ListView, etc. -->
         </StackPanel>
-    
-
-    <Button x:Name="AddJob" Content="Add Job" HorizontalAlignment="Left" Margin="591,91,0,0" VerticalAlignment="Top" Click="ButtonAddJob_Click" Height="33" Width="133"/>
-        <Button x:Name="DeleteJob" Content="Delete Job" HorizontalAlignment="Left" Margin="591,169,0,0" VerticalAlignment="Top" Click="ButtonDeleteJob_Click" Height="33" Width="133"/>
-        <Button x:Name="Exit" Content="Exit" HorizontalAlignment="Left" Margin="619,356,0,0" VerticalAlignment="Top" Height="32" Width="133" Click="ButtonLeave_Click"/>
-        <Button x:Name="ManageJob" Content="Manage Job" HorizontalAlignment="Left" Margin="591,252,0,0" VerticalAlignment="Top" Click="ButtonManageJob_Click" Height="33" Width="133"/>
-        <ListView x:Name="TaskList" Margin="37,50,246,104" SelectionChanged="TaskList_SelectionChanged">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding Name}"/>
-                    <GridViewColumn Header="Number" Width="120" DisplayMemberBinding="{Binding Number}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <TextBox x:Name="outputBox" HorizontalAlignment="Left" Margin="37,345,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="517" Height="53"/>
-        <ComboBox HorizontalAlignment="Left" Margin="632,20,0,0" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Margin="555,20,0,0" TextWrapping="Wrap" Text="Language" VerticalAlignment="Top" Width="72" TextChanged="TextBox_TextChanged" Height="20"/>
-        <Button Content="Global parameter" HorizontalAlignment="Left" Margin="734,72,0,0" VerticalAlignment="Top" Height="48" Width="48"/>
-        
-
-
-
+  
     </Grid>
   
 </Window>

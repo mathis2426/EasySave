@@ -19,36 +19,7 @@ namespace WPFApp
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void TaskList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void ButtonLeave_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void ButtonAddJob_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void ButtonDeleteJob_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void ButtonManageJob_Click(object sender, RoutedEventArgs e)
-        {
-
-            MainFrame.Navigate(new ManageJob());
-
-        }
-
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
+            MainFrame.Navigate(new HomePage(MainFrame));
         }
     }
 }
