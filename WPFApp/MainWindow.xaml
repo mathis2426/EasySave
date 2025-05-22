@@ -22,6 +22,7 @@
         <TextBox x:Name="outputBox" HorizontalAlignment="Left" Margin="37,345,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="517" Height="53"/>
         <ComboBox HorizontalAlignment="Left" Margin="632,20,0,0" VerticalAlignment="Top" Width="120"/>
         <TextBox HorizontalAlignment="Left" Margin="555,20,0,0" TextWrapping="Wrap" Text="Language" VerticalAlignment="Top" Width="72" TextChanged="TextBox_TextChanged" Height="20"/>
+        <Button Content="Global parameter" HorizontalAlignment="Left" Margin="734,72,0,0" VerticalAlignment="Top" Height="48" Width="48"/>
 
 
     </Grid>
