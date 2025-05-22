@@ -16,7 +16,7 @@
         <TextBox x:Name="outputBox" HorizontalAlignment="Left" Margin="37,345,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="517" Height="53"/>
         <ComboBox HorizontalAlignment="Left" Margin="632,20,0,0" VerticalAlignment="Top" Width="120"/>
         <TextBox HorizontalAlignment="Left" Margin="555,20,0,0" TextWrapping="Wrap" Text="Language" VerticalAlignment="Top" Width="72" TextChanged="TextBox_TextChanged" Height="20"/>
-        <Button x:Name="Exit" Content="Exit" HorizontalAlignment="Left" Margin="619,356,0,0" VerticalAlignment="Top" Height="32" Width="133" Click="buttonLeave_Click"/>
+        <Button x:Name="ExitJobManagement" Content="Exit" HorizontalAlignment="Left" Margin="619,356,0,0" VerticalAlignment="Top" Height="32" Width="133" Click="ButtonLeave_ClickJobCreation"/>
         <Button Content="Select path" HorizontalAlignment="Left" Margin="459,202,0,0" VerticalAlignment="Top"/>
         <Button Content="Select path" HorizontalAlignment="Left" Margin="461,267,0,0" VerticalAlignment="Top"/>
     </Grid>

@@ -24,5 +24,13 @@ namespace WPFApp
         {
             InitializeComponent();
         }
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+        private void ButtonLeave_ClickJobCreation(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
