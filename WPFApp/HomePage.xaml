@@ -23,7 +23,7 @@
             </ListView.View>
         </ListView>
         <TextBox x:Name="outputBox" HorizontalAlignment="Left" Margin="37,345,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="517" Height="53"/>
-        <ComboBox HorizontalAlignment="Left" Margin="598,20,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="LanguageComboBox" HorizontalAlignment="Left" Margin="598,20,0,0" VerticalAlignment="Top" Width="120"/>
         <TextBox HorizontalAlignment="Left" Margin="511,20,0,0" TextWrapping="Wrap" Text="Language" VerticalAlignment="Top" Width="72" TextChanged="TextBox_TextChanged" Height="20"/>
         <Button Margin="0,17,19,0" HorizontalAlignment="Right" VerticalAlignment="Top" Click="ButtonSettings_Click">
             <fa:ImageAwesome Icon="Cog" Width="27" Height="24"/>

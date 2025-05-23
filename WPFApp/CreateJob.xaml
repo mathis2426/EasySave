@@ -9,16 +9,36 @@
       Title="CreateJob">
 
     <Grid Background="White">
-        <TextBox x:Name="JobName" HorizontalAlignment="Left" Margin="37,74,0,0" TextWrapping="Wrap" Text="Enter the name of the job" VerticalAlignment="Top" Width="396" Height="35"/>
-        <TextBox x:Name="TypeBackup" HorizontalAlignment="Left" Margin="37,145,0,0" TextWrapping="Wrap" Text="Type of backup" VerticalAlignment="Top" Width="396" Height="25"/>
-        <TextBox x:Name="SourcePath" HorizontalAlignment="Left" Margin="37,199,0,0" TextWrapping="Wrap" Text="Select a source path" VerticalAlignment="Top" Width="396" Height="26"/>
-        <TextBox x:Name="TargetPath" HorizontalAlignment="Left" Margin="37,264,0,0" TextWrapping="Wrap" Text="Select a target path" VerticalAlignment="Top" Width="396" Height="25"/>
-        <TextBox x:Name="outputBox" HorizontalAlignment="Left" Margin="37,345,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="517" Height="53"/>
-        <ComboBox HorizontalAlignment="Left" Margin="632,20,0,0" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Margin="555,20,0,0" TextWrapping="Wrap" Text="Language" VerticalAlignment="Top" Width="72" TextChanged="TextBox_TextChanged" Height="20"/>
-        <Button x:Name="ExitCreateJob" Content="Exit" HorizontalAlignment="Left" Margin="619,356,0,0" VerticalAlignment="Top" Height="32" Width="133" Click="ButtonLeave_ClickJobCreation"/>
-        <Button x:Name="ValidateNewJob" Content="Validate" HorizontalAlignment="Left" Margin="619,298,0,0" VerticalAlignment="Top" Height="32" Width="133" Click="ButtonValidate_ClickJobCreation"/>
-        <Button Content="Select source path" HorizontalAlignment="Left" Margin="459,202,0,0" VerticalAlignment="Top" Click="ButtonSourcePath_ClickJobCreation"/>
-        <Button Content="Select target path" HorizontalAlignment="Left" Margin="461,267,0,0" VerticalAlignment="Top" Click="ButtonTargetPath_ClickJobCreation" />
+        <StackPanel Orientation="Vertical" Margin="20">
+            <Label Content="Enter the name of the job" HorizontalAlignment="Left" Margin="0,15,0,0" VerticalAlignment="Top" Width="165"/>
+            <TextBox x:Name="JobName" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="396" Height="35"/>
+           
+            <Label Content="Type of backup" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top" Width="165"/>
+            <ComboBox x:Name="TypeComboBox" HorizontalAlignment="Left" Width="396" RenderTransformOrigin="0.51,0.602"/>
+            
+            <Label Content="Select a source path" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top" Width="165"/>
+            <TextBox x:Name="SourcePath" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="396" Height="25"/>
+            
+            <Label Content="Select a target path" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top" Width="165"/>
+            <TextBox x:Name="TargetPath" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="396" Height="25"/>
+            
+            <Label Content="Console" HorizontalAlignment="Left" Margin="0,40,0,0" VerticalAlignment="Top" Width="165"/>
+            <TextBox x:Name="ConsoleBox" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="517" Height="50"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Margin="437,209,252,141" RenderTransformOrigin="0.496,0.48">
+            <Button Name="ButtonSourcePath" Tag="SourcePath" Content="Browse" HorizontalAlignment="Left" Margin="0,0,0,45" Click="ButtonPath_ClickJobCreation" Width="110" Height="25"/>
+            <Button Name="ButtonTargetPath" Tag="TargetPath" Content="Browse" HorizontalAlignment="Left" Click="ButtonPath_ClickJobCreation" Width="110" Height="25"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="581,10,20,388">
+            <Label Content="Language" Margin="0,5,0,0" Width="72" Height="25"/>
+            <ComboBox x:Name="LanguageComboBox" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.51,0.602"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Margin="647,304,20,37">
+            <Button x:Name="ValidateNewJob" Content="Validate" HorizontalAlignment="Left" Margin="0,0,0,45" VerticalAlignment="Top" Height="32" Width="133" Click="ButtonValidate_ClickJobCreation"/>
+            <Button x:Name="ExitCreateJob" Content="Exit" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32" Width="133" Click="ButtonLeave_ClickJobCreation"/>
+        </StackPanel>
     </Grid>
 </Page>

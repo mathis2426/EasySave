@@ -10,6 +10,12 @@ using ControllerModel.JsonHelper;
 
 namespace ControllerModel.LanguagesHelper
 {
+    public enum SupportedLanguage
+    {
+        English,
+        Français,
+    }
+
     public class LanguageManager
     {
         public ResourceManager ResManager = new ResourceManager("ControllerModel.Resources.Lang", Assembly.GetExecutingAssembly());
