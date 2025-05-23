@@ -24,12 +24,9 @@ namespace WPFApp
         public HomePage(Frame mainFrame)
         {
             InitializeComponent();
+            HomePageViewModel homePageViewModel = new HomePageViewModel();
+            DataContext = homePageViewModel;
             _mainFrame = mainFrame;
-        }
-
-        private void TaskList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
 
         private void ButtonLeave_Click(object sender, RoutedEventArgs e)
@@ -60,6 +57,11 @@ namespace WPFApp
 
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void outputBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
