@@ -18,46 +18,18 @@ namespace WPFApp
     /// <summary>
     /// Logique d'interaction pour Page1.xaml
     /// </summary>
-    public partial class HomePage : Page
+    public partial class Settings : Page
     {
         private Frame _mainFrame;
-        public HomePage(Frame mainFrame)
+        public Settings(Frame mainFrame)
         {
             InitializeComponent();
             _mainFrame = mainFrame;
         }
-
         private void TaskList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
-
-        private void ButtonLeave_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void ButtonCreateJob_Click(object sender, RoutedEventArgs e)
-        {
-            _mainFrame.Navigate(new CreateJob(_mainFrame));
-        }
-        private void ButtonDeleteJob_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void ButtonManageJob_Click(object sender, RoutedEventArgs e)
-        {
-
-            _mainFrame.Navigate(new ManageJob());
-
-        }
-
-        private void ButtonSettings_Click(object sender, RoutedEventArgs e)
-        {
-
-            _mainFrame.Navigate(new Settings(_mainFrame));
-
-        }
-
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
