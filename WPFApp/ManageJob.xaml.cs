@@ -27,7 +27,7 @@ namespace WPFApp
         }
         private void ButtonLeave_ClickManageJob(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.GoBack();
         }
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
