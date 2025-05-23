@@ -11,6 +11,7 @@ namespace ControllerModel.JsonHelper
         public string PathToLogDaily { get; set; }
         public string Language { get; set; }
         public string PathTologStatus { get; set; }
+        public string[] ExtensionFileCrypt { get; set; }
 
 
         /// <summary>
@@ -19,11 +20,13 @@ namespace ControllerModel.JsonHelper
         /// <param name="PathTologDaily">Chemin du log journalier.</param>
         /// <param name="PathTologStatus">Chemin du log de statut.</param>
         /// <param name="Language">Code de langue (culture).</param>
-        public SaveConfig(string PathTologDaily, string PathTologStatus, string Language) 
+        /// <param name="ExtensionFileCrypt">Extension des fichiers à crypter.</param>
+        public SaveConfig(string PathTologDaily, string PathTologStatus, string Language, string[] ExtensionFileCrypt) 
         { 
             this.PathToLogDaily = PathTologDaily;
             this.PathTologStatus = PathTologStatus;
             this.Language = Language;
+            this.ExtensionFileCrypt = ExtensionFileCrypt;
         }
 
     }

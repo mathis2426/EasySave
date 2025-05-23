@@ -24,16 +24,13 @@ namespace WPFApp
         public Settings(Frame mainFrame)
         {
             InitializeComponent();
-            _mainFrame = mainFrame;
-        }
-        private void TaskList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
+            SettingsViewModel settingsViewModel = new SettingsViewModel();
+            DataContext = settingsViewModel;
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void ExitCreateJob_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.GoBack();
         }
     }
 }
