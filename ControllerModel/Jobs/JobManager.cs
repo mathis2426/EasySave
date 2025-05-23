@@ -108,5 +108,10 @@ namespace ControllerModel.Jobs
         {
             ExtensionFileCryptoSoft.SetExtensionFileCryptoSoft(extensionFile);
         }
+
+        public string[] getListExtensionFilesCryptoSoft()
+        {
+            return ExtensionFileCryptoSoft.getListExtensionFilesCryptoSoft();
+        }
     }
 }

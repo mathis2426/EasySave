@@ -14,7 +14,25 @@ namespace WPFApp
         private string _outputText;
         
         public ObservableCollection<ExtensionItem> Extensions { get; } = new ObservableCollection<ExtensionItem>();
-        
+
+        public SettingsViewModel()
+        {
+            AddExtensionCommand = new CommandHandler(
+                execute: AddExtension,
+                canExecute: () => !string.IsNullOrWhiteSpace(NewExtensionName)
+            );
+
+            DeleteExtensionCommand = new CommandHandler(
+                execute: DeleteExtension,
+                canExecute: () => SelectedExtension != null
+            );
+
+            var existingExtensions = _jobManager.getListExtensionFilesCryptoSoft();
+            foreach (var ext in existingExtensions)
+            {
+                Extensions.Add(new ExtensionItem { Name = ext });
+            }
+        }
         public string OutputText
         {
             get => _outputText;
@@ -55,19 +73,6 @@ namespace WPFApp
             }
         }
 
-        public SettingsViewModel()
-        {
-            AddExtensionCommand = new CommandHandler(
-                execute: AddExtension,
-                canExecute: () => !string.IsNullOrWhiteSpace(NewExtensionName)
-            );
-
-            DeleteExtensionCommand = new CommandHandler(
-                execute: DeleteExtension,
-                canExecute: () => SelectedExtension != null
-            );
-        }
-
         public ICommand AddExtensionCommand { get; }
         private void AddExtension()
         {
@@ -81,15 +86,24 @@ namespace WPFApp
         public ICommand DeleteExtensionCommand { get; }
         private void DeleteExtension()
         {
-            if (SelectedExtension == null)
-                return;
-
-            Extensions.Remove(SelectedExtension);
-            string[] extensionArray = Extensions.Select(e => e.Name).ToArray();
-            _jobManager.UpdateExtensionFileCryptoSoft(extensionArray);
-            OutputText = $"Extension '{SelectedExtension.Name}' supprimée.";
+            try
+            {
+                if (SelectedExtension == null)
+                {
+                    OutputText = "Aucune extension sélectionnée.";
+                    return;
+                }
+                string outputMessage = SelectedExtension.Name;
+                Extensions.Remove(SelectedExtension);
+                string[] extensionArray = Extensions.Select(e => e.Name).ToArray();
+                _jobManager.UpdateExtensionFileCryptoSoft(extensionArray);
+                OutputText = $"Extension '{outputMessage}' supprimée.";
+            }
+            catch (Exception ex)
+            {
+                OutputText = $"Erreur lors de la suppression : {ex.Message}";
+            }
         }
-
     }
 
     public class ExtensionItem

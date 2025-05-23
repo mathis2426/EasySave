@@ -28,14 +28,9 @@ namespace WPFApp
             DataContext = settingsViewModel;
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void ExitCreateJob_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
-        {
-
+            NavigationService.GoBack();
         }
     }
 }

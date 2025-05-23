@@ -27,5 +27,12 @@ namespace ControllerModel
 
             //Thread.CurrentThread.CurrentUICulture = new CultureInfo(ExtensionFileCryptoSoft);
         }
+
+        public string[] getListExtensionFilesCryptoSoft()
+        {
+            binPathGlobal = Path.GetDirectoryName(AppContext.BaseDirectory);
+            SaveConfig SaveConfig = jsonHelperClassJsonReadSingleObj.ReadSingleObj<SaveConfig>(Path.Combine(binPathGlobal, "config.json"));
+            return SaveConfig.ExtensionFileCrypt;
+        }
     }
 }
