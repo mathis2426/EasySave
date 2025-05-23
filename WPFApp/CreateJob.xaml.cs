@@ -20,9 +20,11 @@ namespace WPFApp
     /// </summary>
     public partial class CreateJob : Page
     {
-        public CreateJob()
+        
+        public CreateJob(Frame mainFrame)
         {
             InitializeComponent();
+           
         }
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -30,6 +32,16 @@ namespace WPFApp
         }
         private void ButtonLeave_ClickJobCreation(object sender, RoutedEventArgs e)
         {
+
+        }
+        
+        private void ButtonSourcePath_ClickJobCreation(object source, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonTargetPath_ClickJobCreation(object target, RoutedEventArgs e) 
+        { 
 
         }
     }
