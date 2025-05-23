@@ -13,6 +13,21 @@ namespace WPFApp
 
         public ObservableCollection<JobObj> JobsList { get; } = new ObservableCollection<JobObj>();
 
+        public HomePageViewModel()
+        {
+            // Charger la liste initiale des jobs depuis JobManager
+            foreach (var job in _jobManager.JobList)
+            {
+                JobsList.Add(job);
+            }
+
+            // Initialiser la commande de suppression de job
+            DeleteJobCommand = new CommandHandler(
+                execute: DeleteJob,
+                canExecute: () => SelectedJob != null
+            );
+        }
+
         public JobObj SelectedJob
         {
             get => _selectedJob;
@@ -22,8 +37,7 @@ namespace WPFApp
                 {
                     _selectedJob = value;
                     OnPropertyChanged(nameof(SelectedJob));
-                    // On actualise la commande si besoin
-                    // CommandManager.InvalidateRequerySuggested();
+                    DeleteJobCommand.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -41,27 +55,7 @@ namespace WPFApp
             }
         }
 
-        public ICommand DeleteJobCommand { get; }
-
-        public HomePageViewModel()
-        {
-            // Charger la liste initiale des jobs depuis JobManager
-            List<JobObj> jobsList = _jobManager.JobList;
-            
-            foreach (var job in jobsList)
-            {
-                OutputText = $"Nom de jobs : {job.Name}";
-                JobsList.Add(job);
-            }
-
-            //DeleteJobCommand = new CommandHandler(DeleteJob, CanDeleteJob);
-        }
-
-        private bool CanDeleteJob()
-        {
-            return SelectedJob != null;
-        }
-
+        public CommandHandler DeleteJobCommand { get; }
         private void DeleteJob()
         {
             if (SelectedJob == null)
@@ -71,9 +65,11 @@ namespace WPFApp
             if (index >= 0)
             {
                 _jobManager.JobDeletion(index);
-                JobsList.Remove(SelectedJob);
+                OutputText = $"Job supprimé : {SelectedJob.Name}";
+                JobsList.RemoveAt(index);
                 SelectedJob = null;
             }
         }
+        public CommandHandler DeleteExtensionCommand { get; } 
     }
 }
