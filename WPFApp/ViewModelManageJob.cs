@@ -126,8 +126,8 @@ namespace WPFApp
             {
                 return (false);
             }
-       
         }
+
         private void OnPropertyChanged([CallerMemberName] string? propertyName = null) // appelé quand une propriété change
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
