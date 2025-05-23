@@ -8,6 +8,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControllerModel", "ControllerModel\ControllerModel.csproj", "{CC0CBCCF-0AD6-4359-9C48-7C7CE097844F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFApp", "WPFApp\WPFApp.csproj", "{BB3215A6-7882-4489-9693-7BAC71B2358A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CC0CBCCF-0AD6-4359-9C48-7C7CE097844F} = {CC0CBCCF-0AD6-4359-9C48-7C7CE097844F}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
