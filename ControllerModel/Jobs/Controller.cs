@@ -107,5 +107,9 @@ namespace ControllerModel.Jobs
         {
             _executeBackup.SetBlockingProcess(process);
         }
+        public void SetBlockingApp(string app)
+        {
+            _executeBackup.SetBlockingApp(app);
+        }
     }
 }

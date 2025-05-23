@@ -18,6 +18,7 @@ namespace ControllerModel.Logs2
         public long FileTransferTime { get; set; }
         public DateTime Time { get; set; }
 
+        public LogObject() { }
 
         /// <summary>
         /// Constructeur utilisé pour la désérialisation JSON.

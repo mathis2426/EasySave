@@ -131,7 +131,11 @@ namespace program
                         Console.Clear();
                         string process = Console.ReadLine();
                         jobManager.SetBlockingProcess(process);
-
+                        break;
+                    case "7":
+                        Console.Clear();
+                        string app = Console.ReadLine();
+                        jobManager.SetBlockingApp(app);
                         break;
                     default:
                         Console.Clear();
@@ -142,14 +146,6 @@ namespace program
         }
         public static void CreateJob()
         {
-            if (jobManager.JobList.Count() == 5)
-            {
-                Console.WriteLine(languageManager.ResManager.GetString("max_jobs"));
-                Console.WriteLine(languageManager.ResManager.GetString("press_return"));
-                Console.ReadKey();
-                Console.Clear();
-                return;
-            }
             bool isValid = false;
             while (!isValid)
             {

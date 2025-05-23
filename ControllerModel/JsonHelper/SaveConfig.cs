@@ -12,6 +12,7 @@ namespace ControllerModel.JsonHelper
         public string Language { get; set; }
         public string PathTologStatus { get; set; }
         public string BlockingProcess { get; set; }
+        public string BlockingApp { get; set; }
 
 
         /// <summary>
@@ -20,12 +21,15 @@ namespace ControllerModel.JsonHelper
         /// <param name="PathTologDaily">Chemin du log journalier.</param>
         /// <param name="PathTologStatus">Chemin du log de statut.</param>
         /// <param name="Language">Code de langue (culture).</param>
-        public SaveConfig(string PathTologDaily, string PathTologStatus, string Language,string BlockingProcess) 
+        /// <param name="BlockingProcess">Nom du processus à bloquer.</param>
+        /// <param name="BlockingApp">Nom de l'application à bloquer.</param>"
+        public SaveConfig(string PathTologDaily, string PathTologStatus, string Language,string BlockingProcess, string BlockingApp) 
         { 
             this.PathToLogDaily = PathTologDaily;
             this.PathTologStatus = PathTologStatus;
             this.Language = Language;
             this.BlockingProcess = BlockingProcess;
+            this.BlockingApp = BlockingApp;
         }
 
     }

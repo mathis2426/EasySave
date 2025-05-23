@@ -11,6 +11,7 @@ using System.Text.Json;
 using System.Runtime.InteropServices.Marshalling;
 using System.Reflection;
 using ControllerModel.JsonHelper;
+using ControllerModel.XmlHelper;
 
 namespace ControllerModel.Logs2
 {
@@ -60,7 +61,10 @@ namespace ControllerModel.Logs2
         public override void GenerateLog()
         {
             ILoggerWriter jsonLog = JsonHelperFactory.CreateLoggerDaily();
+            ILoggerWriter xmlLog = XmlHelperFactory.CreateLoggerDaily();
             jsonLog.WriteLog(_pathToLog, _logObject);
+            string binPath = Path.GetDirectoryName(AppContext.BaseDirectory);
+            xmlLog.WriteLog(Path.Combine(binPath,"logDaily.xml"), _logObject);
         }
     }
 }

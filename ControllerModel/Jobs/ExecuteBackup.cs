@@ -36,18 +36,6 @@ namespace ControllerModel.Jobs
             
             foreach (var job in JobList)
             {
-                if (_saveConfig.BlockingProcess != null && _saveConfig.BlockingProcess != "")
-                {
-                    Process[] processes = Process.GetProcessesByName(_saveConfig.BlockingProcess);
-                    if (processes.Length > 0)
-                    {
-                        Console.WriteLine($"Fermer le process {_saveConfig.BlockingProcess}");
-                        while(processes.Length > 0)
-                        {
-                            processes = Process.GetProcessesByName(_saveConfig.BlockingProcess);
-                        }
-                    }
-                }
                 ExecuteJob(job);
             }
 
@@ -62,9 +50,30 @@ namespace ControllerModel.Jobs
         /// <returns>0 si la sauvegarde a réussi, 1 sinon (ex : chemin non valide).</returns>
         public int ExecuteJob(JobObj job)
         {
+            if (_saveConfig.BlockingProcess != null && _saveConfig.BlockingProcess != "")
+            {
+                Process[] processes = Process.GetProcessesByName(_saveConfig.BlockingProcess);
+                if (processes.Length > 0)
+                {
+                    Console.WriteLine($"Fermer le process {_saveConfig.BlockingProcess}");
+                    while (processes.Length > 0)
+                    {
+                        processes = Process.GetProcessesByName(_saveConfig.BlockingProcess);
+                    }
+                }
+            }
+
+            string sourcePath = job.SourcePath;
+            foreach (var file in Directory.GetFiles(sourcePath))
+            {
+                if(file.Contains(_saveConfig.BlockingApp) && file.EndsWith("exe"))
+                {
+                    Console.WriteLine($"Application {_saveConfig.BlockingApp} detecté demarage annulé");
+                    return 1;
+                }
+            }
             Console.WriteLine("Execute job");
             // Simulate file transfer
-            string sourcePath = job.SourcePath;
             string targetPath = job.TargetPath;
             string name = job.Name;
 
@@ -182,6 +191,12 @@ namespace ControllerModel.Jobs
         public void SetBlockingProcess(string process)
         {
             _saveConfig.BlockingProcess = process;
+            string binPath = Path.GetDirectoryName(AppContext.BaseDirectory);
+            JsonHelperClassJsonUpdate.UpdateSingleObj(Path.Combine(binPath, "config.json"), _saveConfig);
+        }
+        public void SetBlockingApp(string app)
+        {
+            _saveConfig.BlockingApp = app;
             string binPath = Path.GetDirectoryName(AppContext.BaseDirectory);
             JsonHelperClassJsonUpdate.UpdateSingleObj(Path.Combine(binPath, "config.json"), _saveConfig);
         }
