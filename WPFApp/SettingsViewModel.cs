@@ -8,7 +8,7 @@ namespace WPFApp
 {
     public class SettingsViewModel : AbstractViewModel
     {
-        private readonly JobManager _jobManager = new JobManager();
+        public readonly JobManager _jobManager = new JobManager();
         private ExtensionItem _selectedExtension;
         private string _newExtensionName;
         private string _outputText;
@@ -17,6 +17,8 @@ namespace WPFApp
 
         public SettingsViewModel()
         {
+            NewExtensionName = ".";
+
             AddExtensionCommand = new CommandHandler(
                 execute: AddExtension,
                 canExecute: () => !string.IsNullOrWhiteSpace(NewExtensionName)
