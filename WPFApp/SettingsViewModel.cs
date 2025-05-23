@@ -14,7 +14,7 @@ namespace WPFApp
         private string _outputText;
         
         public ObservableCollection<ExtensionItem> Extensions { get; } = new ObservableCollection<ExtensionItem>();
-
+   
         public SettingsViewModel()
         {
             NewExtensionName = ".";
@@ -70,7 +70,7 @@ namespace WPFApp
                 {
                     _selectedExtension = value;
                     OnPropertyChanged();
-                    CommandManager.InvalidateRequerySuggested(); // met à jour l'état du bouton "Supprimer"
+                    DeleteExtensionCommand.RaiseCanExecuteChanged(); // ← nécessaire ici
                 }
             }
         }
@@ -85,7 +85,7 @@ namespace WPFApp
             NewExtensionName = string.Empty;
         }
 
-        public ICommand DeleteExtensionCommand { get; }
+        public CommandHandler DeleteExtensionCommand { get; }
         private void DeleteExtension()
         {
             try
