@@ -20,10 +20,13 @@ namespace WPFApp
     /// </summary>
     public partial class ManageJob : Page
     {
+        ViewModelManageJob ViewModelManageJob;
 
         public ManageJob()
         {
             InitializeComponent();
+            ViewModelManageJob = new ViewModelManageJob();
+            DataContext = ViewModelManageJob;
         }
         private void ButtonLeave_ClickManageJob(object sender, RoutedEventArgs e)
         {
