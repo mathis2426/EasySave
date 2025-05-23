@@ -17,6 +17,7 @@ namespace ControllerModel.Logs2
         public double FileSize { get; set; }
         public long FileTransferTime { get; set; }
         public DateTime Time { get; set; }
+        public Dictionary<string, long> EncryptionTimes { get; set; } = new Dictionary<string, long>();
 
 
         /// <summary>
@@ -29,8 +30,9 @@ namespace ControllerModel.Logs2
         /// <param name="FileSize">Taille totale des fichiers transférés.</param>
         /// <param name="FileTransferTime">Temps de transfert en ms.</param>
         /// <param name="Time">Date et heure du transfert.</param>
+        /// <param name="EncryptionTimes">Dictionnaire des temps de chiffrement.</param>"
         [JsonConstructor]
-        public LogObject(string Name, string FileSource, string FileTarget, string DesPath, double FileSize, long FileTransferTime, DateTime Time)
+        public LogObject(string Name, string FileSource, string FileTarget, string DesPath, double FileSize, long FileTransferTime, DateTime Time, Dictionary<string, long> encryptionTimes)
         {
             this.Name = Name;
             this.FileSource = FileSource;
@@ -39,6 +41,7 @@ namespace ControllerModel.Logs2
             this.FileSize = FileSize;
             this.FileTransferTime = FileTransferTime;
             this.Time = Time;
+            this.EncryptionTimes = encryptionTimes;
         }
 
         /// <summary>
