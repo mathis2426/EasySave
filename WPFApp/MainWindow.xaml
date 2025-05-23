@@ -5,18 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFApp"
         mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
 
+    <!-- Ajout d'une grille -->
+    <Grid>
+        <!-- Définition des lignes -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Frame principal -->
         <Frame x:Name="MainFrame"
-           Grid.Row="0"
-           NavigationUIVisibility="Hidden"
-           BorderBrush="Red"
-           BorderThickness="2"/>
+               Grid.Row="0"
+               NavigationUIVisibility="Hidden"
+               BorderBrush="Red"
+               BorderThickness="2"/>
 
-        <!-- Autres éléments en dessous -->
+        <!-- Panneau de contrôle en dessous -->
         <StackPanel Grid.Row="1" Orientation="Horizontal">
             <!-- Boutons, ListView, etc. -->
         </StackPanel>
-  
     </Grid>
-  
 </Window>
