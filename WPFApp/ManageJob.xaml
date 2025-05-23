@@ -27,5 +27,6 @@
         <Button Content="Global parameter" HorizontalAlignment="Left" Margin="734,72,0,0" VerticalAlignment="Top" Height="48" Width="48"/>
         <ComboBox HorizontalAlignment="Left" Margin="675,18,0,0" VerticalAlignment="Top" Width="120"/>
         <TextBox HorizontalAlignment="Left" Margin="598,18,0,0" TextWrapping="Wrap" Text="Language" VerticalAlignment="Top" Width="72" TextChanged="TextBox_TextChanged" Height="20"/>
+        <Rectangle HorizontalAlignment="Center" Height="450" Stroke="White" VerticalAlignment="Center" Width="800" Opacity="100" Fill="White" Panel.ZIndex="-1"/>
     </Grid>
 </Page>
