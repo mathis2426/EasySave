@@ -15,7 +15,7 @@
         <Button x:Name="ExitManageJob" Content="Exit" HorizontalAlignment="Left" Margin="619,356,0,0" VerticalAlignment="Top" Height="32" Width="133" Click="ButtonLeave_ClickManageJob"/>
         <TextBox x:Name="outputBox" Text="{Binding OutputString}" HorizontalAlignment="Left" Margin="37,345,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="517" Height="53"/>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="224" Margin="37,10,0,0" VerticalAlignment="Top" Width="543"/>
-        <ProgressBar HorizontalAlignment="Left" Height="42" Margin="220,55,0,0" VerticalAlignment="Top" Width="322"/>
+        <ProgressBar HorizontalAlignment="Left" Value="{Binding ProgressValue}" Minimum="0" Maximum="100" Height="42" Margin="220,55,0,0" VerticalAlignment="Top" Width="322"/>
         <TextBlock HorizontalAlignment="Left" Margin="48,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="41" Width="167"><Run Text="Percentage"/><Run Language="fr-fr" Text=" completed"/></TextBlock>
         <TextBox HorizontalAlignment="Left" Margin="220,112,0,0" TextWrapping="Wrap" Text="Input file : " VerticalAlignment="Top" Width="142"/>
         <TextBlock HorizontalAlignment="Left" Margin="48,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Text="Input file :"/>

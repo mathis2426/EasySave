@@ -14,9 +14,9 @@ public class CommandHandler : ICommand //implémentation de ICommand
         _canExecute = canExecute ?? throw new ArgumentNullException(nameof(canExecute));
     }
 
-    public bool CanExecute(object parameter) => _canExecute();
+    public bool CanExecute(object? parameter) => _canExecute();
 
-    public void Execute(object parameter) => _execute();
+    public void Execute(object? parameter) => _execute();
 
     public event EventHandler? CanExecuteChanged
     {

@@ -18,6 +18,7 @@ namespace WPFApp
         private string _outputString;
         private string _stateString;
         private int _inputJobID;
+        private double _progressValue;
 
         public JobManager Controller = new();
 
@@ -31,6 +32,7 @@ namespace WPFApp
             StartCommand = new CommandHandler(() => StartJob(), CanStart); // Elle est liée à la méthode ConvertToUpper(), mais seulement si CanConvert() retourne true (exemple : input non vide).
             StopCommand = new CommandHandler(() => StopJob(), CanStop);
             ResumeCommand = new CommandHandler(() => ResumeJob(), CanResume);
+            _progressValue = 72.8;
         }
         public string InputString
         {
@@ -130,6 +132,18 @@ namespace WPFApp
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        
+        public double ProgressValue
+        {
+            get => _progressValue;
+            set
+            {
+                _progressValue = value;
+                OnPropertyChanged(nameof(ProgressValue));
+            }
+        }
+
 
     }
     public class CommandHandler : ICommand //implémentation de ICommand
