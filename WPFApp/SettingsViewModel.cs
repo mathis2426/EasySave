@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ using System.Windows.Controls;
 
 namespace WPFApp
 {
-    public class SettingsViewModel
+    public class SettingsViewModel : AbstractViewModel
     {
         private void TaskList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
