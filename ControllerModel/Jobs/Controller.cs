@@ -17,6 +17,8 @@ namespace ControllerModel.Jobs
         public JsonHelperFactory JsonHelperFactory = new();
         public JsonHelperClassJsonUpdate JsonHelperClassJsonUpdate = JsonHelperFactory.CreateJsonUpdate();
 
+        public ExtensionFileCryptoSoft ExtensionFileCryptoSoft = new();
+
         public SaveConfig SaveConfigObj;
         
         private readonly string _pathToJob = "";
@@ -61,8 +63,6 @@ namespace ControllerModel.Jobs
             _backupJob.DeleteJob(JobList[jobNum]);
             JobList.RemoveAt(jobNum);
             JsonHelperClassJsonUpdate.Update(_pathToJob, JobList);
-            
-
         }
 
         /// <summary>
@@ -102,6 +102,11 @@ namespace ControllerModel.Jobs
             {
                 _executeBackup.ExecuteJob(JobList[indexJob]);
             }
+        }
+
+        public void UpdateExtensionFileCryptoSoft(string[] extensionFile)
+        {
+            ExtensionFileCryptoSoft.SetExtensionFileCryptoSoft(extensionFile);
         }
     }
 }
