@@ -24,16 +24,8 @@ namespace WPFApp
         public Settings(Frame mainFrame)
         {
             InitializeComponent();
-            _mainFrame = mainFrame;
-        }
-        private void TaskList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
+            SettingsViewModel settingsViewModel = new SettingsViewModel();
+            DataContext = settingsViewModel;
         }
     }
 }
