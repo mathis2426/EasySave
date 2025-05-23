@@ -6,23 +6,24 @@
         xmlns:local="clr-namespace:WPFApp"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
     <Grid>
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Frame x:Name="MainFrame"
-           Grid.Row="0"
-           NavigationUIVisibility="Hidden"
-           BorderBrush="Red"
-           BorderThickness="2"/>
 
-        <!-- Autres éléments en dessous -->
+        <Frame x:Name="MainFrame"
+               Grid.Row="0"
+               NavigationUIVisibility="Hidden"
+               BorderBrush="Red"
+               BorderThickness="2"/>
+
+
         <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <!-- Boutons, ListView, etc. -->
+
         </StackPanel>
-  
     </Grid>
-  
 </Window>

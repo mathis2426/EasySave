@@ -34,7 +34,7 @@ namespace WPFApp
 
         private void ButtonValidate_ClickJobCreation(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.GoBack();
         }
         private void ButtonLeave_ClickJobCreation(object sender, RoutedEventArgs e)
         {
