@@ -51,6 +51,13 @@ namespace WPFApp
 
         }
 
+        private void ButtonSettings_Click(object sender, RoutedEventArgs e)
+        {
+
+            _mainFrame.Navigate(new Settings(_mainFrame));
+
+        }
+
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {

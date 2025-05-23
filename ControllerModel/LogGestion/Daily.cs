@@ -40,15 +40,18 @@ namespace ControllerModel.Logs2
         /// <param name="fileSize">Taille du fichier en octets.</param>
         /// <param name="fileTransferTime">Durée du transfert du fichier en millisecondes.</param>
         /// <param name="time">Horodatage de l'opération.</param>
+        /// <param name="encryptionTimes">Temps de chiffrement du fichier.</param>
         public void sendParamToLog(
             string name,
             string fileSource,
             string fileTarget,
             long fileSize,
             long fileTransferTime,
-            DateTime time)
+            DateTime time,
+            Dictionary<string, long> encryptionTimes
+            )
         {
-            LogObject _logObject = new LogObject(name, fileSource, fileTarget, _pathToLog, fileSize, fileTransferTime, time);
+            LogObject _logObject = new LogObject(name, fileSource, fileTarget, _pathToLog, fileSize, fileTransferTime, time, encryptionTimes);
             this._logObject = _logObject.getLog();
             GenerateLog();
         }
