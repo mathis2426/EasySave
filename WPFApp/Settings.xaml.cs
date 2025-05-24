@@ -32,5 +32,15 @@ namespace WPFApp
         {
             NavigationService.GoBack();
         }
+
+        private void ExtensionsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

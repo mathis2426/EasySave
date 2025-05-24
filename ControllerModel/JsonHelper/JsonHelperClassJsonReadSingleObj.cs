@@ -23,7 +23,7 @@ namespace ControllerModel.JsonHelper
             {
                 string binPath = Path.GetDirectoryName(AppContext.BaseDirectory);
 
-                SaveConfig saveConfig = new SaveConfig(Path.Combine(binPath, "daily.json"), Path.Combine(binPath, "state.json"), "en-US", [".txt"]);
+                SaveConfig saveConfig = new SaveConfig(Path.Combine(binPath, "daily.json"), Path.Combine(binPath, "state.json"), "en-US", new string[] { ".txt" }, new string[] { ".txt" });
                 string json = JsonSerializer.Serialize(saveConfig, new JsonSerializerOptions { WriteIndented = true });
                 T save = JsonSerializer.Deserialize<T>(json);
                 _jsonHelperClassBasicsReadSingleObj.CreateJson(PathToFileToRead, save);

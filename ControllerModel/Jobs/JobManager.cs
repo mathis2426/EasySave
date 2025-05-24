@@ -17,7 +17,7 @@ namespace ControllerModel.Jobs
         public JsonHelperFactory JsonHelperFactory = new();
         public JsonHelperClassJsonUpdate JsonHelperClassJsonUpdate = JsonHelperFactory.CreateJsonUpdate();
 
-        public ExtensionFileCryptoSoft ExtensionFileCryptoSoft = new();
+        public ExtensionFileParam ExtensionFileParam = new();
 
         public SaveConfig SaveConfigObj;
         
@@ -104,14 +104,40 @@ namespace ControllerModel.Jobs
             }
         }
 
+        /// <summary>
+        /// Met à jour le fichier de configuration avec les paramètres d'extension de fichier.
+        /// </summary>
+        /// <param name="extensionFile">Liste des extensions a crypter</param>
         public void UpdateExtensionFileCryptoSoft(string[] extensionFile)
         {
-            ExtensionFileCryptoSoft.SetExtensionFileCryptoSoft(extensionFile);
+            ExtensionFileParam.SetExtensionFileCryptoSoft(extensionFile);
         }
 
+        /// <summary>
+        /// Récupère la liste des extensions de fichiers à crypter depuis le fichier de configuration.
+        /// </summary>
+        /// <returns></returns>
         public string[] getListExtensionFilesCryptoSoft()
         {
-            return ExtensionFileCryptoSoft.getListExtensionFilesCryptoSoft();
+            return ExtensionFileParam.getListExtensionFilesCryptoSoft();
+        }
+
+        /// <summary>
+        /// Met à jour le fichier de configuration avec les priorités d'extension de fichier.
+        /// </summary>
+        /// <param name="extensionPriorityFile">Liste des extensions prioritaires</param>
+        public void UpdateExtensionPriorityFile(string[] extensionPriorityFile)
+        {
+            ExtensionFileParam.SetExtensionPriorityFile(extensionPriorityFile);
+        }
+
+        /// <summary>
+        /// Récupère la liste des extensions prioritaires de fichiers depuis le fichier de configuration.
+        /// </summary>
+        /// <returns></returns>
+        public string[] getListExtensionPriorityFiles()
+        {
+            return ExtensionFileParam.getListExtensionPriorityFiles();
         }
     }
 }
