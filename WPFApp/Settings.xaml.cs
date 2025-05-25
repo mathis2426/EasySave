@@ -27,20 +27,5 @@ namespace WPFApp
             SettingsViewModel settingsViewModel = new SettingsViewModel();
             DataContext = settingsViewModel;
         }
-
-        private void ExitCreateJob_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.GoBack();
-        }
-
-        private void ExtensionsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

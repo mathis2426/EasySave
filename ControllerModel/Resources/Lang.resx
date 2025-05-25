@@ -273,4 +273,22 @@
   <data name="language_sucessfull" xml:space="preserve">
     <value>Language successfully changed</value>
   </data>
+  <data name="ExtensionsName" xml:space="preserve">
+    <value>Extension names</value>
+  </data>
+  <data name="BlockingApplication" xml:space="preserve">
+    <value>Blocking application</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
 </root>

@@ -9,14 +9,25 @@
       Title="Settings">
 
     <Grid Background="White">
+        <ListView x:Name="ExtensionsList" ItemsSource="{Binding Extensions}" SelectedItem="{Binding SelectedExtension}" Margin="50,50,0,0" Width="250" Height="190" HorizontalAlignment="Left" VerticalAlignment="Top">
         <!-- Liste des extensions normales -->
         <ListView x:Name="ExtensionsList" ItemsSource="{Binding Extensions}" SelectedItem="{Binding SelectedExtension}" Margin="50,50,547,150">
             <ListView.View>
                 <GridView>
+                    <GridViewColumn Header="{Binding ExtensionsName}" Width="250" DisplayMemberBinding="{Binding Name}"/>
                     <GridViewColumn Header="ExtensionsName" Width="200" DisplayMemberBinding="{Binding Name}"/>
                 </GridView>
             </ListView.View>
         </ListView>
+        <TextBox Text="{Binding NewExtensionName, UpdateSourceTrigger=PropertyChanged}" Margin="50,264,0,0" Height="28" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button Content="{Binding Add}" Command="{Binding AddExtensionCommand}" Margin="175,264,0,0" Height="28" HorizontalAlignment="Left" Width="61" VerticalAlignment="Top"/>
+        <TextBox Text="{Binding OutputText}" IsReadOnly="True" Margin="50,335,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="517" Height="53" HorizontalAlignment="Left" />
+        <ComboBox  ItemsSource="{Binding AvailableLanguages}" SelectedItem="{Binding SelectedLanguage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="632,20,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="ExitCreateJob" Content="{Binding Exit}" HorizontalAlignment="Left" Margin="626,356,0,0" VerticalAlignment="Top" Height="32" Width="133"/>
+        <Button Content="{Binding Delete}" Command="{Binding DeleteExtensionCommand}" Margin="241,264,0,0" Width="59" Height="28" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Label Content="{Binding BlockingApplication}" HorizontalAlignment="Left" Margin="376,50,0,0" VerticalAlignment="Top"/>
+        <TextBox Text="{Binding BlockingApp, UpdateSourceTrigger=LostFocus}" HorizontalAlignment="Left" Margin="379,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="{Binding Language}" HorizontalAlignment="Left" Margin="568,18,0,0" VerticalAlignment="Top"/>
 
         <!-- Nouvelle liste : extensions prioritaires (à droite) -->
         <ListView x:Name="PriorityExtensionsList" ItemsSource="{Binding PriorityExtensions}" SelectedItem="{Binding SelectedPriorityExtension}" Margin="270,50,341,150">
