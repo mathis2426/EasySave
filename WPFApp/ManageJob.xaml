@@ -17,13 +17,13 @@
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="224" Margin="37,10,0,0" VerticalAlignment="Top" Width="543"/>
         <ProgressBar HorizontalAlignment="Left" Value="{Binding ProgressValue}" Minimum="0" Maximum="100" Height="42" Margin="220,55,0,0" VerticalAlignment="Top" Width="322"/>
         <TextBlock HorizontalAlignment="Left" Margin="48,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="41" Width="167"><Run Text="Percentage"/><Run Language="fr-fr" Text=" completed"/></TextBlock>
-        <TextBox HorizontalAlignment="Left" Margin="220,112,0,0" TextWrapping="Wrap" Text="Input file : " VerticalAlignment="Top" Width="142"/>
+        <TextBox HorizontalAlignment="Left" Text="{Binding InputFileString}" Margin="220,112,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="322"/>
         <TextBlock HorizontalAlignment="Left" Margin="48,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Text="Input file :"/>
-        <TextBox HorizontalAlignment="Left" Margin="220,142,0,0" TextWrapping="Wrap" Text="Output file : " VerticalAlignment="Top" Width="142"/>
+        <TextBox HorizontalAlignment="Left" Text="{Binding OutputFileString}" Margin="220,142,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="322"/>
         <TextBlock HorizontalAlignment="Left" Margin="48,142,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"><Run Language="fr-fr" Text="Output"/><Run Text=" file :"/></TextBlock>
         <TextBlock HorizontalAlignment="Left" Margin="48,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"><Run Language="fr-fr" Text="Priority Files :"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="48,206,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"><Run Language="fr-fr" Text="Type of backup : "/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="51,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"><Run Language="fr-fr" Text="Job name :"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Text="{Binding TypeBackupString}" Margin="48,206,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="258"><Run Language="fr-fr" Text="Type of backup : "/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Text="{Binding NameString}" Margin="51,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="509"><Run Language="fr-fr"/></TextBlock>
         <Button Content="Global parameter" HorizontalAlignment="Left" Margin="734,72,0,0" VerticalAlignment="Top" Height="48" Width="48"/>
         <ComboBox HorizontalAlignment="Left" Margin="675,18,0,0" VerticalAlignment="Top" Width="120"/>
         <TextBox HorizontalAlignment="Left" Margin="598,18,0,0" TextWrapping="Wrap" Text="Language" VerticalAlignment="Top" Width="72" TextChanged="TextBox_TextChanged" Height="20"/>

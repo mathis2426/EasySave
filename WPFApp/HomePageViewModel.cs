@@ -26,6 +26,11 @@ namespace WPFApp
                 execute: DeleteJob,
                 canExecute: () => SelectedJob != null
             );
+
+            ManageJobCommand = new CommandHandler(
+                execute: () => ManageJob(),
+                canExecute: () => SelectedJob != null
+            );
         }
 
         public JobObj SelectedJob
@@ -38,6 +43,7 @@ namespace WPFApp
                     _selectedJob = value;
                     OnPropertyChanged(nameof(SelectedJob));
                     DeleteJobCommand.RaiseCanExecuteChanged();
+                    ManageJobCommand.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -70,6 +76,10 @@ namespace WPFApp
                 SelectedJob = null;
             }
         }
+        public CommandHandler ManageJobCommand { get; }
+        private void ManageJob() { }
+
         public CommandHandler DeleteExtensionCommand { get; } 
+
     }
 }
