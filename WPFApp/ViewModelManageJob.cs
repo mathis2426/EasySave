@@ -44,6 +44,7 @@ namespace WPFApp
             _inputFileString = _job.SourcePath;
             _outputFileString = _job.TargetPath;
             _typeBackupString = "Job type : " + _job.Type.ToString();
+            _inputJobID = _job.Id;
 
         }   
         public string InputString
@@ -124,12 +125,14 @@ namespace WPFApp
         }
         private void StartJob() 
         {
+            OutputString = $"Demarrage du job {JobID}";
             int result = Controller.LaunchBackup(JobID);
-            OutputString = $"Demarrage du job {result}";
+
         }
 
         private void StopJob() 
         {
+
             int result = Controller.LaunchBackup(JobID);/////////////: à faiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiire
             OutputString = $"Demarrage du job {result}";
         }
