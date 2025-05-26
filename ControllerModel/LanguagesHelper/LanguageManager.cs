@@ -16,7 +16,7 @@ namespace ControllerModel.LanguagesHelper
         public JsonHelperClassJsonReadSingleObj jsonHelperClassJsonReadSingleObj = JsonHelperFactory.CreateJsonReadSingleObj();
         public JsonHelperClassJsonUpdate jsonHelperClassJsonUpdate = JsonHelperFactory.CreateJsonUpdate();
         public SaveConfig saveConfigObj;
-        public string binPathGlobal;
+        private string binPathGlobal;
 
         /// <summary>
         /// Initialise une nouvelle instance de la classe <see cref="LanguageManager"/> et configure la langue.

@@ -8,7 +8,7 @@ namespace ControllerModel.JsonHelper
 
     public class JsonHelperClassLoggerStatus : ILoggerWriter
     {
-        private JsonHelperClassBasics jsonHelperClassBasicsForLogger = new();
+        private JsonHelperClassBasics _jsonHelperClassBasicsForLogger = new();
 
         /// <summary>
         /// Écrit un objet dans un fichier JSON, remplaçant son contenu.
@@ -18,7 +18,7 @@ namespace ControllerModel.JsonHelper
         /// <param name="obj">Objet à écrire.</param>
         public void WriteLog<T> (string path,T obj)
         {
-            jsonHelperClassBasicsForLogger.CreateJson(path, obj);
+            _jsonHelperClassBasicsForLogger.CreateJson(path, obj);
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace ControllerModel.JsonHelper
         /// <param name="obj">Liste d'objets à écrire.</param>
         public void WriteLogList<T>(string path, List<T> obj)
         {
-            jsonHelperClassBasicsForLogger.CreateJsonList(path, obj);
+            _jsonHelperClassBasicsForLogger.CreateJsonList(path, obj);
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace ControllerModel.JsonHelper
         /// <returns>Liste d'objets lue à partir du fichier JSON.</returns>
         public List<T> ReadLogStatus<T>(string path)
         {
-            List<T> ListObject = jsonHelperClassBasicsForLogger.ReadJsonList<T>(path);
+            List<T> ListObject = _jsonHelperClassBasicsForLogger.ReadJsonList<T>(path);
             return ListObject;
         }
     }
