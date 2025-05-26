@@ -17,7 +17,7 @@ using ControllerModel.Jobs;
 namespace WPFApp
 {
     /// <summary>
-    /// Logique d'interaction pour Page1.xaml
+    /// Interaction Logic for Page1.xaml
     /// </summary>
     public partial class ManageJob : Page
     {

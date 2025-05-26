@@ -15,13 +15,13 @@ namespace WPFApp
 
         public HomePageViewModel()
         {
-            // Charger la liste initiale des jobs depuis JobManager
+
             foreach (var job in _jobManager.JobList)
             {
                 JobsList.Add(job);
             }
 
-            // Initialiser la commande de suppression de job
+
             DeleteJobCommand = new CommandHandler(
                 execute: DeleteJob,
                 canExecute: () => SelectedJob != null
