@@ -33,18 +33,45 @@ namespace ControllerModel.Jobs
             _listExtensionFileCrypt = this._saveConfig.ExtensionFileCrypt;
         }
 
+        private object _lockPriorityFile;
+        private object _priorityFileProperty = null;
+        public int PriorityFile
+        {
+            get
+            {
+                lock (_lockPriorityFile)
+                {
+                    if (_priorityFileProperty == null)
+                    {
+                        _priorityFileProperty = 0;
+                    }
+                    return (int)_priorityFileProperty;
+                }
+            }
+            set
+            {
+                lock (_lockPriorityFile)
+                {
+                    // ajouter un mutex => 0 to * = mutex | * to 0 = release
+                    _priorityFileProperty = (object)value;
+                }
+            }
+        }
+
         /// <summary>
         /// Exécute la sauvegarde pour tous les jobs présents dans la liste.
         /// </summary>
         /// <param name="JobList">Liste des jobs de sauvegarde à exécuter.</param>
         public void ExecuteJobAll(List<JobObj> JobList)
         {
+            List<Thread> threads = new List<Thread>();
 
             foreach (var job in JobList)
             {
-                ExecuteJob(job);
+                Thread thread = new Thread(() => ExecuteJob(job));
+                thread.Start();
+                threads.Add(thread);
             }
-
         }
 
         /// <summary>
@@ -56,6 +83,8 @@ namespace ControllerModel.Jobs
         /// <returns>0 si la sauvegarde a réussi, 1 sinon (ex : chemin non valide).</returns>
         public int ExecuteJob(JobObj job)
         {
+            Console.WriteLine($"[START] Job {job.Name} démarré dans le thread {Thread.CurrentThread.ManagedThreadId}");
+
             // Simulate file transfer
             string sourcePath = job.SourcePath;
             string targetPath = job.TargetPath;
@@ -94,6 +123,7 @@ namespace ControllerModel.Jobs
                 DateTime.Now,
                 fileEncryptionTimes
             );
+            Console.WriteLine($"[END] Job {name} terminé en {stopwatch.ElapsedMilliseconds} ms");
             return 0;
         }
         // Backup methods
@@ -141,7 +171,7 @@ namespace ControllerModel.Jobs
                     encryptTimer.Stop();
                     timeToEncrypt = encryptTimer.ElapsedMilliseconds;
 
-                    Console.WriteLine("Process terminé");
+                    //Console.WriteLine("Process terminé");
                 } 
                 else 
                 { 
