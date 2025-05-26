@@ -18,12 +18,42 @@ namespace ControllerModel.Jobs
         private readonly Daily _logDaily = new();
         private readonly State _state = new();
         private string[] _listExtensionFileCrypt;
+        private string[] _extensionPriorityFile;
 
         public JsonHelperClassJsonReadSingleObj jsonHelperClassJsonReadSingleObj = JsonHelperFactory.CreateJsonReadSingleObj();
         public JsonHelperClassJsonUpdate jsonHelperClassJsonUpdate = JsonHelperFactory.CreateJsonUpdate();
         public SaveConfig _saveConfig;
-        //public SaveConfig saveConfigObjJob;
         public string binPathGlobal;
+
+        private readonly object _lockPriorityFile = new();
+        private int _priorityFileCount = 0;
+        private ManualResetEvent _canProcessNonPriorityFiles = new(false);
+
+        public int PriorityFile
+        {
+            get
+            {
+                lock (_lockPriorityFile)
+                {
+                    return _priorityFileCount;
+                }
+            }
+            set
+            {
+                lock (_lockPriorityFile)
+                {
+                    _priorityFileCount = value;
+                    if (_priorityFileCount == 0)
+                    {
+                        _canProcessNonPriorityFiles.Set(); // débloque les non-prioritaires
+                    }
+                    else
+                    {
+                        _canProcessNonPriorityFiles.Reset(); // bloque les non-prioritaires
+                    }
+                }
+            }
+        }
 
         public ExecuteBackup()
         {
@@ -31,31 +61,7 @@ namespace ControllerModel.Jobs
             SaveConfig SaveConfig = jsonHelperClassJsonReadSingleObj.ReadSingleObj<SaveConfig>(Path.Combine(binPath, "config.json"));
             this._saveConfig = SaveConfig;
             _listExtensionFileCrypt = this._saveConfig.ExtensionFileCrypt;
-        }
-
-        private object _lockPriorityFile;
-        private object _priorityFileProperty = null;
-        public int PriorityFile
-        {
-            get
-            {
-                lock (_lockPriorityFile)
-                {
-                    if (_priorityFileProperty == null)
-                    {
-                        _priorityFileProperty = 0;
-                    }
-                    return (int)_priorityFileProperty;
-                }
-            }
-            set
-            {
-                lock (_lockPriorityFile)
-                {
-                    // ajouter un mutex => 0 to * = mutex | * to 0 = release
-                    _priorityFileProperty = (object)value;
-                }
-            }
+            _extensionPriorityFile = this._saveConfig.ExtensionPriorityFile;
         }
 
         /// <summary>
@@ -72,6 +78,10 @@ namespace ControllerModel.Jobs
                 thread.Start();
                 threads.Add(thread);
             }
+            /*foreach (var thread in threads)
+            {
+                thread.Join(); // wait for all threads to finish
+            }*/
         }
 
         /// <summary>
@@ -83,6 +93,7 @@ namespace ControllerModel.Jobs
         /// <returns>0 si la sauvegarde a réussi, 1 sinon (ex : chemin non valide).</returns>
         public int ExecuteJob(JobObj job)
         {
+
             Console.WriteLine($"[START] Job {job.Name} démarré dans le thread {Thread.CurrentThread.ManagedThreadId}");
 
             // Simulate file transfer
@@ -101,6 +112,14 @@ namespace ControllerModel.Jobs
             long totalFileSize = new DirectoryInfo(job.SourcePath).GetFiles().Sum(f => f.Length);
 
             Dictionary<string, long> fileEncryptionTimes = new();
+
+            // Initialiser le compteur global de fichiers prioritaires
+            int nbPriorityFiles = Directory.GetFiles(sourcePath).Count(f => _extensionPriorityFile.Contains(Path.GetExtension(f)));
+
+            lock (_lockPriorityFile)
+            {
+                PriorityFile += nbPriorityFiles; // increment the global priority file count
+            }
 
             // transfer files
             switch (job.Type)
