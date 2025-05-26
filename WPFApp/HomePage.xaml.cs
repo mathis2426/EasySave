@@ -48,8 +48,13 @@ namespace WPFApp
         }
         private void ButtonManageJob_Click(object sender, RoutedEventArgs e)
         {
+            var selectedJob = ((HomePageViewModel)DataContext).SelectedJob;
 
-            _mainFrame.Navigate(new ManageJob());
+            if (selectedJob != null)
+            {
+                _mainFrame.Navigate(new ManageJob(selectedJob));
+            }
+
 
         }
 

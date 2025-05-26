@@ -12,20 +12,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ControllerModel.Jobs;
 
 namespace WPFApp
 {
     /// <summary>
-    /// Logique d'interaction pour Page1.xaml
+    /// Interaction Logic for Page1.xaml
     /// </summary>
     public partial class ManageJob : Page
     {
         ViewModelManageJob ViewModelManageJob;
-
-        public ManageJob()
+        public ManageJob(JobObj Job)
         {
             InitializeComponent();
-            ViewModelManageJob = new ViewModelManageJob();
+            ViewModelManageJob = new ViewModelManageJob(Job);
             DataContext = ViewModelManageJob;
         }
         private void ButtonLeave_ClickManageJob(object sender, RoutedEventArgs e)
