@@ -36,7 +36,6 @@ namespace ControllerModel.Jobs
             _pathToConfig = Path.Combine(binPath, "config.json");
             JsonHelperClassJsonReadMultipleObj jsonHelperClassJsonReadMultipleObj = new JsonHelperClassJsonReadMultipleObj();
             JobList = jsonHelperClassJsonReadMultipleObj.ReadMultipleObj<JobObj>(_pathToJob);
-            
         }
 
         /// <summary>
@@ -49,7 +48,12 @@ namespace ControllerModel.Jobs
         /// <param name="type">Type de job.</param>
         public void JobCreation(string name, string sourcePath, string targetPath, JobType type)
         {
-            JobList.Add(_backupJob.CreateJob(name, sourcePath, targetPath, type));
+            int nextId = Enumerable.Range(1, JobList.Count + 1)
+                           .Except(JobList.Select(j => j.Id))
+                           .First();
+
+            JobObj job = _backupJob.CreateJob(nextId, name, sourcePath, targetPath, type);
+            JobList.Add(job);
             JsonHelperClassJsonUpdate.Update(_pathToJob, JobList);
         }
 

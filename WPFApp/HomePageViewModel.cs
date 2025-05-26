@@ -11,10 +11,11 @@ namespace WPFApp
         private string _outputText = string.Empty;
         private JobObj _selectedJob;
 
-        public ObservableCollection<JobObj> JobsList { get; } = new ObservableCollection<JobObj>();
+        public ObservableCollection<JobObj> JobsList { get; set; } = new ObservableCollection<JobObj>();
 
-        public HomePageViewModel()
+        public HomePageViewModel(JobManager jobManager)
         {
+            _jobManager = jobManager;
             // Charger la liste initiale des jobs depuis JobManager
             foreach (var job in _jobManager.JobList)
             {

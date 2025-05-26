@@ -17,8 +17,11 @@
         <ListView x:Name="TaskList" ItemsSource="{Binding JobsList}" SelectedItem="{Binding SelectedJob}" Margin="37,50,298,147">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding Name}"/>
-                    <GridViewColumn Header="Number" Width="120" DisplayMemberBinding="{Binding Number}"/>
+                    <GridViewColumn Header="ID" Width="50" DisplayMemberBinding="{Binding Id}"/>
+                    <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Source path" Width="105" DisplayMemberBinding="{Binding SourcePath}"/>
+                    <GridViewColumn Header="Target path" Width="105" DisplayMemberBinding="{Binding TargetPath}"/>
+                    <GridViewColumn Header="Type" Width="100" DisplayMemberBinding="{Binding Type}"/>
                 </GridView>
             </ListView.View>
         </ListView>

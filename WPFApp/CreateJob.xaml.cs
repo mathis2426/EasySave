@@ -18,7 +18,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using Forms = System.Windows.Forms;
 using ControllerModel.LanguagesHelper;
 using System.Globalization;
-
+using System.IO;
 
 namespace WPFApp
 {
@@ -29,15 +29,75 @@ namespace WPFApp
     {
         private Frame _mainFrame;
 
-        public CreateJob(Frame mainFrame)
+        private JobManager _jobManager;
+        public CreateJob(Frame mainFrame, JobManager jobManager)
         {
             InitializeComponent();
             _mainFrame = mainFrame;
+            _jobManager = jobManager;
 
             TypeComboBox.ItemsSource = Enum.GetValues(typeof(JobType));
             TypeComboBox.SelectedIndex = 0;
         }
-        
+
+        public bool AreFieldsFilled(System.Windows.Controls.TextBox jobNameTextBox, System.Windows.Controls.TextBox sourcePathTextBox, System.Windows.Controls.TextBox targetPathTextBox)
+        {
+            if (string.IsNullOrWhiteSpace(jobNameTextBox.Text))
+            {
+                System.Windows.MessageBox.Show("Le champ 'Nom du job' est obligatoire.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+                jobNameTextBox.Focus();
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(sourcePathTextBox.Text))
+            {
+                System.Windows.MessageBox.Show("Le champ 'Chemin source du job' est obligatoire.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+                sourcePathTextBox.Focus();
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(targetPathTextBox.Text))
+            {
+                System.Windows.MessageBox.Show("Le champ 'Chemin de destination du job' est obligatoire.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+                targetPathTextBox.Focus();
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool ArePathsValid(System.Windows.Controls.TextBox sourcePathTextBox, System.Windows.Controls.TextBox targetPathTextBox)
+        {
+            if (!IsValidExistingDirectory(sourcePathTextBox.Text))
+            {
+                System.Windows.MessageBox.Show("Le chemin source n'est pas valide ou n'existe pas.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+                sourcePathTextBox.Focus();
+                return false;
+            }
+
+            if (!IsValidExistingDirectory(targetPathTextBox.Text))
+            {
+                System.Windows.MessageBox.Show("Le chemin de destination n'est pas valide ou n'existe pas.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+                targetPathTextBox.Focus();
+                return false;
+            }
+
+            return true;
+        }
+
+        // Méthode auxiliaire
+        private bool IsValidExistingDirectory(string path)
+        {
+            try
+            {
+                string fullPath = System.IO.Path.GetFullPath(path);
+                return Directory.Exists(fullPath);
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
         private void ButtonValidate_ClickJobCreation(object sender, RoutedEventArgs e)
         {
@@ -46,10 +106,15 @@ namespace WPFApp
             string target = TargetPath.Text;
             JobType selectedType = (JobType)TypeComboBox.SelectedItem;
 
-            BackupJob backupJob = new BackupJob();
-            JobObj job = backupJob.CreateJob(name, source, target, selectedType);
+            if (!AreFieldsFilled(JobName, SourcePath, TargetPath))
+                return;
 
-            _mainFrame.Navigate(new HomePage(_mainFrame));
+            if (!ArePathsValid(SourcePath, TargetPath))
+                return;
+
+            _jobManager.JobCreation(name, source, target, selectedType);
+
+            _mainFrame.Navigate(new HomePage(_mainFrame, _jobManager));
         }
 
         private void ButtonLeave_ClickJobCreation(object sender, RoutedEventArgs e)

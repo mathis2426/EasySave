@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ControllerModel.Jobs;
 
 namespace WPFApp
 {
@@ -16,10 +17,12 @@ namespace WPFApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly JobManager _jobManager;
         public MainWindow()
         {
             InitializeComponent();
-            MainFrame.Navigate(new HomePage(MainFrame));
+            _jobManager = new JobManager();
+            MainFrame.Navigate(new HomePage(MainFrame, _jobManager));
         }
     }
 }
