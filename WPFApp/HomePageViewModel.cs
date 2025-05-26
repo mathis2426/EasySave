@@ -11,19 +11,26 @@ namespace WPFApp
         private string _outputText = string.Empty;
         private JobObj _selectedJob;
 
-        public ObservableCollection<JobObj> JobsList { get; } = new ObservableCollection<JobObj>();
+        public ObservableCollection<JobObj> JobsList { get; set; } = new ObservableCollection<JobObj>();
 
-        public HomePageViewModel()
+        public HomePageViewModel(JobManager jobManager)
         {
+            _jobManager = jobManager;
             // Charger la liste initiale des jobs depuis JobManager
+
             foreach (var job in _jobManager.JobList)
             {
                 JobsList.Add(job);
             }
 
-            // Initialiser la commande de suppression de job
+
             DeleteJobCommand = new CommandHandler(
                 execute: DeleteJob,
+                canExecute: () => SelectedJob != null
+            );
+
+            ManageJobCommand = new CommandHandler(
+                execute: () => ManageJob(),
                 canExecute: () => SelectedJob != null
             );
         }
@@ -38,6 +45,7 @@ namespace WPFApp
                     _selectedJob = value;
                     OnPropertyChanged(nameof(SelectedJob));
                     DeleteJobCommand.RaiseCanExecuteChanged();
+                    ManageJobCommand.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -70,6 +78,10 @@ namespace WPFApp
                 SelectedJob = null;
             }
         }
+        public CommandHandler ManageJobCommand { get; }
+        private void ManageJob() { }
+
         public CommandHandler DeleteExtensionCommand { get; } 
+
     }
 }

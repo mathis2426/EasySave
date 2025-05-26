@@ -20,9 +20,9 @@ namespace ControllerModel.Jobs
         /// <param name="targetPath">Le chemin cible où la sauvegarde sera stockée.</param>
         /// <param name="type">Le type de job (jobType) à créer.</param>
         /// <returns>Le nouvel objet JobObj représentant le job créé.</returns>
-        public JobObj CreateJob(string name, string sourcePath, string targetPath, JobType type)
+        public JobObj CreateJob(int id, string name, string sourcePath, string targetPath, JobType type)
         {
-           JobObj job = new (name, sourcePath, targetPath, type);
+           JobObj job = new (id, name, sourcePath, targetPath, type);
            _state.StateAddDelete(job);
            return job;
         }

@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ControllerModel.LanguagesHelper;
 using System.Globalization;
+using ControllerModel.Jobs;
 
 namespace WPFApp
 {
@@ -23,30 +24,37 @@ namespace WPFApp
     public partial class HomePage : Page
     {
         private Frame _mainFrame;
-        public HomePage(Frame mainFrame)
+        private JobManager _jobManager;
+        public HomePage(Frame mainFrame, JobManager jobManager)
         {
             InitializeComponent();
-            HomePageViewModel homePageViewModel = new HomePageViewModel();
+            HomePageViewModel homePageViewModel = new HomePageViewModel(jobManager);
             DataContext = homePageViewModel;
             _mainFrame = mainFrame;
+            _jobManager = jobManager;
         }
 
         private void ButtonLeave_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.GoBack();
         }
         private void ButtonCreateJob_Click(object sender, RoutedEventArgs e)
         {
-            _mainFrame.Navigate(new CreateJob(_mainFrame));
+            _mainFrame.Navigate(new CreateJob(_mainFrame, _jobManager));
         }
         private void ButtonDeleteJob_Click(object sender, RoutedEventArgs e)
         {
-
+            //_mainFrame.Navigate(new DeleteJob(_mainFrame));
         }
         private void ButtonManageJob_Click(object sender, RoutedEventArgs e)
         {
+            var selectedJob = ((HomePageViewModel)DataContext).SelectedJob;
 
-            _mainFrame.Navigate(new ManageJob());
+            if (selectedJob != null)
+            {
+                _mainFrame.Navigate(new ManageJob(selectedJob));
+            }
+
 
         }
 

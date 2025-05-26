@@ -17,9 +17,15 @@ namespace WPFApp
         private string _inputString;
         private string _outputString;
         private string _stateString;
+        private string _nameString;
+        private string _inputFileString;
+        private string _outputFileString;
+        private string _typeBackupString;
+        
+
         private int _inputJobID;
         private double _progressValue;
-
+        private JobObj _job;
         public JobManager Controller = new();
 
         public ICommand StartCommand { get; }
@@ -27,13 +33,19 @@ namespace WPFApp
         public ICommand ResumeCommand { get; }
 
 
-        public ViewModelManageJob() // constructeur 
+        public ViewModelManageJob(JobObj Job) // constructor
         {
-            StartCommand = new CommandHandler(() => StartJob(), CanStart); // Elle est liée à la méthode ConvertToUpper(), mais seulement si CanConvert() retourne true (exemple : input non vide).
+            _job = Job;
+            StartCommand = new CommandHandler(() => StartJob(), CanStart);
             StopCommand = new CommandHandler(() => StopJob(), CanStop);
             ResumeCommand = new CommandHandler(() => ResumeJob(), CanResume);
             _progressValue = 72.8;
-        }
+            _nameString = "Job name : " + _job.Name;
+            _inputFileString = _job.SourcePath;
+            _outputFileString = _job.TargetPath;
+            _typeBackupString = "Job type : " + _job.Type.ToString();
+
+        }   
         public string InputString
         {
             get => _inputString; // getter
@@ -54,6 +66,34 @@ namespace WPFApp
             }
         }
 
+        public string NameString
+        {
+            get => _nameString;
+            set
+            {
+                _nameString = value;
+                OnPropertyChanged(nameof(NameString));
+            }
+        }
+        public string InputFileString
+        {
+            get => _inputFileString;
+            set
+            {
+                _inputFileString = value;
+                OnPropertyChanged(nameof(InputFileString));
+            }
+        }
+        public string OutputFileString
+        {
+            get => _outputFileString;
+            set
+            {
+                _outputFileString = value;
+                OnPropertyChanged(nameof(OutputFileString));
+            }
+        }
+
         public string StateString
         {
             get => _stateString;
@@ -61,6 +101,15 @@ namespace WPFApp
             {
                 _stateString = value;
                 OnPropertyChanged(nameof(StateString));
+            }
+        }
+        public string TypeBackupString
+        {
+            get => _typeBackupString;
+            set
+            {
+                _typeBackupString = value;
+                OnPropertyChanged(nameof(TypeBackupString));
             }
         }
 
@@ -73,25 +122,25 @@ namespace WPFApp
                 OnPropertyChanged(nameof(JobID));
             }
         }
-        private void StartJob() //appel au model
+        private void StartJob() 
         {
             int result = Controller.LaunchBackup(JobID);
             OutputString = $"Demarrage du job {result}";
         }
 
-        private void StopJob() //appel au model
+        private void StopJob() 
         {
             int result = Controller.LaunchBackup(JobID);/////////////: à faiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiire
             OutputString = $"Demarrage du job {result}";
         }
 
-        private void ResumeJob() //appel au model
+        private void ResumeJob() 
         { 
             int result = Controller.LaunchBackup(JobID);/////////////: à faiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiire
             OutputString = $"Demarrage du job {result}";
         }
 
-        private bool CanStart() //valide si le bouton est cliquable, si le input est vide, le bouton est grisé
+        private bool CanStart() 
         {
 
             if (StateString != "Active" && StateString != "Stopped")
@@ -103,7 +152,7 @@ namespace WPFApp
                 return (false); 
             }
         }
-        private bool CanStop() //valide si le bouton est cliquable, si le input est vide, le bouton est grisé
+        private bool CanStop() 
         {
 
             if (StateString == "Active")
@@ -115,7 +164,7 @@ namespace WPFApp
                 return (false);
             }
         }
-        private bool CanResume() //valide si le bouton est cliquable, si le input est vide, le bouton est grisé
+        private bool CanResume() 
         {
 
             if (StateString == "Stopped")
@@ -128,7 +177,7 @@ namespace WPFApp
             }
         }
 
-        private void OnPropertyChanged([CallerMemberName] string? propertyName = null) // appelé quand une propriété change
+        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

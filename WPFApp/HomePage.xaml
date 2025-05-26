@@ -13,12 +13,15 @@
         <Button x:Name="CreateJob" Content="Create Job" HorizontalAlignment="Left" Margin="591,126,0,0" VerticalAlignment="Top" Click="ButtonCreateJob_Click" Height="33" Width="133"/>
         <Button x:Name="DeleteJob" Command="{Binding DeleteJobCommand}" Content="Delete Job" HorizontalAlignment="Left" Margin="591,192,0,0" VerticalAlignment="Top" Height="33" Width="133"/>
         <Button x:Name="Exit" Content="Exit" HorizontalAlignment="Left" Margin="619,356,0,0" VerticalAlignment="Top" Height="32" Width="133" Click="ButtonLeave_Click"/>
-        <Button x:Name="ManageJob" Content="Manage Job" HorizontalAlignment="Left" Margin="591,270,0,0" VerticalAlignment="Top" Click="ButtonManageJob_Click" Height="33" Width="133"/>
+        <Button x:Name="ManageJob" Command="{Binding ManageJobCommand}" Content="Manage Job" HorizontalAlignment="Left" Margin="591,270,0,0" VerticalAlignment="Top" Click="ButtonManageJob_Click" Height="33" Width="133"/>
         <ListView x:Name="TaskList" ItemsSource="{Binding JobsList}" SelectedItem="{Binding SelectedJob}" Margin="37,50,298,147">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding Name}"/>
-                    <GridViewColumn Header="Number" Width="120" DisplayMemberBinding="{Binding Number}"/>
+                    <GridViewColumn Header="ID" Width="50" DisplayMemberBinding="{Binding Id}"/>
+                    <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Source path" Width="105" DisplayMemberBinding="{Binding SourcePath}"/>
+                    <GridViewColumn Header="Target path" Width="105" DisplayMemberBinding="{Binding TargetPath}"/>
+                    <GridViewColumn Header="Type" Width="100" DisplayMemberBinding="{Binding Type}"/>
                 </GridView>
             </ListView.View>
         </ListView>
