@@ -306,4 +306,19 @@
   <data name="DeletePriority" xml:space="preserve">
     <value>Suppression de priorité</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nom</value>
+  </data>
+  <data name="Number" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="CreateJob" xml:space="preserve">
+    <value>Crer un travail</value>
+  </data>
+  <data name="DeleteJob" xml:space="preserve">
+    <value>Suprimer un travail</value>
+  </data>
+  <data name="ManageJob" xml:space="preserve">
+    <value>Gerer un travail</value>
+  </data>
 </root>

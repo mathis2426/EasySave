@@ -10,15 +10,15 @@
       Title="HomePage">
 
     <Grid Background="White">
-        <Button x:Name="CreateJob" Content="Create Job" HorizontalAlignment="Left" Margin="591,126,0,0" VerticalAlignment="Top" Click="ButtonCreateJob_Click" Height="33" Width="133"/>
-        <Button x:Name="DeleteJob" Command="{Binding DeleteJobCommand}" Content="Delete Job" HorizontalAlignment="Left" Margin="591,192,0,0" VerticalAlignment="Top" Height="33" Width="133"/>
-        <Button x:Name="Exit" Content="Exit" HorizontalAlignment="Left" Margin="619,356,0,0" VerticalAlignment="Top" Height="32" Width="133" Click="ButtonLeave_Click"/>
-        <Button x:Name="ManageJob" Content="Manage Job" HorizontalAlignment="Left" Margin="591,270,0,0" VerticalAlignment="Top" Click="ButtonManageJob_Click" Height="33" Width="133"/>
+        <Button x:Name="CreateJob" Content="{Binding CreateJob}" HorizontalAlignment="Left" Margin="591,126,0,0" VerticalAlignment="Top" Click="ButtonCreateJob_Click" Height="33" Width="133"/>
+        <Button x:Name="DeleteJob" Command="{Binding DeleteJobCommand}" Content="{Binding DeleteJobName}" HorizontalAlignment="Left" Margin="591,192,0,0" VerticalAlignment="Top" Height="33" Width="133"/>
+        <Button x:Name="Exit" Content="{Binding Exit}" HorizontalAlignment="Left" Margin="619,356,0,0" VerticalAlignment="Top" Height="32" Width="133" Click="ButtonLeave_Click"/>
+        <Button x:Name="ManageJob" Content="{Binding ManageJob}" HorizontalAlignment="Left" Margin="591,270,0,0" VerticalAlignment="Top" Click="ButtonManageJob_Click" Height="33" Width="133"/>
         <ListView x:Name="TaskList" ItemsSource="{Binding JobsList}" SelectedItem="{Binding SelectedJob}" Margin="37,50,298,147">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding Name}"/>
-                    <GridViewColumn Header="Number" Width="120" DisplayMemberBinding="{Binding Number}"/>
+                    <GridViewColumn Header="{Binding Name}" Width="120" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="{Binding Number}" Width="120" DisplayMemberBinding="{Binding Number}"/>
                 </GridView>
             </ListView.View>
         </ListView>
