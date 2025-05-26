@@ -291,4 +291,19 @@
   <data name="Language" xml:space="preserve">
     <value>Langue</value>
   </data>
+  <data name="AddExtension" xml:space="preserve">
+    <value>Ajout d'extension</value>
+  </data>
+  <data name="DeleteExtension" xml:space="preserve">
+    <value>Suppression d'extension</value>
+  </data>
+  <data name="PriorityExtension" xml:space="preserve">
+    <value>Extension prioritaire</value>
+  </data>
+  <data name="AddPriority" xml:space="preserve">
+    <value>Ajout de priorité</value>
+  </data>
+  <data name="DeletePriority" xml:space="preserve">
+    <value>Suppression de priorité</value>
+  </data>
 </root>

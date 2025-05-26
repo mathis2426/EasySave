@@ -35,39 +35,6 @@ namespace WPFApp
 
             BlockingApp = _jobManager.GetBlockingApp();
             _selectedLanguage = languageManager.saveConfigObj.Language;
-        }
-
-        public string ExtensionsName => languageManager.Get("ExtensionsName");
-        public string BlockingApplication => languageManager.Get("BlockingApplication");
-        public string Exit => languageManager.Get("Exit");
-        public string Add => languageManager.Get("Add");
-        public string Delete => languageManager.Get("Delete");
-        public string Language => languageManager.Get("Language");
-
-        private void RefreshTranslations()
-        {
-            OnPropertyChanged(nameof(ExtensionsName));
-            OnPropertyChanged(nameof(BlockingApplication));
-            OnPropertyChanged(nameof(Exit));
-            OnPropertyChanged(nameof(Add));
-            OnPropertyChanged(nameof(Delete));
-            OnPropertyChanged(nameof(Language));
-        }
-        public ObservableCollection<ExtensionItem> PriorityExtensions { get; } = new ObservableCollection<ExtensionItem>();
-
-        public SettingsViewModel()
-        {
-            NewExtensionName = ".";
-
-            AddExtensionCommand = new CommandHandler(
-                execute: AddExtension,
-                canExecute: () => !string.IsNullOrWhiteSpace(NewExtensionName)
-            );
-
-            DeleteExtensionCommand = new CommandHandler(
-                execute: DeleteExtension,
-                canExecute: () => SelectedExtension != null
-            );
 
             AddPriorityExtensionCommand = new CommandHandler(
                 execute: AddPriorityExtension,
@@ -91,6 +58,32 @@ namespace WPFApp
                 PriorityExtensions.Add(new ExtensionItem { Name = ext });
             }
         }
+
+        public string ExtensionsName => languageManager.Get("ExtensionsName");
+        public string BlockingApplication => languageManager.Get("BlockingApplication");
+        public string Exit => languageManager.Get("Exit");
+        public string Language => languageManager.Get("Language");
+        public string AddExtensionName => languageManager.Get("AddExtension");
+        public string DeleteExtensionName => languageManager.Get("DeleteExtension");
+        public string PriorityExtension => languageManager.Get("PriorityExtension");
+        public string AddPriority => languageManager.Get("AddPriority");
+        public string DeletePriority => languageManager.Get("DeletePriority");
+
+
+        private void RefreshTranslations()
+        {
+            OnPropertyChanged(nameof(ExtensionsName));
+            OnPropertyChanged(nameof(BlockingApplication));
+            OnPropertyChanged(nameof(Exit));
+            OnPropertyChanged(nameof(Language));
+            OnPropertyChanged(nameof(AddExtensionName));
+            OnPropertyChanged(nameof(DeleteExtensionName));
+            OnPropertyChanged(nameof(PriorityExtension));
+            OnPropertyChanged(nameof(AddPriority));
+            OnPropertyChanged(nameof(DeletePriority));
+
+        }
+        public ObservableCollection<ExtensionItem> PriorityExtensions { get; } = new ObservableCollection<ExtensionItem>();
 
         public string OutputText
         {

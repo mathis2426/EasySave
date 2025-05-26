@@ -1,4 +1,5 @@
 ﻿using ControllerModel.Jobs;
+using ControllerModel.LanguagesHelper;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -8,6 +9,7 @@ namespace WPFApp
     public class HomePageViewModel : AbstractViewModel
     {
         private readonly JobManager _jobManager = new JobManager();
+        private readonly LanguageManager languageManager = new();
         private string _outputText = string.Empty;
         private JobObj _selectedJob;
 
@@ -26,6 +28,8 @@ namespace WPFApp
                 execute: DeleteJob,
                 canExecute: () => SelectedJob != null
             );
+
+            _selectedLanguage = languageManager.saveConfigObj.Language;
         }
 
         public JobObj SelectedJob
@@ -70,6 +74,35 @@ namespace WPFApp
                 SelectedJob = null;
             }
         }
-        public CommandHandler DeleteExtensionCommand { get; } 
+        public CommandHandler DeleteExtensionCommand { get; }
+
+        private void RefreshTranslations()
+        {
+        }
+
+        private string _selectedLanguage;
+        public string SelectedLanguage
+        {
+            get => _selectedLanguage;
+            set
+            {
+                if (_selectedLanguage != value)
+                {
+                    _selectedLanguage = value;
+
+                    languageManager.SetLanguage(_selectedLanguage);
+                    RefreshTranslations();
+                    OnPropertyChanged();
+                    OutputText = $"{languageManager.Get("language_changed")} : {_selectedLanguage}";
+
+                }
+            }
+        }
+
+        public ObservableCollection<string> AvailableLanguages { get; } = new ObservableCollection<string>
+        {
+            "fr",
+            "en-US"
+        };
     }
 }
