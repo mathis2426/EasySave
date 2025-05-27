@@ -23,6 +23,7 @@ namespace WPFApp
         public ManageAllJob()
         {
             InitializeComponent();
+            DataContext = new ManageAllJobViewModel();
         }
 
         private void ButtonLeave_ClickManageAllJob(object sender, RoutedEventArgs e)
