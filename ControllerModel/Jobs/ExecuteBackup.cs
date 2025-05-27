@@ -217,7 +217,7 @@ namespace ControllerModel.Jobs
 
         private bool IsHeavyFile(long fileSize)
         {
-            return fileSize > _saveConfig.LargeFileThreshold * 1024;
+            return fileSize > _saveConfig.LargeFileThreshold;
         }
 
         private void WaitIfHeavyFile(long fileSize)
