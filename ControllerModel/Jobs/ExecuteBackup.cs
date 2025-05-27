@@ -10,6 +10,8 @@ using ControllerModel.Logs2;
 using ControllerModel.JsonHelper;
 using System.Reflection;
 
+
+
 namespace ControllerModel.Jobs
 {
     public class ExecuteBackup
@@ -116,6 +118,7 @@ namespace ControllerModel.Jobs
             // Simulate file transfer
             string targetPath = job.TargetPath;
             string name = job.Name;
+            int id = job.Id;
 
             // Timer
             Stopwatch stopwatch = new();
@@ -133,10 +136,10 @@ namespace ControllerModel.Jobs
             switch (job.Type)
             {
                 case JobType.Full:
-                    FullBackup(name, sourcePath, targetPath, totalFiles, totalFileSize, totalFilesLeft, fileEncryptionTimes, pauseEvent, token);
+                    FullBackup(id, name, sourcePath, targetPath, totalFiles, totalFileSize, totalFilesLeft, fileEncryptionTimes, pauseEvent, token);
                     break;
                 case JobType.Differential:
-                    DifferentialBackup(name, sourcePath, targetPath, totalFiles, totalFileSize, totalFilesLeft, fileEncryptionTimes, pauseEvent, token);
+                    DifferentialBackup(id, name, sourcePath, targetPath, totalFiles, totalFileSize, totalFilesLeft, fileEncryptionTimes, pauseEvent, token);
                     break;
             }
             stopwatch.Stop();
@@ -160,6 +163,8 @@ namespace ControllerModel.Jobs
                 DateTime.Now,
                 fileEncryptionTimes
             );
+            ChangeButtonStatus(id, 0);
+            ChangeProgressionBar(id, 0);
             Status?.Invoke(0);
             ProgressBar?.Invoke(100);
             Console.WriteLine($"[END] Job {name} terminé en {stopwatch.ElapsedMilliseconds} ms");
@@ -178,7 +183,7 @@ namespace ControllerModel.Jobs
         /// <param name="totalFiles">Nombre total de fichiers à sauvegarder.</param>
         /// <param name="totalFileSize">Taille totale des fichiers à sauvegarder en octets.</param>
         /// <param name="totalFilesLeft">Nombre de fichiers restant à traiter.</param>
-        public void FullBackup(string name, string sourcePath, string targetPath, int totalFiles, long totalFileSize, int totalFilesLeft, Dictionary<string, long> fileEncryptionTimes, ManualResetEventSlim pauseEvent, CancellationToken token)
+        public void FullBackup(int id, string name, string sourcePath, string targetPath, int totalFiles, long totalFileSize, int totalFilesLeft, Dictionary<string, long> fileEncryptionTimes, ManualResetEventSlim pauseEvent, CancellationToken token)
         {
 
             token.ThrowIfCancellationRequested();
@@ -194,11 +199,15 @@ namespace ControllerModel.Jobs
                 {
 
                     Debug.WriteLine("Le job est en pause. Libération des ressources...");
+                    ChangeButtonStatus(id, 2);
+
                     Status?.Invoke(2);
                     pauseEvent.Wait();
                 }
                 else if (token.IsCancellationRequested)
                 {
+                    ChangeButtonStatus(id, 0);
+
                     Status?.Invoke(0);
                     token.ThrowIfCancellationRequested();
                 }
@@ -228,6 +237,7 @@ namespace ControllerModel.Jobs
                     timeToEncrypt = encryptTimer.ElapsedMilliseconds;
                     if (token.IsCancellationRequested)
                     {
+                        ChangeButtonStatus(id, 0);
                         Status?.Invoke(0);
                         token.ThrowIfCancellationRequested();
                     }
@@ -254,15 +264,37 @@ namespace ControllerModel.Jobs
                 );
                 if (token.IsCancellationRequested)
                 {
+                    ChangeButtonStatus(id, 0);
                     Status?.Invoke(0);
                     token.ThrowIfCancellationRequested();
                 }
+
+                ChangeButtonStatus(id, 1);
+                ChangeProgressionBar(id, progression);
 
                 Status?.Invoke(1);
                 ProgressBar?.Invoke(progression);
             }
 
         }
+
+
+        public void ChangeButtonStatus(int id, int status) 
+        {
+            if (JobManager.threadsByJob.TryGetValue(id, out var oldValue))
+            {
+                JobManager.threadsByJob[id] = (oldValue.Thread, oldValue.TokenSource, oldValue.PauseEvent, status, oldValue.progressBarPercent);
+            }
+        }
+
+        public void ChangeProgressionBar(int id, double progress)
+        {
+            if (JobManager.threadsByJob.TryGetValue(id, out var oldValue))
+            {
+                JobManager.threadsByJob[id] = (oldValue.Thread, oldValue.TokenSource, oldValue.PauseEvent, oldValue.ButtonStatus, progress);
+            }
+        }
+
 
         /// <summary>
         /// Performs a differential backup: copies only modified or new files.
@@ -274,7 +306,7 @@ namespace ControllerModel.Jobs
         /// <param name="totalFiles">Nombre total de fichiers à analyser.</param>
         /// <param name="totalFileSize">Taille totale des fichiers à analyser en octets.</param>
         /// <param name="totalFilesLeft">Nombre de fichiers restant à traiter.</param>
-        public void DifferentialBackup(string name, string sourcePath, string targetPath, int totalFiles, long totalFileSize, int totalFilesLeft, Dictionary<string, long> fileEncryptionTimes, ManualResetEventSlim pauseEvent, CancellationToken token)
+        public void DifferentialBackup(int id, string name, string sourcePath, string targetPath, int totalFiles, long totalFileSize, int totalFilesLeft, Dictionary<string, long> fileEncryptionTimes, ManualResetEventSlim pauseEvent, CancellationToken token)
         {
             
             
@@ -284,11 +316,14 @@ namespace ControllerModel.Jobs
                 {
 
                     Debug.WriteLine("Le job est en pause. Libération des ressources...");
+                    ChangeButtonStatus(id, 2);
+                    
                     Status?.Invoke(2);
                     pauseEvent.Wait();
                 }else if (token.IsCancellationRequested)
                 {
-                    Status?.Invoke(0);
+                    ChangeButtonStatus(id, 0);
+                    Status?.Invoke(0);  
                     token.ThrowIfCancellationRequested();
                 }
                 
@@ -319,6 +354,7 @@ namespace ControllerModel.Jobs
                         timeToEncrypt = encryptTimer.ElapsedMilliseconds;
                         if (token.IsCancellationRequested)
                         {
+                            ChangeButtonStatus(id, 0);
                             Status?.Invoke(0);
                             token.ThrowIfCancellationRequested();
                         }
@@ -346,9 +382,12 @@ namespace ControllerModel.Jobs
                 );
                 if (token.IsCancellationRequested)
                 {
+                    ChangeButtonStatus(id, 0);
                     Status?.Invoke(0);
                     token.ThrowIfCancellationRequested();
                 }
+                ChangeButtonStatus(id, 1);
+                ChangeProgressionBar(id, progression);
                 Status?.Invoke(1);
                 ProgressBar?.Invoke(progression);
             }

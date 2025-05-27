@@ -51,12 +51,12 @@ namespace WPFApp
             _stateString = 0;
             Controller.ExecuteBackup.Status += (int status) => {
                 this.OnPropertyChanged(null);
-                StateString = status; 
+                StateString = JobManager.threadsByJob[Job.Id].ButtonStatus; 
                 
             };
             Controller.ExecuteBackup.ProgressBar += (int progressBar) => {
                 this.OnPropertyChanged(null);
-                ProgressValue = progressBar;
+                ProgressValue = JobManager.threadsByJob[Job.Id].progressBarPercent;
             };
 
         }   
