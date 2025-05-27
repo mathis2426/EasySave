@@ -5,40 +5,31 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WPFApp"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="470" d:DesignWidth="800"
       Title="CreateJob">
 
     <Grid Background="White">
-        <StackPanel Orientation="Vertical" Margin="20">
-            <Label Content="Enter the name of the job" HorizontalAlignment="Left" Margin="0,15,0,0" VerticalAlignment="Top" Width="165"/>
-            <TextBox x:Name="JobName" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="396" Height="25"/>
+        <Canvas Margin="20">
+            <Label Content="{Binding JobNameLabel}" Canvas.Left="0" Canvas.Top="15" Width="165"/>
+            <TextBox Text="{Binding JobName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="0" Canvas.Top="40" Width="396" Height="25"/>
 
-            <Label Content="Type of backup" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top" Width="165"/>
-            <ComboBox x:Name="TypeComboBox" HorizontalAlignment="Left" Width="396" RenderTransformOrigin="0.51,0.602"/>
+            <Label Content="{Binding BackupTypeLabel}" Canvas.Left="0" Canvas.Top="80" Width="165"/>
+            <ComboBox ItemsSource="{Binding JobTypes}" SelectedItem="{Binding SelectedJobType}" Canvas.Left="0" Canvas.Top="105" Width="396"/>
 
-            <Label Content="Select a source path" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top" Width="165"/>
-            <TextBox x:Name="SourcePath" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="396" Height="25"/>
+            <Label Content="{Binding SourcePathLabel}" Canvas.Left="0" Canvas.Top="145" Width="165"/>
+            <TextBox Text="{Binding SourcePath, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="0" Canvas.Top="170" Width="396" Height="25"/>
+            <Button Content="{Binding Browse}" Tag="SourcePath" Command="{Binding BrowseSourceCommand}" Canvas.Left="439" Canvas.Top="170" Width="110" Height="25"/>
 
-            <Label Content="Select a target path" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top" Width="165"/>
-            <TextBox x:Name="TargetPath" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="396" Height="25"/>
+            <Label Content="{Binding TargetPathLabel}" Canvas.Left="0" Canvas.Top="210" Width="165"/>
+            <TextBox Text="{Binding TargetPath, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="0" Canvas.Top="235" Width="396" Height="25"/>
+            <Button Content="{Binding Browse}" Tag="TargetPath" Command="{Binding BrowseTargetCommand}" Canvas.Left="439" Canvas.Top="235" Width="110" Height="25"/>
 
-            <Label Content="Console" HorizontalAlignment="Left" Margin="0,40,0,0" VerticalAlignment="Top" Width="165"/>
-            <TextBox x:Name="ConsoleBox" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="517" Height="50"/>
-        </StackPanel>
+            <Label Content="Console" Canvas.Left="0" Canvas.Top="280" Width="165"/>
+            <TextBox x:Name="ConsoleBox" Canvas.Left="0" Canvas.Top="305" Width="517" Height="50"/>
 
-        <StackPanel Orientation="Vertical" Margin="439,200,0,0" RenderTransformOrigin="0.485,-0.072">
-            <Button Name="ButtonSourcePath" Tag="SourcePath" Content="Browse" HorizontalAlignment="Left" Margin="0,0,0,45" Click="ButtonPath_ClickJobCreation" Width="110" Height="25"/>
-            <Button Name="ButtonTargetPath" Tag="TargetPath" Content="Browse" HorizontalAlignment="Left" Click="ButtonPath_ClickJobCreation" Width="110" Height="25"/>
-        </StackPanel>
+            <Button Content="{Binding ValidateLabel}" Command="{Binding ValidateCommand}" Canvas.Left="580" Canvas.Top="272" Width="133" Height="32"/>
+            <Button Content="{Binding ExitLabel}" Command="{Binding ExitCommand}" Canvas.Left="580" Canvas.Top="319" Width="133" Height="32"/>
 
-        <StackPanel Orientation="Horizontal" Margin="580,5,0,0">
-            <Label Content="Language" HorizontalAlignment="Left" Margin="0,18,0,0" VerticalAlignment="Top" Width="72" Height="30"/>
-            <ComboBox x:Name="LanguageComboBox" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.51,0.602"/>
-        </StackPanel>
-
-        <StackPanel Orientation="Vertical" Margin="647,304,20,37">
-            <Button x:Name="ValidateNewJob" Content="Validate" HorizontalAlignment="Left" Margin="0,0,0,45" VerticalAlignment="Top" Height="32" Width="133" Click="ButtonValidate_ClickJobCreation"/>
-            <Button x:Name="ExitCreateJob" Content="Exit" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32" Width="133" Click="ButtonLeave_ClickJobCreation"/>
-        </StackPanel>
+        </Canvas>
     </Grid>
 </Page>

@@ -85,23 +85,30 @@ namespace WPFApp
         public CommandHandler DeleteExtensionCommand { get; }
 
         public string Exit => languageManager.Get("Exit");
-        public string Name => languageManager.Get("Name");
-        public string Number => languageManager.Get("Number");
         public string Language => languageManager.Get("Language");
         public string CreateJob => languageManager.Get("CreateJob");
         public string DeleteJobName => languageManager.Get("DeleteJob");
         public string ManageJobName => languageManager.Get("ManageJob");
+        public string ID => languageManager.Get("ID");
+        public string Name => languageManager.Get("Name");
+        public string SourcePath => languageManager.Get("SourcePath");
+        public string TargetPath => languageManager.Get("TargetPath");
+        public string Type => languageManager.Get("Type");
+
 
 
         private void RefreshTranslations()
         {
             OnPropertyChanged(nameof(Exit));
             OnPropertyChanged(nameof(Name));
-            OnPropertyChanged(nameof(Number));
+            OnPropertyChanged(nameof(ID));
+            OnPropertyChanged(nameof(SourcePath));
+            OnPropertyChanged(nameof(TargetPath));
+            OnPropertyChanged(nameof(Type));
             OnPropertyChanged(nameof(Language));
             OnPropertyChanged(nameof(CreateJob));
             OnPropertyChanged(nameof(DeleteJobName));
-            OnPropertyChanged(nameof(ManageJob));
+            OnPropertyChanged(nameof(ManageJobName));
             OnPropertyChanged(nameof(DeleteExtensionCommand));
         }
 
