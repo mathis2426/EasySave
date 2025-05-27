@@ -7,7 +7,7 @@ using WPFApp;
 public class ManageAllJobViewModel : INotifyPropertyChanged
 {
     private readonly JobManager _jobManager = new();
-    public ObservableCollection<JobViewModel> Jobs { get; set; } = new();
+    //public ObservableCollection<JobViewModel> Jobs { get; set; } = new();
 
     public ICommand StartCommand { get; }
     public ICommand PauseCommand { get; }
@@ -30,7 +30,7 @@ public class ManageAllJobViewModel : INotifyPropertyChanged
         // Convertir chaque JobObj en JobViewModel
         foreach (var job in _jobManager.JobList)
         {
-            Jobs.Add(new JobViewModel(job));
+            //Jobs.Add(new JobViewModel(job));
         }
 
         StartCommand = new RelayCommand(StartAllJobs);
