@@ -494,9 +494,10 @@ namespace ControllerModel.Jobs
                         if (_listExtensionFileCrypt.Contains(Path.GetExtension(sourceFilePath)))
                         {
                             Stopwatch encryptTimer = Stopwatch.StartNew();
+                            string basePath = Path.Combine(Path.GetDirectoryName(AppContext.BaseDirectory), "win-x64/CryptoSoft.exe");
                             ProcessStartInfo processStartInfo = new ProcessStartInfo
                             {
-                                FileName = "C:\\Users\\Mathis\\OneDrive\\Bureau\\cesi temporaire\\A3\\Bloc Génie logiciel\\Prosit-5\\Prosit5\\Prosit5\\bin\\Release\\net8.0\\Prosit5.exe",
+                                FileName = basePath,
                                 Arguments = $"\"{sourceFilePath}\" \"{destFilePath}\"",
                                 RedirectStandardOutput = true,
                                 UseShellExecute = false,
