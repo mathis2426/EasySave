@@ -90,7 +90,7 @@ namespace WPFApp
         public string Language => languageManager.Get("Language");
         public string CreateJob => languageManager.Get("CreateJob");
         public string DeleteJobName => languageManager.Get("DeleteJob");
-        public string ManageJob => languageManager.Get("ManageJob");
+        public string ManageJobName => languageManager.Get("ManageJob");
 
 
         private void RefreshTranslations()
@@ -131,8 +131,5 @@ namespace WPFApp
         };
         public CommandHandler ManageJobCommand { get; }
         private void ManageJob() { }
-
-        public CommandHandler DeleteExtensionCommand { get; } 
-
     }
 }
