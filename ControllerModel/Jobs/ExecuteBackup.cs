@@ -134,36 +134,40 @@ namespace ControllerModel.Jobs
             return 0;
         }
 
+        private bool IsHeavyFile(long fileSize)
+        {
+            return fileSize > _saveConfig.LargeFileThreshold * 1024;
+        }
+
         private void WaitIfHeavyFile(long fileSize)
         {
-            if (fileSize > _saveConfig.LargeFileThreshold)
+            if (!IsHeavyFile(fileSize)) return;
+
+            Console.WriteLine($"Waiting to process large file > {_saveConfig.LargeFileThreshold} kB");
+
+            while (true)
             {
-                Console.WriteLine($"Waiting to process large file > {_saveConfig.LargeFileThreshold} kB");
-                while (true)
+                lock (_lockHeavyFile)
                 {
-                    lock (_lockHeavyFile)
+                    if (_heavyFileInProgress < 1)
                     {
-                        if (_heavyFileInProgress < 1)
-                        {
-                            _heavyFileInProgress++;
-                            Console.WriteLine("Large file allowed to proceed.");
-                            break;
-                        }
+                        _heavyFileInProgress++;
+                        Console.WriteLine("Large file allowed to proceed.");
+                        break;
                     }
-                    Thread.Sleep(100);
                 }
+                Thread.Sleep(100);
             }
         }
 
         private void DoneProcessingHeavyFile(long fileSize)
         {
-            if (fileSize > _saveConfig.LargeFileThreshold)
+            if (!IsHeavyFile(fileSize)) return;
+
+            lock (_lockHeavyFile)
             {
-                lock (_lockHeavyFile)
-                {
-                    _heavyFileInProgress--;
-                    Console.WriteLine("Large file finished. Slot released.");
-                }
+                _heavyFileInProgress--;
+                Console.WriteLine("Large file finished. Slot released.");
             }
         }
 
