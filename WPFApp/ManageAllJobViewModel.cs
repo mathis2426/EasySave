@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ControllerModel.Jobs;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -15,8 +14,10 @@ using ControllerModel.LanguagesHelper;
 
 namespace WPFApp
 {
-    public class ManageAllJobViewModel : AbstractViewModel
+    public class ManageAllJobViewModel : INotifyPropertyChanged
     {
+        private readonly JobManager _jobManager = new();
+        public ObservableCollection<JobViewModel> Jobs { get; set; } = new();
 
         private string _inputString;
         private string _outputString;
@@ -78,7 +79,12 @@ namespace WPFApp
                 OnPropertyChanged(nameof(InputString));
             }
         }
+        public ICommand StartCommand { get; }
+        public ICommand PauseCommand { get; }
+        public ICommand ResumeCommand { get; }
+        public ICommand StopCommand { get; }
 
+        private string _outputString;
         public string OutputString
         {
             get => _outputString;
@@ -150,7 +156,8 @@ namespace WPFApp
         }
         private void StartJob()
         {
-            
+
+        public ManageAllJobViewModel()
             int result = Controller.LaunchBackup(JobID);
             OutputString = $"Demarrage du job {JobID}";
 
@@ -158,135 +165,59 @@ namespace WPFApp
 
         private void PauseJob() 
         {
+            // Convertir chaque JobObj en JobViewModel
+            foreach (var job in _jobManager.JobList)
 
             if (JobManager.threadsByJob.TryGetValue(JobID, out var threadInfo))
             {
+                Jobs.Add(new JobViewModel(job));
                 threadInfo.PauseEvent.Reset();
                 OutputString = $"Pause du job {JobID}";
             }
-            
+
+            StartCommand = new RelayCommand(StartAllJobs);
+            PauseCommand = new RelayCommand(PauseAllJobs);
+            ResumeCommand = new RelayCommand(ResumeAllJobs);
+            StopCommand = new RelayCommand(StopAllJobs);
         }
 
-        private void StopJob()
+        private void StartAllJobs()
         {
-
-            if (JobManager.threadsByJob.TryGetValue(JobID, out var threadInfo))
-            {
-                threadInfo.TokenSource.Cancel();
-                OutputString = $"Arrêt du job {JobID}"; ;
-            }
-
+            _jobManager.LaunchBackup(0); // 0 = tous les jobs
+            OutputString = "Tous les jobs ont démarré.";
         }
 
-        private void ResumeJob() 
+        private void PauseAllJobs()
         {
-            if (JobManager.threadsByJob.TryGetValue(JobID, out var threadInfo))
+            foreach (var kvp in JobManager.threadsByJob)
             {
-                threadInfo.PauseEvent.Set(); 
-                OutputString = $"Redémarrage du job : {JobID}";
+                kvp.Value.PauseEvent.Reset(); // Pause
             }
+            OutputString = "Tous les jobs sont en pause.";
         }
 
-        private bool CanStart()
+        private void ResumeAllJobs()
         {
-            Debug.WriteLine("CanStart called with state: " + StateString);
-            if (StateString != 1 && StateString != 2)
+            foreach (var kvp in JobManager.threadsByJob)
             {
-                return (true);
+                kvp.Value.PauseEvent.Set(); // Resume
             }
-            else
-            {
-                return (false);
-            }
-        }
-        private bool CanPauseOrStop() 
-        {
-
-            if (StateString == 1)
-            {
-                return (true);
-            }
-            else
-            {
-                return (false);
-            }
-        }
-        private bool CanResume()
-        {
-
-            if (StateString == 2)
-            {
-                return (true);
-            }
-            else
-            {
-                return (false);
-            }
+            OutputString = "Tous les jobs ont repris.";
         }
 
-
-        public double ProgressValue
+        private void StopAllJobs()
         {
-            get => _progressValue;
-            set
+            foreach (var kvp in JobManager.threadsByJob)
             {
-                _progressValue = value;
-                OnPropertyChanged(nameof(ProgressValue));
+                kvp.Value.TokenSource.Cancel(); // Stop
             }
+            OutputString = "Tous les jobs ont été arrêtés.";
         }
 
-        public string JobNameLabel => languageManager.Get("job_name");
-        public string StartJobLabel => languageManager.Get("start_job");
-        public string PauseJobLabel => languageManager.Get("pause_job");
-        public string ResumeJobLabel => languageManager.Get("resume_job");
-        public string ExitLabel => languageManager.Get("Exit");
-        public string InputFileLabel => languageManager.Get("job_source");
-        public string OutputFileLabel => languageManager.Get("job_target");
-        public string PriorityFileLabel => languageManager.Get("priority_files");
-        public string JobTypeLabel => languageManager.Get("job_type");
-        public string Language => languageManager.Get("language");
-        public string PercentageCompleted => languageManager.Get("percentage_completed");
-        public string StopJobLabel => languageManager.Get("stop_job");
-
-        private void RefreshTranslations()
-        {
-            OnPropertyChanged(nameof(StartJobLabel));
-            OnPropertyChanged(nameof(PauseJobLabel));
-            OnPropertyChanged(nameof(ResumeJobLabel));
-            OnPropertyChanged(nameof(ExitLabel));
-            OnPropertyChanged(nameof(InputFileLabel));
-            OnPropertyChanged(nameof(OutputFileLabel));
-            OnPropertyChanged(nameof(PriorityFileLabel));
-            OnPropertyChanged(nameof(JobTypeLabel));
-            OnPropertyChanged(nameof(Language));
-            OnPropertyChanged(nameof(PercentageCompleted));
-
-        }
-
-        private string _selectedLanguage;
-        public string SelectedLanguage
-        {
-            get => _selectedLanguage;
-            set
-            {
-                if (_selectedLanguage != value)
-                {
-                    _selectedLanguage = value;
-
-                    languageManager.SetLanguage(_selectedLanguage);
-                    RefreshTranslations();
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public ObservableCollection<string> AvailableLanguages { get; } = new ObservableCollection<string>
-        {
-            "fr",
-            "en-US"
-        };
-
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string name) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
-    
+
    
 }
