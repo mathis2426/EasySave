@@ -483,8 +483,6 @@ namespace ControllerModel.Jobs
 
                 WaitIfHeavyFile(fileSize);
 
-
-
                 try
                 {
                     // Copy file only if it doesn't exist or is newer than the one in target
