@@ -22,7 +22,6 @@ namespace ControllerModel.Jobs
         public JsonHelperClassJsonUpdate jsonHelperClassJsonUpdate = JsonHelperFactory.CreateJsonUpdate();
 
         public SaveConfig _saveConfig;
-
         public string binPathGlobal;
 
         // Lock object to synchronize access to the priority file count
@@ -34,6 +33,9 @@ namespace ControllerModel.Jobs
         // ManualResetEvent used as a signal to control when non-priority files can be processed.
         // Initially set to false, meaning non-priority files must wait until all priority files are done.
         private ManualResetEvent _canProcessNonPriorityFiles = new(false);
+
+        private readonly object _lockHeavyFile = new();
+        private int _heavyFileInProgress = 0;
 
         // Property to safely get/set the count of priority files with locking
         public int PriorityFile
@@ -132,6 +134,38 @@ namespace ControllerModel.Jobs
             return 0;
         }
 
+        private void WaitIfHeavyFile(long fileSize)
+        {
+            if (fileSize > _saveConfig.LargeFileThreshold)
+            {
+                Console.WriteLine($"Waiting to process large file > {_saveConfig.LargeFileThreshold} kB");
+                while (true)
+                {
+                    lock (_lockHeavyFile)
+                    {
+                        if (_heavyFileInProgress < 1)
+                        {
+                            _heavyFileInProgress++;
+                            Console.WriteLine("Large file allowed to proceed.");
+                            break;
+                        }
+                    }
+                    Thread.Sleep(100);
+                }
+            }
+        }
+
+        private void DoneProcessingHeavyFile(long fileSize)
+        {
+            if (fileSize > _saveConfig.LargeFileThreshold)
+            {
+                lock (_lockHeavyFile)
+                {
+                    _heavyFileInProgress--;
+                    Console.WriteLine("Large file finished. Slot released.");
+                }
+            }
+        }
 
         // Performs a full backup of all files from source to target folder
         public void FullBackup(string name, string sourcePath, string targetPath, int totalFiles, long totalFileSize, int totalFilesLeft, Dictionary<string, long> fileEncryptionTimes)
@@ -153,6 +187,7 @@ namespace ControllerModel.Jobs
                 string fileName = Path.GetFileName(file);
                 string targetFile = Path.Combine(targetPath, fileName);
                 string extension = Path.GetExtension(file);
+                long fileSize = new FileInfo(file).Length;
                 bool isPriority = _extensionPriorityFile.Contains(extension);
                 long timeToEncrypt = 0;
 
@@ -165,15 +200,15 @@ namespace ControllerModel.Jobs
                     _canProcessNonPriorityFiles.WaitOne();
                 }
 
+                WaitIfHeavyFile(fileSize);
+
                 try
                 {
                     if (_listExtensionFileCrypt.Contains(extension))
                     {
                         // Encrypt files with extensions requiring encryption
                         Stopwatch encryptTimer = Stopwatch.StartNew();
-
                         string basePath = Path.Combine(Path.GetDirectoryName(AppContext.BaseDirectory), "win-x64/CryptoSoft.exe");
-
                         ProcessStartInfo processStartInfo = new ProcessStartInfo
                         {
                             FileName = basePath,
@@ -197,6 +232,7 @@ namespace ControllerModel.Jobs
                 }
                 finally
                 {
+                    DoneProcessingHeavyFile(fileSize);
                     // Decrement the priority file count once a priority file is processed
                     if (isPriority)
                     {
@@ -241,6 +277,7 @@ namespace ControllerModel.Jobs
                 string fileName = Path.GetFileName(sourceFilePath);
                 string destFilePath = Path.Combine(targetPath, fileName);
                 string extension = Path.GetExtension(sourceFilePath);
+                long fileSize = new FileInfo(sourceFilePath).Length;
                 bool isPriority = _extensionPriorityFile.Contains(extension);
                 long timeToEncrypt = 0;
 
@@ -252,6 +289,8 @@ namespace ControllerModel.Jobs
                     Console.WriteLine("Waiting for non-priority files...");
                     _canProcessNonPriorityFiles.WaitOne();
                 }
+
+                WaitIfHeavyFile(fileSize);
 
                 try
                 {
@@ -286,6 +325,7 @@ namespace ControllerModel.Jobs
                 }
                 finally
                 {
+                    DoneProcessingHeavyFile(fileSize);
                     // Decrement priority file count and signal if done
                     if (isPriority)
                     {

@@ -13,6 +13,7 @@ namespace ControllerModel.JsonHelper
         public string PathTologStatus { get; set; }
         public string[] ExtensionFileCrypt { get; set; }
         public string[] ExtensionPriorityFile { get; set; }
+        public int LargeFileThreshold { get; set; }
 
 
         /// <summary>
@@ -23,13 +24,14 @@ namespace ControllerModel.JsonHelper
         /// <param name="Language">Code de langue (culture).</param>
         /// <param name="ExtensionFileCrypt">Extension des fichiers à crypter.</param>
         /// <param name="ExtensionPriorityFile">Extension des fichiers prioritaires.</param>
-        public SaveConfig(string PathTologDaily, string PathTologStatus, string Language, string[] ExtensionFileCrypt, string[] ExtensionPriorityFile) 
+        public SaveConfig(string PathTologDaily, string PathTologStatus, string Language, string[] ExtensionFileCrypt, string[] ExtensionPriorityFile, int LargeFileThreshold) 
         { 
             this.PathToLogDaily = PathTologDaily;
             this.PathTologStatus = PathTologStatus;
             this.Language = Language;
             this.ExtensionFileCrypt = ExtensionFileCrypt;
             this.ExtensionPriorityFile = ExtensionPriorityFile;
+            this.LargeFileThreshold = LargeFileThreshold;
         }
 
     }
