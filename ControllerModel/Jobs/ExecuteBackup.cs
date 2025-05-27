@@ -319,7 +319,7 @@ namespace ControllerModel.Jobs
                     {
                         // Encrypt files with extensions requiring encryption
                         Stopwatch encryptTimer = Stopwatch.StartNew();
-                        string basePath = Path.Combine(Path.GetDirectoryName(AppContext.BaseDirectory), "win-x64/CryptoSoft.exe");
+                        string basePath = Path.Combine(AppContext.BaseDirectory, "win-x64", "CryptoSoft.exe");
                         ProcessStartInfo processStartInfo = new ProcessStartInfo
                         {
                             FileName = basePath,
@@ -494,7 +494,7 @@ namespace ControllerModel.Jobs
                         if (_listExtensionFileCrypt.Contains(Path.GetExtension(sourceFilePath)))
                         {
                             Stopwatch encryptTimer = Stopwatch.StartNew();
-                            string basePath = Path.Combine(Path.GetDirectoryName(AppContext.BaseDirectory), "win-x64/CryptoSoft.exe");
+                            string basePath = Path.Combine(AppContext.BaseDirectory, "win-x64", "CryptoSoft.exe");
                             ProcessStartInfo processStartInfo = new ProcessStartInfo
                             {
                                 FileName = basePath,
