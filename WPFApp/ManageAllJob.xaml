@@ -15,7 +15,7 @@
         <Button x:Name="ExitManageJob" Content="Exit" HorizontalAlignment="Left" Margin="624,382,0,0" VerticalAlignment="Top" Height="32" Width="134" Click="ButtonLeave_ClickManageAllJob"/>
         <TextBox x:Name="outputBox" Text="{Binding OutputString}" HorizontalAlignment="Left" Margin="37,372,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="517" Height="53"/>
         
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,10,225">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,10,177">
             <ItemsControl ItemsSource="{Binding Jobs}" Margin="0,0,10,183" Width="802">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>

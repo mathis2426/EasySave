@@ -18,7 +18,7 @@
         <Frame x:Name="MainFrame"
                Grid.Row="0"
                NavigationUIVisibility="Hidden"
-               BorderBrush="Red"
+               
                BorderThickness="2"/>
 
 
