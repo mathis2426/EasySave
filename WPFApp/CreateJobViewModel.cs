@@ -96,7 +96,7 @@ namespace WPFApp
 
             _jobManager.JobCreation(JobName.Trim(), SourcePath.Trim(), TargetPath.Trim(), SelectedJobType);
             System.Windows.MessageBox.Show("Job created successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-            _mainFrame.GoBack();
+            _mainFrame.Navigate(new HomePage(_mainFrame, _jobManager));
         }
 
         private void Exit()
@@ -176,7 +176,7 @@ namespace WPFApp
             set
             {
                 if (_selectedLanguage != value)
-                {
+                { 
                     _selectedLanguage = value;
 
                     languageManager.SetLanguage(_selectedLanguage);
