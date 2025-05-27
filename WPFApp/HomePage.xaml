@@ -10,10 +10,11 @@
       Title="HomePage">
 
     <Grid Background="White">
-        <Button x:Name="CreateJob" Content="{Binding CreateJob}" HorizontalAlignment="Left" Margin="591,126,0,0" VerticalAlignment="Top" Click="ButtonCreateJob_Click" Height="33" Width="133"/>
-        <Button x:Name="DeleteJob" Command="{Binding DeleteJobCommand}" Content="{Binding DeleteJobName}" HorizontalAlignment="Left" Margin="591,192,0,0" VerticalAlignment="Top" Height="33" Width="133"/>
+        <Button x:Name="CreateJob" Content="{Binding CreateJob}" HorizontalAlignment="Left" Margin="591,95,0,0" VerticalAlignment="Top" Click="ButtonCreateJob_Click" Height="33" Width="133"/>
+        <Button x:Name="DeleteJob" Command="{Binding DeleteJobCommand}" Content="{Binding DeleteJobName}" HorizontalAlignment="Left" Margin="591,160,0,0" VerticalAlignment="Top" Height="32" Width="133"/>
         <Button x:Name="Exit" Content="{Binding Exit}" HorizontalAlignment="Left" Margin="619,356,0,0" VerticalAlignment="Top" Height="32" Width="133" Click="ButtonLeave_Click"/>
-        <Button x:Name="ManageJob" Content="{Binding ManageJobName}" Command="{Binding ManageJobCommand}" HorizontalAlignment="Left" Margin="591,270,0,0" VerticalAlignment="Top" Click="ButtonManageJob_Click" Height="33" Width="133"/>
+        <Button x:Name="ManageJob" Content="{Binding ManageJobName}" Command="{Binding ManageJobCommand}" HorizontalAlignment="Left" Margin="591,225,0,0" VerticalAlignment="Top" Click="ButtonManageJob_Click" Height="33" Width="133"/>
+        <Button x:Name="ManageAllJob" Content="{Binding ManageAllJobName}" Command="{Binding ManageAllJobCommand}" HorizontalAlignment="Left" Margin="591,286,0,0" VerticalAlignment="Top" Click="ButtonManageAllJob_Click" Height="33" Width="133"/>
         <ListView x:Name="TaskList" ItemsSource="{Binding JobsList}" SelectedItem="{Binding SelectedJob}" Margin="50,51,0,0" Width="500" Height="250" HorizontalAlignment="Left" VerticalAlignment="Top">
             <ListView.View>
                 <GridView>
@@ -34,5 +35,6 @@
         <Button Margin="0,17,19,0" HorizontalAlignment="Right" VerticalAlignment="Top" Click="ButtonSettings_Click">
             <fa:ImageAwesome Icon="Cog" Width="27" Height="24"/>
         </Button>
+        
     </Grid>
 </Page>
