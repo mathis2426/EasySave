@@ -26,7 +26,7 @@ namespace WPFApp
         private string _outputFileString;
         private string _typeBackupString;
 
-        private readonly LanguageManager languageManager = new();
+        private LanguageManager languageManager = new();
 
 
 
@@ -42,6 +42,7 @@ namespace WPFApp
 
         public string JobType => _job.Type.ToString();
         public string JobName => _job.Name;
+        public string PriorityFile => string.Join("\t", languageManager.saveConfigObj.ExtensionPriorityFile); 
 
 
         public ViewModelManageJob(JobObj Job) // constructor
@@ -66,7 +67,6 @@ namespace WPFApp
                 ProgressValue = JobManager.threadsByJob[Job.Id].progressBarPercent;
             };
 
-        }   
 
             _selectedLanguage = languageManager.saveConfigObj.Language;
 
@@ -251,6 +251,7 @@ namespace WPFApp
         public string JobTypeLabel => languageManager.Get("job_type");
         public string Language => languageManager.Get("language");
         public string PercentageCompleted => languageManager.Get("percentage_completed");
+        public string StopJobLabel => languageManager.Get("stop_job");
 
         private void RefreshTranslations()
         {

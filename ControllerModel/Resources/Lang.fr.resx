@@ -361,7 +361,7 @@
     <value>Valider</value>
   </data>
   <data name="start_job" xml:space="preserve">
-    <value>Démarrer le job </value>
+    <value>Démarrer le travai</value>
   </data>
   <data name="pause_job" xml:space="preserve">
     <value>Mettre en pause </value>
@@ -374,5 +374,8 @@
   </data>
   <data name="percentage_completed" xml:space="preserve">
     <value>Pourcentage complété</value>
+  </data>
+  <data name="stop_job" xml:space="preserve">
+    <value>Arreter le travail</value>
   </data>
 </root>

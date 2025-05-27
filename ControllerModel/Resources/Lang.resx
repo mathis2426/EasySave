@@ -339,6 +339,9 @@
   <data name="Percentage" xml:space="preserve">
     <value>Completion percentage</value>
   </data>
+  <data name="ThresholdSizeFile" xml:space="preserve">
+    <value>Large file threshold</value>
+  </data>
   <data name="ManageJob" xml:space="preserve">
     <value>Manage job</value>
     <comment>Manage job</comment>
@@ -373,7 +376,7 @@
   <data name="percentage_completed" xml:space="preserve">
     <value>Completed percentage</value>
   </data>
-  <data name="ThresholdSizeFile" xml:space="preserve">
-    <value>Large file threshold</value>
+  <data name="stop_job" xml:space="preserve">
+    <value>Stop Job</value>
   </data>
 </root>

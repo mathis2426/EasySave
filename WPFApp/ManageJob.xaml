@@ -25,9 +25,8 @@
         <Label Content="{Binding JobName}" HorizontalAlignment="Left" Margin="137,22,0,0" VerticalAlignment="Top"/>
         <Label Content="{Binding JobTypeLabel}" HorizontalAlignment="Left" Margin="41,217,0,0" VerticalAlignment="Top"/>
         <Label Content="{Binding JobType}" HorizontalAlignment="Left" Margin="128,217,0,0" VerticalAlignment="Top"/>
-
-        <ComboBox HorizontalAlignment="Left" Margin="675,18,0,0" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Margin="598,18,0,0" TextWrapping="Wrap" Text="Language" VerticalAlignment="Top" Width="72" TextChanged="TextBox_TextChanged" Height="20"/>
         <Rectangle HorizontalAlignment="Center" Height="450" Stroke="White" VerticalAlignment="Center" Width="800" Opacity="100" Fill="White" Panel.ZIndex="-1"/>
-        <Button Content="Stop Job" Command="{Binding StopCommand}" HorizontalAlignment="Left" Margin="634,269,0,0" VerticalAlignment="Top" Height="40" Width="114" RenderTransformOrigin="0.886,-0.4" />
+        <Button Content="{Binding StopJobLabel}" Command="{Binding StopCommand}" HorizontalAlignment="Left" Margin="634,269,0,0" VerticalAlignment="Top" Height="40" Width="114" RenderTransformOrigin="0.886,-0.4" />
+        <Label Content="{Binding PriorityFile}" HorizontalAlignment="Left" Margin="220,176,0,0" VerticalAlignment="Top" Width="322" Height="27"/>
     </Grid>
+</Page>
