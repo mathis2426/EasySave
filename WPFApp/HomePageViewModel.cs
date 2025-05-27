@@ -90,6 +90,7 @@ namespace WPFApp
         public string CreateJob => languageManager.Get("CreateJob");
         public string DeleteJobName => languageManager.Get("DeleteJob");
         public string ManageJobName => languageManager.Get("ManageJob");
+        public string ManageAllJobName => "All jobs";
         public string ID => languageManager.Get("ID");
         public string Name => languageManager.Get("Name");
         public string SourcePath => languageManager.Get("SourcePath");
@@ -110,6 +111,7 @@ namespace WPFApp
             OnPropertyChanged(nameof(CreateJob));
             OnPropertyChanged(nameof(DeleteJobName));
             OnPropertyChanged(nameof(ManageJobName));
+            OnPropertyChanged(nameof(ManageAllJobName));
             OnPropertyChanged(nameof(DeleteExtensionCommand));
         }
 
