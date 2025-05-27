@@ -11,19 +11,19 @@ namespace ControllerModel.JsonHelper
         private readonly JsonHelperClassBasics _jsonHelperClassBasicsReadSingleObj = new();
 
         /// <summary>
-        /// Lit un objet depuis un fichier JSON.
-        /// Si le fichier n'existe pas, crée un fichier avec une instance par défaut de <see cref="SaveConfig"/>.
+        /// Reads an object from a JSON file.
+        /// If the file does not exist, creates a file with a default instance of <see cref="SaveConfig"/>.
         /// </summary>
-        /// <typeparam name="T">Type de l'objet à lire.</typeparam>
-        /// <param name="PathToFileToRead">Chemin du fichier JSON à lire.</param>
-        /// <returns>Objet désérialisé de type <typeparamref name="T"/>.</returns>
+        /// <typeparam name="T">Type of object to read. </typeparam>
+        /// <param name="PathToFileToRead">Path to JSON file to read.</param>
+        /// <returns>Deserialized object of type <typeparamref name="T"/>.</returns>
         public T ReadSingleObj<T> (string PathToFileToRead)
         {
             if (!File.Exists(PathToFileToRead))
             {
                 string binPath = Path.GetDirectoryName(AppContext.BaseDirectory);
 
-                SaveConfig saveConfig = new SaveConfig(Path.Combine(binPath, "daily.json"), Path.Combine(binPath, "state.json"), "en-US", new string[] { ".txt" }, new string[] { ".txt" },"");
+                SaveConfig saveConfig = new SaveConfig(Path.Combine(binPath, "daily.json"), Path.Combine(binPath, "state.json"), "en-US", new string[] { ".txt" }, new string[] { ".txt" },"", 100000);
                 string json = JsonSerializer.Serialize(saveConfig, new JsonSerializerOptions { WriteIndented = true });
                 T save = JsonSerializer.Deserialize<T>(json);
                 _jsonHelperClassBasicsReadSingleObj.CreateJson(PathToFileToRead, save);

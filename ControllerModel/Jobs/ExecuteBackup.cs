@@ -10,11 +10,17 @@ using ControllerModel.Logs2;
 using ControllerModel.JsonHelper;
 using System.Reflection;
 
+
+
 namespace ControllerModel.Jobs
 {
     public class ExecuteBackup
     {
 
+        public delegate void StatusHandler(int status);
+        public event StatusHandler Status;
+        public delegate void ProgresseBarHandler(int progressBar);
+        public event ProgresseBarHandler ProgressBar;
         // Properties
         private readonly Daily _logDaily = new();
         private readonly State _state = new();
@@ -53,38 +59,40 @@ namespace ControllerModel.Jobs
             {
                 lock (_lockPriorityFile)
                 {
-                    // ajouter un mutex => 0 to * = mutex | * to 0 = release
+                    // add a mutex => 0 to * = mutex | * to 0 = release
                     _priorityFileProperty = (object)value;
                 }
             }
         }
 
         /// <summary>
-        /// Exécute la sauvegarde pour tous les jobs présents dans la liste.
+        /// Runs the backup for all jobs in the list.
         /// </summary>
-        /// <param name="JobList">Liste des jobs de sauvegarde à exécuter.</param>
+        /// <param name="JobList">List of backup jobs to run.</param>
         public void ExecuteJobAll(List<JobObj> JobList)
         {
             List<Thread> threads = new List<Thread>();
 
             foreach (var job in JobList)
             {
-                Thread thread = new Thread(() => ExecuteJob(job));
+                var tokenSource = new CancellationTokenSource();
+                var pauseEvent = new ManualResetEventSlim(true);
+                Thread thread = new Thread(() => ExecuteJob(job, tokenSource.Token, pauseEvent));
                 thread.Start();
                 threads.Add(thread);
             }
         }
 
         /// <summary>
-        /// Exécute une sauvegarde pour un job donné.
-        /// Vérifie l'existence des chemins source et cible, mesure le temps d'exécution,
-        /// et loggue les informations liées au job.
+        /// Runs a backup for a given job.
+        /// Checks the existence of source and target paths, measures execution time,
+        /// and logs job information.
         /// </summary>
         /// <param name="job">Le job de sauvegarde à exécuter.</param>
         /// <returns>0 si la sauvegarde a réussi, 1 sinon (ex : chemin non valide).</returns>
-        public int ExecuteJob(JobObj job)
+        public int ExecuteJob(JobObj job, CancellationToken token, ManualResetEventSlim pauseEvent)
         {
-            if (_saveConfig.BlockingApp != null && _saveConfig.BlockingApp != "")
+            /*if (_saveConfig.BlockingApp != null && _saveConfig.BlockingApp != "")
             {
                 Process[] processes = Process.GetProcessesByName(_saveConfig.BlockingApp);
                 if (processes.Length > 0)
@@ -95,21 +103,22 @@ namespace ControllerModel.Jobs
                         processes = Process.GetProcessesByName(_saveConfig.BlockingApp);
                     }
                 }
-            }
+            }*/
             string sourcePath = job.SourcePath;
-            foreach (var file in Directory.GetFiles(sourcePath))
+            /*foreach (var file in Directory.GetFiles(sourcePath))
             {
                 if (file.Contains(_saveConfig.BlockingApp) && file.EndsWith("exe"))
                 {
                     Console.WriteLine($"Application {_saveConfig.BlockingApp} detecté demarage annulé");
                     return 1;
                 }
-            }
+            }*/
 
             Console.WriteLine("Execute job");
             // Simulate file transfer
             string targetPath = job.TargetPath;
             string name = job.Name;
+            int id = job.Id;
 
             // Timer
             Stopwatch stopwatch = new();
@@ -127,13 +136,23 @@ namespace ControllerModel.Jobs
             switch (job.Type)
             {
                 case JobType.Full:
-                    FullBackup(name, sourcePath, targetPath, totalFiles, totalFileSize, totalFilesLeft, fileEncryptionTimes);
+                    FullBackup(id, name, sourcePath, targetPath, totalFiles, totalFileSize, totalFilesLeft, fileEncryptionTimes, pauseEvent, token);
                     break;
                 case JobType.Differential:
-                    DifferentialBackup(name, sourcePath, targetPath, totalFiles, totalFileSize, totalFilesLeft, fileEncryptionTimes);
+                    DifferentialBackup(id, name, sourcePath, targetPath, totalFiles, totalFileSize, totalFilesLeft, fileEncryptionTimes, pauseEvent, token);
                     break;
             }
             stopwatch.Stop();
+            _state.SendParamToLog(
+                    name,
+                    sourcePath,
+                    targetPath,
+                    StateEnumeration.Inactive,
+                    totalFiles,
+                    totalFileSize,
+                    totalFilesLeft,
+                    100
+                );
 
             _logDaily.sendParamToLog(
                 name,
@@ -144,15 +163,19 @@ namespace ControllerModel.Jobs
                 DateTime.Now,
                 fileEncryptionTimes
             );
+            ChangeButtonStatus(id, 0);
+            ChangeProgressionBar(id, 0);
+            Status?.Invoke(0);
+            ProgressBar?.Invoke(100);
             Console.WriteLine($"[END] Job {name} terminé en {stopwatch.ElapsedMilliseconds} ms");
             return 0;
         }
         // Backup methods
 
         /// <summary>
-        /// Effectue une sauvegarde complète : supprime tous les fichiers dans la cible
-        /// et copie tous les fichiers du source vers la cible.
-        /// Met à jour la progression dans l'état.
+        /// Performs a full backup: deletes all files in the target
+        /// and copies all files from the source to the target.
+        /// Updates the progress in the report.
         /// </summary>
         /// <param name="name">Nom du job.</param>
         /// <param name="sourcePath">Chemin source des fichiers à sauvegarder.</param>
@@ -160,14 +183,35 @@ namespace ControllerModel.Jobs
         /// <param name="totalFiles">Nombre total de fichiers à sauvegarder.</param>
         /// <param name="totalFileSize">Taille totale des fichiers à sauvegarder en octets.</param>
         /// <param name="totalFilesLeft">Nombre de fichiers restant à traiter.</param>
-        public void FullBackup(string name, string sourcePath, string targetPath, int totalFiles, long totalFileSize, int totalFilesLeft, Dictionary<string, long> fileEncryptionTimes)
+        public void FullBackup(int id, string name, string sourcePath, string targetPath, int totalFiles, long totalFileSize, int totalFilesLeft, Dictionary<string, long> fileEncryptionTimes, ManualResetEventSlim pauseEvent, CancellationToken token)
         {
+
+            token.ThrowIfCancellationRequested();
+
             foreach (string file in Directory.GetFiles(targetPath))
             {
+               
                 File.Delete(file);
             }
             foreach (var file in Directory.GetFiles(sourcePath))
             {
+                if (!pauseEvent.IsSet)
+                {
+
+                    Debug.WriteLine("Le job est en pause. Libération des ressources...");
+                    ChangeButtonStatus(id, 2);
+
+                    Status?.Invoke(2);
+                    pauseEvent.Wait();
+                }
+                else if (token.IsCancellationRequested)
+                {
+                    ChangeButtonStatus(id, 0);
+
+                    Status?.Invoke(0);
+                    token.ThrowIfCancellationRequested();
+                }
+
                 string fileName = Path.GetFileName(file);
                 string targetFile = Path.Combine(targetPath, fileName);
                 long timeToEncrypt = 0;
@@ -191,7 +235,12 @@ namespace ControllerModel.Jobs
                     processCryptoSoft.WaitForExit();
                     encryptTimer.Stop();
                     timeToEncrypt = encryptTimer.ElapsedMilliseconds;
-
+                    if (token.IsCancellationRequested)
+                    {
+                        ChangeButtonStatus(id, 0);
+                        Status?.Invoke(0);
+                        token.ThrowIfCancellationRequested();
+                    }
                     //Console.WriteLine("Process terminé");
                 }
                 else
@@ -213,13 +262,43 @@ namespace ControllerModel.Jobs
                     totalFilesLeft,
                     progression
                 );
+                if (token.IsCancellationRequested)
+                {
+                    ChangeButtonStatus(id, 0);
+                    Status?.Invoke(0);
+                    token.ThrowIfCancellationRequested();
+                }
+
+                ChangeButtonStatus(id, 1);
+                ChangeProgressionBar(id, progression);
+
+                Status?.Invoke(1);
+                ProgressBar?.Invoke(progression);
             }
 
         }
 
+
+        public void ChangeButtonStatus(int id, int status) 
+        {
+            if (JobManager.threadsByJob.TryGetValue(id, out var oldValue))
+            {
+                JobManager.threadsByJob[id] = (oldValue.Thread, oldValue.TokenSource, oldValue.PauseEvent, status, oldValue.progressBarPercent);
+            }
+        }
+
+        public void ChangeProgressionBar(int id, double progress)
+        {
+            if (JobManager.threadsByJob.TryGetValue(id, out var oldValue))
+            {
+                JobManager.threadsByJob[id] = (oldValue.Thread, oldValue.TokenSource, oldValue.PauseEvent, oldValue.ButtonStatus, progress);
+            }
+        }
+
+
         /// <summary>
-        /// Effectue une sauvegarde différentielle : copie uniquement les fichiers modifiés ou nouveaux.
-        /// Met à jour la progression dans l'état.
+        /// Performs a differential backup: copies only modified or new files.
+        /// Updates the progress in the report.
         /// </summary>
         /// <param name="name">Nom du job.</param>
         /// <param name="sourcePath">Chemin source des fichiers à sauvegarder.</param>
@@ -227,10 +306,29 @@ namespace ControllerModel.Jobs
         /// <param name="totalFiles">Nombre total de fichiers à analyser.</param>
         /// <param name="totalFileSize">Taille totale des fichiers à analyser en octets.</param>
         /// <param name="totalFilesLeft">Nombre de fichiers restant à traiter.</param>
-        public void DifferentialBackup(string name, string sourcePath, string targetPath, int totalFiles, long totalFileSize, int totalFilesLeft, Dictionary<string, long> fileEncryptionTimes)
+        public void DifferentialBackup(int id, string name, string sourcePath, string targetPath, int totalFiles, long totalFileSize, int totalFilesLeft, Dictionary<string, long> fileEncryptionTimes, ManualResetEventSlim pauseEvent, CancellationToken token)
         {
+            
+            
             foreach (string sourceFilePath in Directory.GetFiles(sourcePath))
             {
+                if (!pauseEvent.IsSet)
+                {
+
+                    Debug.WriteLine("Le job est en pause. Libération des ressources...");
+                    ChangeButtonStatus(id, 2);
+                    
+                    Status?.Invoke(2);
+                    pauseEvent.Wait();
+                }else if (token.IsCancellationRequested)
+                {
+                    ChangeButtonStatus(id, 0);
+                    Status?.Invoke(0);  
+                    token.ThrowIfCancellationRequested();
+                }
+                
+                Thread.Sleep(500);
+                
                 string fileName = Path.GetFileName(sourceFilePath);
                 string destFilePath = Path.Combine(targetPath, fileName);
 
@@ -254,7 +352,12 @@ namespace ControllerModel.Jobs
 
                         encryptTimer.Stop();
                         timeToEncrypt = encryptTimer.ElapsedMilliseconds;
-
+                        if (token.IsCancellationRequested)
+                        {
+                            ChangeButtonStatus(id, 0);
+                            Status?.Invoke(0);
+                            token.ThrowIfCancellationRequested();
+                        }
                         Console.WriteLine("Process terminé");
                     }
                     else
@@ -277,6 +380,16 @@ namespace ControllerModel.Jobs
                     totalFilesLeft,
                     progression
                 );
+                if (token.IsCancellationRequested)
+                {
+                    ChangeButtonStatus(id, 0);
+                    Status?.Invoke(0);
+                    token.ThrowIfCancellationRequested();
+                }
+                ChangeButtonStatus(id, 1);
+                ChangeProgressionBar(id, progression);
+                Status?.Invoke(1);
+                ProgressBar?.Invoke(progression);
             }
         }
     }

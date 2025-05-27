@@ -27,7 +27,7 @@
         </ListView>
         <TextBox Text="{Binding OutputText}" IsReadOnly="True" Margin="50,335,0,0" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Width="517" Height="53"/>
 
-        <!-- Langue -->
+        <!-- Language -->
         <Label Content="{Binding Language}" HorizontalAlignment="Left" Margin="527,18,0,0" VerticalAlignment="Top"/>
         <ComboBox  ItemsSource="{Binding AvailableLanguages}" SelectedItem="{Binding SelectedLanguage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="591,20,0,0" VerticalAlignment="Top" Width="120"/>
 

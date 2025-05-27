@@ -20,8 +20,8 @@ namespace ControllerModel.Logs2
         private LogObject _logObject;
 
         /// <summary>
-        /// Initialise une nouvelle instance de la classe Daily,
-        /// et définit le chemin vers le fichier de log quotidien.
+        /// Initializes a new instance of the Daily class,
+        /// and defines the path to the daily log file.
         /// </summary>
         public Daily()
         {
@@ -31,16 +31,16 @@ namespace ControllerModel.Logs2
         }
 
         /// <summary>
-        /// Prépare un objet log avec les paramètres fournis,
-        /// met à jour l'objet de log interne et génère le log.
+        /// Prepares a log object with the parameters supplied,
+        /// updates the internal log object and generates the log.
         /// </summary>
-        /// <param name="name">Nom du job ou de la tâche.</param>
-        /// <param name="fileSource">Chemin source du fichier sauvegardé.</param>
-        /// <param name="fileTarget">Chemin cible du fichier sauvegardé.</param>
-        /// <param name="fileSize">Taille du fichier en octets.</param>
-        /// <param name="fileTransferTime">Durée du transfert du fichier en millisecondes.</param>
-        /// <param name="time">Horodatage de l'opération.</param>
-        /// <param name="encryptionTimes">Temps de chiffrement du fichier.</param>
+        /// <param name="name">Name of the job or task.</param>
+        /// <param name="fileSource">Source path of the backed-up file.</param>
+        /// <param name="fileTarget">Target path of the backed-up file. </param>
+        /// <param name="fileSize">File size in bytes.</param>
+        /// <param name="fileTransferTime">File transfer time in milliseconds.</param>
+        /// <param name="time">Operation timestamp.</param>
+        /// <param name="encryptionTimes">File encryption time.</param>
         public void sendParamToLog(
             string name,
             string fileSource,
@@ -57,8 +57,8 @@ namespace ControllerModel.Logs2
         }
 
         /// <summary>
-        /// Implémentation de la méthode abstraite GenerateLog.
-        /// Utilise un logger JSON pour écrire les données de log dans le fichier défini.
+        /// Implementation of the GenerateLog abstract method.
+        /// Uses a JSON logger to write log data to the defined file.
         /// </summary>
         public override void GenerateLog()
         {

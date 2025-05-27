@@ -18,7 +18,7 @@ namespace WPFApp
         public HomePageViewModel(JobManager jobManager)
         {
             _jobManager = jobManager;
-            // Charger la liste initiale des jobs depuis JobManager
+            // Load initial job list from JobManager
 
             foreach (var job in _jobManager.JobList)
             {

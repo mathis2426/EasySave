@@ -12,23 +12,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ControllerModel.Jobs;
 
 namespace WPFApp
 {
     /// <summary>
-    /// Interaction Logic for Page1.xaml
+    /// Logique d'interaction pour ManageAllJob.xaml
     /// </summary>
-    public partial class ManageJob : Page
+    public partial class ManageAllJob : Page
     {
-        ViewModelManageJob ViewModelManageJob;
-        public ManageJob(JobObj Job)
+        public ManageAllJob()
         {
             InitializeComponent();
-            ViewModelManageJob = new ViewModelManageJob(Job);
-            DataContext = ViewModelManageJob;
         }
-        private void ButtonLeave_ClickManageJob(object sender, RoutedEventArgs e)
+
+        private void ButtonLeave_ClickManageAllJob(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
         }
@@ -36,7 +33,5 @@ namespace WPFApp
         {
 
         }
-
-        
     }
 }

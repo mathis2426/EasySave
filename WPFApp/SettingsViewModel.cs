@@ -2,6 +2,7 @@
 using ControllerModel.LanguagesHelper;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Windows.Input;
 
@@ -33,8 +34,12 @@ namespace WPFApp
                 canExecute: () => SelectedExtension != null
             );
 
-            BlockingApp = _jobManager.GetBlockingApp();
+            //BlockingApp = _jobManager.GetBlockingApp();
             _selectedLanguage = languageManager.saveConfigObj.Language;
+
+            //SizeFile = _jobManager.GetLargeFileThreshold();
+
+            //SizeMax =
 
             AddPriorityExtensionCommand = new CommandHandler(
                 execute: AddPriorityExtension,
@@ -68,6 +73,7 @@ namespace WPFApp
         public string PriorityExtension => languageManager.Get("PriorityExtension");
         public string AddPriority => languageManager.Get("AddPriority");
         public string DeletePriority => languageManager.Get("DeletePriority");
+        public string MaxSizeFile => languageManager.Get("MaxSizeFile");
 
 
         private void RefreshTranslations()
@@ -81,6 +87,7 @@ namespace WPFApp
             OnPropertyChanged(nameof(PriorityExtension));
             OnPropertyChanged(nameof(AddPriority));
             OnPropertyChanged(nameof(DeletePriority));
+            OnPropertyChanged(nameof(MaxSizeFile));
 
         }
         public ObservableCollection<ExtensionItem> PriorityExtensions { get; } = new ObservableCollection<ExtensionItem>();
@@ -232,7 +239,7 @@ namespace WPFApp
                 OutputText = $"Erreur lors de la suppression prioritaire : {ex.Message}";
             }
         }
-        private string _blockingApp;
+    /*    private string _blockingApp;
         public string BlockingApp
         {
             get => _blockingApp;
@@ -248,6 +255,24 @@ namespace WPFApp
                 OnPropertyChanged();
             }
         }
+
+        private int _sizeFile;
+        public int SizeFile
+        {
+            get => _sizeFile;
+            set
+            {
+                if (_sizeFile != value)
+                {
+                    _sizeFile = value;
+                    OnPropertyChanged();
+                }
+
+                _jobManager.SetLargeFileThreshold(_sizeFile);
+                OnPropertyChanged();
+            }
+        }*/
+
         private string _selectedLanguage;
         public string SelectedLanguage
         {

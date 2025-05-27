@@ -19,7 +19,7 @@ using ControllerModel.Jobs;
 namespace WPFApp
 {
     /// <summary>
-    /// Logique d'interaction pour Page1.xaml
+    /// Page1.xaml interaction logic
     /// </summary>
     public partial class HomePage : Page
     {

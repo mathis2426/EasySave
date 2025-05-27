@@ -14,13 +14,13 @@
         public JobType Type { get;}
 
         /// <summary>
-        /// Initialise une nouvelle instance de JobObj avec les paramètres spécifiés.
+        /// Initializes a new instance of JobObj with the specified parameters.
         /// </summary>
-        /// <param name="Id">ID du job</param>
-        /// <param name="Name">Nom du job.</param>
-        /// <param name="SourcePath">Chemin source des fichiers.</param>
-        /// <param name="TargetPath">Chemin cible pour la sauvegarde.</param>
-        /// <param name="Type">Type de sauvegarde.</param>
+        /// <param name="Id">Job ID</param>
+        /// <param name="Name">Job name. </param>
+        /// <param name="SourcePath">File source path.</param>
+        /// <param name="TargetPath">Target path for backup.</param>
+        /// <param name="Type">Backup type.</param>
         public JobObj(int Id, string Name, string SourcePath, string TargetPath, JobType Type)
         {
             this.Id = Id;

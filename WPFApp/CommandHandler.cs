@@ -1,12 +1,18 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
+
 
 public class CommandHandler : ICommand
 {
     private readonly Action _execute;
     private readonly Func<bool> _canExecute;
+
+    public event EventHandler? CanExecuteChanged
+    {
+        add { CommandManager.RequerySuggested += value; }
+        remove { CommandManager.RequerySuggested -= value; }
+    }
 
     public CommandHandler(Action execute, Func<bool> canExecute)
     {
@@ -18,8 +24,17 @@ public class CommandHandler : ICommand
 
     public void Execute(object parameter) => _execute();
 
-    public event EventHandler CanExecuteChanged;
-
-    public void RaiseCanExecuteChanged() =>
-        CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+    public void RaiseCanExecuteChanged()
+    {
+        // Appelle via le Dispatcher si on n’est pas dans le thread UI
+        if (System.Windows.Application.Current?.Dispatcher?.CheckAccess() == false)
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                CommandManager.InvalidateRequerySuggested());
+        }
+        else
+        {
+            CommandManager.InvalidateRequerySuggested();
+        }
+    }
 }

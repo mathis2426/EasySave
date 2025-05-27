@@ -25,7 +25,7 @@ namespace ControllerModel.LanguagesHelper
         public string binPathGlobal;
 
         /// <summary>
-        /// Initialise une nouvelle instance de la classe <see cref="LanguageManager"/> et configure la langue.
+        /// Initializes a new instance of the <see cref="LanguageManager"/> class and configures the language.
         /// </summary>
         public LanguageManager()
         {
@@ -37,9 +37,9 @@ namespace ControllerModel.LanguagesHelper
         }
 
         /// <summary>
-        /// Définit la langue de l'application et met à jour le fichier de configuration.
+        /// Sets the application language and updates the configuration file.
         /// </summary>
-        /// <param name="cultureCode">Code de la culture (ex. : "en-US", "fr-FR").</param>
+        /// <param name="cultureCode">Culture code (e.g. "en-US", "fr-FR").</param>
         public void SetLanguage(string cultureCode)
         {
             if(cultureCode == null && cultureCode == "")
@@ -54,10 +54,10 @@ namespace ControllerModel.LanguagesHelper
         }
 
         /// <summary>
-        /// Récupère une chaîne localisée à partir des ressources.
+        /// Retrieves a localized string from resources.
         /// </summary>
-        /// <param name="key">Clé de la ressource.</param>
-        /// <returns>Chaîne localisée correspondant à la clé.</returns>
+        /// <param name="key">Resource key.</param>
+        /// <returns>Localized string corresponding to the key.</returns>
         public string Get(string key)
         {
             return ResManager.GetString(key);

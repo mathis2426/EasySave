@@ -10,8 +10,8 @@ namespace ControllerModel.Logs2
     public abstract class AbstractLogger
     {
         /// <summary>
-        /// Méthode abstraite destinée à générer un log.
-        /// Doit être implémentée par les classes dérivées pour définir la logique de journalisation.
+        /// Abstract method intended to generate a log.
+        /// Must be implemented by derived classes to define the logging logic.
         /// </summary
         public abstract void GenerateLog();
     }

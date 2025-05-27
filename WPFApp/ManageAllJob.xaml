@@ -1,0 +1,34 @@
+﻿<Page x:Class="WPFApp.ManageAllJob"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WPFApp"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ManageJob">
+
+    <Grid RenderTransformOrigin="0.481,0.464" Background="White">
+        <Button Content="Start all" Command="{Binding StartCommand}" HorizontalAlignment="Left" Margin="37,283,0,0" VerticalAlignment="Top" Height="40" Width="114"/>
+        <Button Content="Pause" Command="{Binding PauseCommand}" HorizontalAlignment="Left" Margin="440,283,0,0" VerticalAlignment="Top" Height="40" Width="114" RenderTransformOrigin="0.886,-0.4"/>
+        <Button Content="Resume" Command="{Binding ResumeCommand}" HorizontalAlignment="Left" Margin="238,283,0,0" VerticalAlignment="Top" Height="40" Width="115"/>
+        <Button x:Name="ExitManageJob" Content="Exit" HorizontalAlignment="Left" Margin="619,356,0,0" VerticalAlignment="Top" Height="32" Width="133" Click="ButtonLeave_ClickManageAllJob"/>
+        <TextBox x:Name="outputBox" Text="{Binding OutputString}" HorizontalAlignment="Left" Margin="37,345,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="517" Height="53"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="100" Margin="37,4,0,0" VerticalAlignment="Top" Width="543"/>
+        <ProgressBar HorizontalAlignment="Left" Value="{Binding ProgressValue}" Minimum="0" Maximum="100" Height="20" Margin="209,66,0,0" VerticalAlignment="Top" Width="322"/>
+        <TextBlock HorizontalAlignment="Left" Margin="41,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="128"><Run Text="Percentage"/><Run Language="fr-fr" Text=" completed"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="41,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"><Run Language="fr-fr" Text="Priority Files :"/></TextBlock>
+        <Label Content="Name" HorizontalAlignment="Left" Margin="37,8,0,0" VerticalAlignment="Top" Width="45" Height="26"/>
+        <TextBox HorizontalAlignment="Left" Text="{Binding NameString}" Margin="94,12,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="158" TextChanged="TextBox_TextChanged"></TextBox>
+        <Label Content="Type" HorizontalAlignment="Left" Margin="37,33,0,0" VerticalAlignment="Top" Width="45" Height="26"/>
+        <TextBox HorizontalAlignment="Left" Text="{Binding TypeBackupString}" Margin="94,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="158"></TextBox>
+        <ComboBox HorizontalAlignment="Left" Margin="675,18,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Margin="598,18,0,0" TextWrapping="Wrap" Text="Language" VerticalAlignment="Top" Width="72" TextChanged="TextBox_TextChanged" Height="20"/>
+        <Rectangle HorizontalAlignment="Center" Height="450" Stroke="White" VerticalAlignment="Center" Width="800" Opacity="100" Fill="White" Panel.ZIndex="-1"/>
+        <Button Content="Stop" Command="{Binding StopCommand}" HorizontalAlignment="Left" Margin="634,283,0,0" VerticalAlignment="Top" Height="40" Width="114" RenderTransformOrigin="0.886,-0.4" />
+
+        <Button Content="Pause Job" Command="{Binding PauseCommand}" HorizontalAlignment="Left" Margin="390,26,0,0" VerticalAlignment="Top" Height="25" Width="77" RenderTransformOrigin="0.886,-0.4"/>
+        <Button Content="Resume Job" Command="{Binding ResumeCommand}" HorizontalAlignment="Left" Margin="283,26,0,0" VerticalAlignment="Top" Height="25" Width="87"/>
+        <Button Content="Stop Job" Command="{Binding StopCommand}" HorizontalAlignment="Left" Margin="485,27,0,0" VerticalAlignment="Top" Height="24" Width="69" RenderTransformOrigin="0.886,-0.4" />
+    </Grid>
+</Page>

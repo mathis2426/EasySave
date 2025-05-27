@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 namespace WPFApp
 {
     /// <summary>
-    /// Logique d'interaction pour Page1.xaml
+    /// Page1.xaml interaction logic
     /// </summary>
     public partial class Settings : Page
     {

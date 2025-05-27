@@ -11,34 +11,35 @@ namespace ControllerModel.JsonHelper
         private JsonHelperClassBasics jsonHelperClassBasicsForLogger = new();
 
         /// <summary>
-        /// Écrit un objet dans un fichier JSON, remplaçant son contenu.
+        /// Writes an object to a JSON file, replacing its contents.
         /// </summary>
-        /// <typeparam name="T">Type de l'objet à écrire.</typeparam>
-        /// <param name="path">Chemin du fichier JSON.</param>
-        /// <param name="obj">Objet à écrire.</param>
+        /// <typeparam name="T">Type of object to write.</typeparam>
+        /// <param name="path">Path of JSON file.</param>
+        /// <param name="obj">Object to write.</param>
         public void WriteLog<T> (string path,T obj)
         {
             jsonHelperClassBasicsForLogger.CreateJson(path, obj);
         }
 
+
         /// <summary>
-        /// Écrit une liste d'objets dans un fichier JSON, remplaçant son contenu.
+        /// Writes a list of objects to a JSON file, replacing its contents.
         /// </summary>
-        /// <typeparam name="T">Type des objets dans la liste.</typeparam>
-        /// <param name="path">Chemin du fichier JSON.</param>
-        /// <param name="obj">Liste d'objets à écrire.</param>
+        /// <typeparam name="T">Type of objects in the list.</typeparam>
+        /// <param name="path">Path to JSON file.</param>
+        /// <param name="obj">List of objects to write.</param>
         public void WriteLogList<T>(string path, List<T> obj)
         {
             jsonHelperClassBasicsForLogger.CreateJsonList(path, obj);
         }
 
         /// <summary>
-        /// Lit une liste d'objets depuis un fichier JSON.
-        /// Retourne une liste vide si le fichier n'existe pas ou est vide.
+        /// Reads a list of objects from a JSON file.
+        /// Returns an empty list if the file does not exist or is empty.
         /// </summary>
-        /// <typeparam name="T">Type des objets à lire.</typeparam>
-        /// <param name="path">Chemin du fichier JSON à lire.</param>
-        /// <returns>Liste d'objets lue à partir du fichier JSON.</returns>
+        /// <typeparam name="T">Type of objects to read.</typeparam>
+        /// <param name="path">Path of JSON file to read.</param>
+        /// <returns>List of objects read from JSON file.</returns>
         public List<T> ReadLogStatus<T>(string path)
         {
             List<T> ListObject = jsonHelperClassBasicsForLogger.ReadJsonList<T>(path);

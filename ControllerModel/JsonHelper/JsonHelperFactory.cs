@@ -5,45 +5,45 @@ namespace ControllerModel.JsonHelper
     public class JsonHelperFactory
     {
         /// <summary>
-        /// Crée une instance de <see cref="JsonHelperClassLoggerDaily"/> pour gérer les logs quotidiens.
+        /// Creates an instance of <see cref="JsonHelperClassLoggerDaily"/> to manage daily logs.
         /// </summary>
-        /// <returns>Instance de <see cref="ILoggerWriter"/>.</returns>
+        /// <returns>Instance of <see cref="ILoggerWriter"/>.</returns>
         public static ILoggerWriter CreateLoggerDaily()
         {      
             return new JsonHelperClassLoggerDaily();   
         }
 
         /// <summary>
-        /// Crée une instance de <see cref="JsonHelperClassLoggerStatus"/> pour gérer les logs d'état.
+        /// Creates an instance of <see cref="JsonHelperClassLoggerStatus"/> to manage status logs.
         /// </summary>
-        /// <returns>Instance de <see cref="JsonHelperClassLoggerStatus"/>.</returns>
+        /// <returns>Instance of <see cref="JsonHelperClassLoggerStatus"/>.</returns>
         public static JsonHelperClassLoggerStatus CreateLoggerStatus()
         {
             return new JsonHelperClassLoggerStatus();
         }
 
         /// <summary>
-        /// Crée une instance de <see cref="JsonHelperClassJsonUpdate"/> pour mettre à jour les fichiers JSON.
+        /// Creates an instance of <see cref="JsonHelperClassJsonUpdate"/> to update JSON files.
         /// </summary>
-        /// <returns>Instance de <see cref="JsonHelperClassJsonUpdate"/>.</returns>
+        /// <returns>Instance of <see cref="JsonHelperClassJsonUpdate"/>.</returns>
         public static JsonHelperClassJsonUpdate CreateJsonUpdate()
         {     
             return new JsonHelperClassJsonUpdate();
         }
 
         /// <summary>
-        /// Crée une instance de <see cref="JsonHelperClassJsonReadMultipleObj"/> pour lire plusieurs objets depuis un fichier JSON.
+        /// Creates an instance of <see cref="JsonHelperClassJsonReadMultipleObj"/> to read multiple objects from a JSON file.
         /// </summary>
-        /// <returns>Instance de <see cref="JsonHelperClassJsonReadMultipleObj"/>.</returns>
+        /// <returns>Instance of <see cref="JsonHelperClassJsonReadMultipleObj"/>.</returns>
         public static JsonHelperClassJsonReadMultipleObj CreateJsonReadMultipleObj()
         {
             return new JsonHelperClassJsonReadMultipleObj();
         }
 
         /// <summary>
-        /// Crée une instance de <see cref="JsonHelperClassJsonReadSingleObj"/> pour lire un objet unique depuis un fichier JSON.
+        /// Creates an instance of <see cref="JsonHelperClassJsonReadSingleObj"/> to read a single object from a JSON file.
         /// </summary>
-        /// <returns>Instance de <see cref="JsonHelperClassJsonReadSingleObj"/>.</returns>
+        /// <returns>Instance of <see cref="JsonHelperClassJsonReadSingleObj"/>.</returns>
         public static JsonHelperClassJsonReadSingleObj CreateJsonReadSingleObj()
         {
             return new JsonHelperClassJsonReadSingleObj();

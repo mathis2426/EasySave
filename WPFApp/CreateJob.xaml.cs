@@ -5,7 +5,7 @@ using System.Windows.Controls;
 namespace WPFApp
 {
     /// <summary>
-    /// Logique d'interaction pour CreateJob.xaml
+    /// Interaction logic for CreateJob.xaml
     /// </summary>
     public partial class CreateJob : Page
     {

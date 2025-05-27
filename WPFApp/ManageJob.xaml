@@ -10,7 +10,7 @@
 
     <Grid RenderTransformOrigin="0.481,0.464" Background="White">
         <Button Content="{Binding StartJobLabel}" Command="{Binding StartCommand}" HorizontalAlignment="Left" Margin="37,269,0,0" VerticalAlignment="Top" Height="40" Width="114"/>
-        <Button Content="{Binding PauseJobLabel}" Command="{Binding StopCommand}" HorizontalAlignment="Left" Margin="440,269,0,0" VerticalAlignment="Top" Height="40" Width="114" RenderTransformOrigin="0.886,-0.4"/>
+        <Button Content="{Binding PauseJobLabel}" Command="{Binding PauseCommand}" HorizontalAlignment="Left" Margin="440,269,0,0" VerticalAlignment="Top" Height="40" Width="114" RenderTransformOrigin="0.886,-0.4"/>
         <Button Content="{Binding ResumeJobLabel}" Command="{Binding ResumeCommand}" HorizontalAlignment="Left" Margin="238,269,0,0" VerticalAlignment="Top" Height="40" Width="115"/>
         <Button x:Name="ExitManageJob" Content="{Binding ExitLabel}" HorizontalAlignment="Left" Margin="619,356,0,0" VerticalAlignment="Top" Height="32" Width="133" Click="ButtonLeave_ClickManageJob"/>
         <TextBox x:Name="outputBox" Text="{Binding OutputString}" HorizontalAlignment="Left" Margin="37,345,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="517" Height="53"/>
@@ -18,7 +18,6 @@
         <ProgressBar HorizontalAlignment="Left" Value="{Binding ProgressValue}" Minimum="0" Maximum="100" Height="42" Margin="220,55,0,0" VerticalAlignment="Top" Width="322"/>
         <TextBox HorizontalAlignment="Left" Text="{Binding InputFileString}" Margin="220,112,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="322"/>
         <TextBox HorizontalAlignment="Left" Text="{Binding OutputFileString}" Margin="220,142,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="322"/>
-        <Rectangle HorizontalAlignment="Center" Height="450" Stroke="White" VerticalAlignment="Center" Width="800" Opacity="100" Fill="White" Panel.ZIndex="-1"/>
         <Label Content="{Binding InputFileLabel}" HorizontalAlignment="Left" Height="27" Margin="37,107,0,0" VerticalAlignment="Top" Width="140"/>
         <Label Content="{Binding OutputFileLabel}" HorizontalAlignment="Left" Height="27" Margin="37,137,0,0" VerticalAlignment="Top" Width="140"/>
         <Label Content="{Binding PriorityFileLabel}" HorizontalAlignment="Left" Height="27" Margin="37,176,0,0" VerticalAlignment="Top" Width="140"/>
@@ -27,5 +26,8 @@
         <Label Content="{Binding JobTypeLabel}" HorizontalAlignment="Left" Margin="41,217,0,0" VerticalAlignment="Top"/>
         <Label Content="{Binding JobType}" HorizontalAlignment="Left" Margin="128,217,0,0" VerticalAlignment="Top"/>
 
+        <ComboBox HorizontalAlignment="Left" Margin="675,18,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Margin="598,18,0,0" TextWrapping="Wrap" Text="Language" VerticalAlignment="Top" Width="72" TextChanged="TextBox_TextChanged" Height="20"/>
+        <Rectangle HorizontalAlignment="Center" Height="450" Stroke="White" VerticalAlignment="Center" Width="800" Opacity="100" Fill="White" Panel.ZIndex="-1"/>
+        <Button Content="Stop Job" Command="{Binding StopCommand}" HorizontalAlignment="Left" Margin="634,269,0,0" VerticalAlignment="Top" Height="40" Width="114" RenderTransformOrigin="0.886,-0.4" />
     </Grid>
-</Page>

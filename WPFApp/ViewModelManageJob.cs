@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Policy;
@@ -19,7 +20,7 @@ namespace WPFApp
 
         private string _inputString;
         private string _outputString;
-        private string _stateString;
+        private int _stateString;
         private string _nameString;
         private string _inputFileString;
         private string _outputFileString;
@@ -34,9 +35,10 @@ namespace WPFApp
         private JobObj _job;
         public JobManager Controller = new();
 
-        public ICommand StartCommand { get; }
-        public ICommand StopCommand { get; }
-        public ICommand ResumeCommand { get; }
+        public CommandHandler StartCommand { get; }
+        public CommandHandler StopCommand { get; }
+        public CommandHandler PauseCommand { get; }
+        public CommandHandler ResumeCommand { get; }
 
         public string JobType => _job.Type.ToString();
         public string JobName => _job.Name;
@@ -46,12 +48,25 @@ namespace WPFApp
         {
             _job = Job;
             StartCommand = new CommandHandler(() => StartJob(), CanStart);
-            StopCommand = new CommandHandler(() => StopJob(), CanStop);
+            StopCommand = new CommandHandler(() => StopJob(), CanPauseOrStop);
+            PauseCommand = new CommandHandler(() => PauseJob(), CanPauseOrStop);
             ResumeCommand = new CommandHandler(() => ResumeJob(), CanResume);
-            _progressValue = 72.8;
+            _progressValue = 0;
             _inputFileString = _job.SourcePath;
             _outputFileString = _job.TargetPath;
             _inputJobID = _job.Id;
+            _stateString = 0;
+            Controller.ExecuteBackup.Status += (int status) => {
+                this.OnPropertyChanged(null);
+                StateString = JobManager.threadsByJob[Job.Id].ButtonStatus; 
+                
+            };
+            Controller.ExecuteBackup.ProgressBar += (int progressBar) => {
+                this.OnPropertyChanged(null);
+                ProgressValue = JobManager.threadsByJob[Job.Id].progressBarPercent;
+            };
+
+        }   
 
             _selectedLanguage = languageManager.saveConfigObj.Language;
 
@@ -101,16 +116,22 @@ namespace WPFApp
             {
                 _outputFileString = value;
                 OnPropertyChanged(nameof(OutputFileString));
+                StartCommand?.RaiseCanExecuteChanged();
+                StopCommand?.RaiseCanExecuteChanged();
+                StartCommand?.RaiseCanExecuteChanged();
             }
         }
 
-        public string StateString
+        public int StateString
         {
             get => _stateString;
             set
             {
                 _stateString = value;
                 OnPropertyChanged(nameof(StateString));
+                StartCommand?.RaiseCanExecuteChanged();
+                StopCommand?.RaiseCanExecuteChanged();
+                StartCommand?.RaiseCanExecuteChanged();
             }
         }
         public string TypeBackupString
@@ -134,28 +155,47 @@ namespace WPFApp
         }
         private void StartJob()
         {
-            OutputString = $"Demarrage du job {JobID}";
+            
             int result = Controller.LaunchBackup(JobID);
+            OutputString = $"Demarrage du job {JobID}";
 
+        }
+
+        private void PauseJob() 
+        {
+
+            if (JobManager.threadsByJob.TryGetValue(JobID, out var threadInfo))
+            {
+                threadInfo.PauseEvent.Reset();
+                OutputString = $"Pause du job {JobID}";
+            }
+            
         }
 
         private void StopJob()
         {
 
-            int result = Controller.LaunchBackup(JobID);/////////////: à faiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiire
-            OutputString = $"Demarrage du job {result}";
+            if (JobManager.threadsByJob.TryGetValue(JobID, out var threadInfo))
+            {
+                threadInfo.TokenSource.Cancel();
+                OutputString = $"Arrêt du job {JobID}"; ;
+            }
+
         }
 
-        private void ResumeJob()
+        private void ResumeJob() 
         {
-            int result = Controller.LaunchBackup(JobID);/////////////: à faiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiire
-            OutputString = $"Demarrage du job {result}";
+            if (JobManager.threadsByJob.TryGetValue(JobID, out var threadInfo))
+            {
+                threadInfo.PauseEvent.Set(); 
+                OutputString = $"Redémarrage du job : {JobID}";
+            }
         }
 
         private bool CanStart()
         {
-
-            if (StateString != "Active" && StateString != "Stopped")
+            Debug.WriteLine("CanStart called with state: " + StateString);
+            if (StateString != 1 && StateString != 2)
             {
                 return (true);
             }
@@ -164,10 +204,10 @@ namespace WPFApp
                 return (false);
             }
         }
-        private bool CanStop()
+        private bool CanPauseOrStop() 
         {
 
-            if (StateString == "Active")
+            if (StateString == 1)
             {
                 return (true);
             }
@@ -179,7 +219,7 @@ namespace WPFApp
         private bool CanResume()
         {
 
-            if (StateString == "Stopped")
+            if (StateString == 2)
             {
                 return (true);
             }

@@ -17,24 +17,24 @@ using ControllerModel.JsonHelper;
 namespace ControllerModel.Logs2
 {
     /// <summary>
-    /// Interface définissant les méthodes pour écrire des logs au format JSON.
+    /// Interface defining methods for writing logs in JSON format.
     /// </summary>
     public interface ILoggerWriter
     {
         /// <summary>
-        /// Écrit un objet de log dans un fichier spécifié.
+        /// Writes a log object to a specified file.
         /// </summary>
-        /// <typeparam name="T">Type de l'objet de log.</typeparam>
-        /// <param name="path">Chemin du fichier où écrire le log.</param>
-        /// <param name="obj">Objet de log à écrire.</param>
+        /// <typeparam name="T">Type of log object.</typeparam>
+        /// <param name="path">Path to file where to write log.</param>
+        /// <param name="obj">Log object to write.</param>
         void WriteLog<T>(string path, T obj);
 
         /// <summary>
-        /// Écrit une liste d'objets de log dans un fichier spécifié.
+        /// Writes a list of log objects to a specified file.
         /// </summary>
-        /// <typeparam name="T">Type des objets de log dans la liste.</typeparam>
-        /// <param name="path">Chemin du fichier où écrire les logs.</param>
-        /// <param name="list">Liste d'objets de log à écrire.</param>
+        /// <typeparam name="T">Type of log objects in the list.</typeparam>
+        /// <param name="path">Path to the file where to write the logs.</param>
+        /// <param name="list">List of log objects to write.</param>
         void WriteLogList<T>(string path, List<T> list);
 
     }
