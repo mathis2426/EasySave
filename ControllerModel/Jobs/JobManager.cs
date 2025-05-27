@@ -17,10 +17,10 @@ namespace ControllerModel.Jobs
         public JsonHelperFactory JsonHelperFactory = new();
         public JsonHelperClassJsonUpdate JsonHelperClassJsonUpdate = JsonHelperFactory.CreateJsonUpdate();
 
-        public ExtensionFileParam ExtensionFileParam = new();
+        public FileParam ExtensionFileParam = new();
 
         public SaveConfig SaveConfigObj;
-        
+
         private readonly string _pathToJob = "";
         private readonly string _pathToConfig = "";
 
@@ -28,7 +28,7 @@ namespace ControllerModel.Jobs
         /// Initializes a new job manager,
         /// loads existing jobs from the JSON file.
         /// </summary>
-        public JobManager() 
+        public JobManager()
         {
             string binPath = Path.GetDirectoryName(AppContext.BaseDirectory);
 
@@ -77,13 +77,13 @@ namespace ControllerModel.Jobs
         /// <returns>Returns 0 if the backup went well, otherwise 1.</returns>
         public int LaunchBackup(int jobNum)
         {
-            if( jobNum == 0)
+            if (jobNum == 0)
             {
                 _executeBackup.ExecuteJobAll(JobList);
                 return 0;
             }
-            int jobexit = _executeBackup.ExecuteJob(JobList[jobNum-1]);
-            if(jobexit == 0) { return 0; }
+            int jobexit = _executeBackup.ExecuteJob(JobList[jobNum - 1]);
+            if (jobexit == 0) { return 0; }
             else { return 1; }
 
 
@@ -143,14 +143,27 @@ namespace ControllerModel.Jobs
         {
             return ExtensionFileParam.getListExtensionPriorityFiles();
         }
+
         public string GetBlockingApp()
         {
-            return _executeBackup._saveConfig.BlockingApp;
+            return ExtensionFileParam.GetBlockingApp();
         }
+
         public void SetBlockingApp(string app)
         {
-            _executeBackup._saveConfig.BlockingApp = app;
-            JsonHelperClassJsonUpdate.UpdateSingleObj(Path.Combine(Path.GetDirectoryName(AppContext.BaseDirectory), "config.json"), _executeBackup._saveConfig);
+            ExtensionFileParam.SetBlockingApp(app);
+        }
+
+        public int GetLargeFileThreshold()
+        {
+            SaveConfigObj = JsonHelperFactory.CreateJsonReadSingleObj().ReadSingleObj<SaveConfig>(_pathToConfig);
+            return SaveConfigObj.LargeFileThreshold;
+        }
+
+        public void SetLargeFileThreshold(int largeFileThreshold)
+        {
+            SaveConfigObj.LargeFileThreshold = largeFileThreshold;
+            JsonHelperClassJsonUpdate.UpdateSingleObj(_pathToConfig, SaveConfigObj);
         }
     }
 }

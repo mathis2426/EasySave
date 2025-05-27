@@ -342,4 +342,7 @@
   <data name="Percentage" xml:space="preserve">
     <value>Completion percentage</value>
   </data>
+  <data name="ThresholdSizeFile" xml:space="preserve">
+    <value>Large file threshold</value>
+  </data>
 </root>

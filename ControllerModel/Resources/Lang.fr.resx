@@ -342,4 +342,7 @@
   <data name="Percentage" xml:space="preserve">
     <value>Pourcentage de complétion</value>
   </data>
+  <data name="ThresholdSizeFile" xml:space="preserve">
+    <value>Seuil fichiers volumineux</value>
+  </data>
 </root>
