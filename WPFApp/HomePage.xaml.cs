@@ -75,5 +75,10 @@ namespace WPFApp
         {
 
         }
+
+        private void ButtonManageAllJob_Click(object sender, RoutedEventArgs e)
+        {
+            _mainFrame.Navigate(new ManageAllJob());
+        }
     }
 }

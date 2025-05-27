@@ -93,6 +93,9 @@ namespace ControllerModel.Jobs
                 var tokenSource = new CancellationTokenSource();
                 var pauseEvent = new ManualResetEventSlim(true);
                 Thread thread = new Thread(() => ExecuteJob(job, tokenSource.Token, pauseEvent));
+
+
+
                 thread.Start();
                 threads.Add(thread);
             }

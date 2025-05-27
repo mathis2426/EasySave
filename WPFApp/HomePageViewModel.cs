@@ -30,13 +30,14 @@ namespace WPFApp
                 execute: DeleteJob,
                 canExecute: () => SelectedJob != null
             );
-
-            _selectedLanguage = languageManager.saveConfigObj.Language;
-
             ManageJobCommand = new CommandHandler(
                 execute: () => ManageJob(),
                 canExecute: () => SelectedJob != null
             );
+
+            _selectedLanguage = languageManager.saveConfigObj.Language;
+
+            
         }
 
         public JobObj SelectedJob
