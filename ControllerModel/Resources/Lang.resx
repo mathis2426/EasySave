@@ -321,4 +321,25 @@
   <data name="ManageJob" xml:space="preserve">
     <value>Manage job</value>
   </data>
+  <data name="BackupType" xml:space="preserve">
+    <value>Type of backup:</value>
+  </data>
+  <data name="select_source" xml:space="preserve">
+    <value>Select a source path:</value>
+  </data>
+  <data name="select_target" xml:space="preserve">
+    <value>Select a target path:</value>
+  </data>
+  <data name="Console" xml:space="preserve">
+    <value>Console</value>
+  </data>
+  <data name="Validate" xml:space="preserve">
+    <value>Validate</value>
+  </data>
+  <data name="Browse" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="Percentage" xml:space="preserve">
+    <value>Completion percentage</value>
+  </data>
 </root>

@@ -321,4 +321,25 @@
   <data name="ManageJob" xml:space="preserve">
     <value>Gerer un travail</value>
   </data>
+  <data name="BackupType" xml:space="preserve">
+    <value>Type de travail:</value>
+  </data>
+  <data name="select_source" xml:space="preserve">
+    <value>Selectioner un chemin de source:</value>
+  </data>
+  <data name="select_target" xml:space="preserve">
+    <value>Selectioner un chemin de destination:</value>
+  </data>
+  <data name="Console" xml:space="preserve">
+    <value>Console</value>
+  </data>
+  <data name="Validate" xml:space="preserve">
+    <value>Valider</value>
+  </data>
+  <data name="Browse" xml:space="preserve">
+    <value>Naviguer</value>
+  </data>
+  <data name="Percentage" xml:space="preserve">
+    <value>Pourcentage de complétion</value>
+  </data>
 </root>
