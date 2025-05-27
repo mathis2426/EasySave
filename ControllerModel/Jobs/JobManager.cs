@@ -143,5 +143,14 @@ namespace ControllerModel.Jobs
         {
             return ExtensionFileParam.getListExtensionPriorityFiles();
         }
+        public string GetBlockingApp()
+        {
+            return _executeBackup._saveConfig.BlockingApp;
+        }
+        public void SetBlockingApp(string app)
+        {
+            _executeBackup._saveConfig.BlockingApp = app;
+            JsonHelperClassJsonUpdate.UpdateSingleObj(Path.Combine(Path.GetDirectoryName(AppContext.BaseDirectory), "config.json"), _executeBackup._saveConfig);
+        }
     }
 }

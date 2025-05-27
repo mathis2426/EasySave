@@ -1,4 +1,5 @@
 ﻿using ControllerModel.Jobs;
+using ControllerModel.LanguagesHelper;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -8,9 +9,9 @@ namespace WPFApp
 {
     public class SettingsViewModel : AbstractViewModel
     {
-        public readonly JobManager _jobManager = new JobManager();
-
+        private readonly JobManager _jobManager = new();
         private ExtensionItem _selectedExtension;
+        private readonly LanguageManager languageManager = new();
         private ExtensionItem _selectedPriorityExtension;
 
         private string _newExtensionName;
@@ -19,12 +20,9 @@ namespace WPFApp
         private string _outputText;
 
         public ObservableCollection<ExtensionItem> Extensions { get; } = new ObservableCollection<ExtensionItem>();
-        public ObservableCollection<ExtensionItem> PriorityExtensions { get; } = new ObservableCollection<ExtensionItem>();
 
         public SettingsViewModel()
         {
-            NewExtensionName = ".";
-
             AddExtensionCommand = new CommandHandler(
                 execute: AddExtension,
                 canExecute: () => !string.IsNullOrWhiteSpace(NewExtensionName)
@@ -34,6 +32,9 @@ namespace WPFApp
                 execute: DeleteExtension,
                 canExecute: () => SelectedExtension != null
             );
+
+            BlockingApp = _jobManager.GetBlockingApp();
+            _selectedLanguage = languageManager.saveConfigObj.Language;
 
             AddPriorityExtensionCommand = new CommandHandler(
                 execute: AddPriorityExtension,
@@ -57,6 +58,32 @@ namespace WPFApp
                 PriorityExtensions.Add(new ExtensionItem { Name = ext });
             }
         }
+
+        public string ExtensionsName => languageManager.Get("ExtensionsName");
+        public string BlockingApplication => languageManager.Get("BlockingApplication");
+        public string Exit => languageManager.Get("Exit");
+        public string Language => languageManager.Get("Language");
+        public string AddExtensionName => languageManager.Get("AddExtension");
+        public string DeleteExtensionName => languageManager.Get("DeleteExtension");
+        public string PriorityExtension => languageManager.Get("PriorityExtension");
+        public string AddPriority => languageManager.Get("AddPriority");
+        public string DeletePriority => languageManager.Get("DeletePriority");
+
+
+        private void RefreshTranslations()
+        {
+            OnPropertyChanged(nameof(ExtensionsName));
+            OnPropertyChanged(nameof(BlockingApplication));
+            OnPropertyChanged(nameof(Exit));
+            OnPropertyChanged(nameof(Language));
+            OnPropertyChanged(nameof(AddExtensionName));
+            OnPropertyChanged(nameof(DeleteExtensionName));
+            OnPropertyChanged(nameof(PriorityExtension));
+            OnPropertyChanged(nameof(AddPriority));
+            OnPropertyChanged(nameof(DeletePriority));
+
+        }
+        public ObservableCollection<ExtensionItem> PriorityExtensions { get; } = new ObservableCollection<ExtensionItem>();
 
         public string OutputText
         {
@@ -205,6 +232,46 @@ namespace WPFApp
                 OutputText = $"Erreur lors de la suppression prioritaire : {ex.Message}";
             }
         }
+        private string _blockingApp;
+        public string BlockingApp
+        {
+            get => _blockingApp;
+            set
+            {
+                if (_blockingApp != value)
+                {
+                    _blockingApp = value;
+                    OnPropertyChanged();
+                }
+
+                _jobManager.SetBlockingApp(_blockingApp);
+                OnPropertyChanged();
+            }
+        }
+        private string _selectedLanguage;
+        public string SelectedLanguage
+        {
+            get => _selectedLanguage;
+            set
+            {
+                if (_selectedLanguage != value)
+                {
+                    _selectedLanguage = value;
+                    
+                    languageManager.SetLanguage(_selectedLanguage);
+                    RefreshTranslations();
+                    OnPropertyChanged();
+                    OutputText = $"{ languageManager.Get("language_changed")} : {_selectedLanguage}";
+
+                }
+            }
+        }
+
+        public ObservableCollection<string> AvailableLanguages { get; } = new ObservableCollection<string>
+        {
+            "fr",
+            "en-US"
+        };
     }
 
     public class ExtensionItem

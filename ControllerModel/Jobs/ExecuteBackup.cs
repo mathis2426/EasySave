@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +14,7 @@ namespace ControllerModel.Jobs
 {
     public class ExecuteBackup
     {
+
         // Properties
         private readonly Daily _logDaily = new();
         private readonly State _state = new();
@@ -83,10 +84,30 @@ namespace ControllerModel.Jobs
         /// <returns>0 si la sauvegarde a réussi, 1 sinon (ex : chemin non valide).</returns>
         public int ExecuteJob(JobObj job)
         {
-            Console.WriteLine($"[START] Job {job.Name} démarré dans le thread {Thread.CurrentThread.ManagedThreadId}");
-
-            // Simulate file transfer
+            if (_saveConfig.BlockingApp != null && _saveConfig.BlockingApp != "")
+            {
+                Process[] processes = Process.GetProcessesByName(_saveConfig.BlockingApp);
+                if (processes.Length > 0)
+                {
+                    Console.WriteLine($"Fermer le process {_saveConfig.BlockingApp}");
+                    while (processes.Length > 0)
+                    {
+                        processes = Process.GetProcessesByName(_saveConfig.BlockingApp);
+                    }
+                }
+            }
             string sourcePath = job.SourcePath;
+            foreach (var file in Directory.GetFiles(sourcePath))
+            {
+                if (file.Contains(_saveConfig.BlockingApp) && file.EndsWith("exe"))
+                {
+                    Console.WriteLine($"Application {_saveConfig.BlockingApp} detecté demarage annulé");
+                    return 1;
+                }
+            }
+
+            Console.WriteLine("Execute job");
+            // Simulate file transfer
             string targetPath = job.TargetPath;
             string name = job.Name;
 
