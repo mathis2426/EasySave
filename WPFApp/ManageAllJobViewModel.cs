@@ -1,13 +1,14 @@
 ﻿using ControllerModel.Jobs;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 using WPFApp;
+using System.Windows.Threading;
 
 public class ManageAllJobViewModel : INotifyPropertyChanged
 {
     private readonly JobManager _jobManager = new();
-    //public ObservableCollection<JobViewModel> Jobs { get; set; } = new();
 
     public ICommand StartCommand { get; }
     public ICommand PauseCommand { get; }
@@ -25,24 +26,31 @@ public class ManageAllJobViewModel : INotifyPropertyChanged
         }
     }
 
+    // Propriétés de contrôle des boutons
+    public bool CanStart => !JobManager.threadsByJob.Values.Any(v => v.ButtonStatus != 0);
+    public bool CanPauseOrStop => JobManager.threadsByJob.Values.Any(v => v.ButtonStatus != 0);
+
     public ManageAllJobViewModel()
     {
-        // Convertir chaque JobObj en JobViewModel
-        foreach (var job in _jobManager.JobList)
-        {
-            //Jobs.Add(new JobViewModel(job));
-        }
+        StartCommand = new RelayCommand(StartAllJobs, () => CanStart);
+        PauseCommand = new RelayCommand(PauseAllJobs, () => CanPauseOrStop);
+        ResumeCommand = new RelayCommand(ResumeAllJobs, () => CanPauseOrStop);
+        StopCommand = new RelayCommand(StopAllJobs, () => CanPauseOrStop);
 
-        StartCommand = new RelayCommand(StartAllJobs);
-        PauseCommand = new RelayCommand(PauseAllJobs);
-        ResumeCommand = new RelayCommand(ResumeAllJobs);
-        StopCommand = new RelayCommand(StopAllJobs);
+        // Optionnel : timer pour actualiser les états même sans interaction
+        DispatcherTimer timer = new DispatcherTimer
+        {
+            Interval = System.TimeSpan.FromSeconds(1)
+        };
+        timer.Tick += (s, e) => RefreshButtonStates();
+        timer.Start();
     }
 
     private void StartAllJobs()
     {
         _jobManager.LaunchBackup(0); // 0 = tous les jobs
         OutputString = "Tous les jobs ont démarré.";
+        RefreshButtonStates();
     }
 
     private void PauseAllJobs()
@@ -52,6 +60,7 @@ public class ManageAllJobViewModel : INotifyPropertyChanged
             kvp.Value.PauseEvent.Reset(); // Pause
         }
         OutputString = "Tous les jobs sont en pause.";
+        RefreshButtonStates();
     }
 
     private void ResumeAllJobs()
@@ -61,6 +70,7 @@ public class ManageAllJobViewModel : INotifyPropertyChanged
             kvp.Value.PauseEvent.Set(); // Resume
         }
         OutputString = "Tous les jobs ont repris.";
+        RefreshButtonStates();
     }
 
     private void StopAllJobs()
@@ -70,9 +80,21 @@ public class ManageAllJobViewModel : INotifyPropertyChanged
             kvp.Value.TokenSource.Cancel(); // Stop
         }
         OutputString = "Tous les jobs ont été arrêtés.";
+        RefreshButtonStates();
+    }
+
+    public void RefreshButtonStates()
+    {
+        OnPropertyChanged(nameof(CanStart));
+        OnPropertyChanged(nameof(CanPauseOrStop));
+
+        // Notifie les RelayCommands pour qu'ils réévaluent CanExecute
+        CommandManager.InvalidateRequerySuggested();
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
     protected void OnPropertyChanged(string name) =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 }
+
+
