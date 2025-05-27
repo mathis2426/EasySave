@@ -1,4 +1,5 @@
-﻿using ControllerModel.JsonHelper;
+﻿using ControllerModel.Jobs;
+using ControllerModel.JsonHelper;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -8,15 +9,17 @@ using System.Threading.Tasks;
 
 namespace ControllerModel
 {
-    public class ExtensionFileParam
+    public class FileParam
     {
         public JsonHelperClassJsonReadSingleObj jsonHelperClassJsonReadSingleObj = JsonHelperFactory.CreateJsonReadSingleObj();
         public JsonHelperClassJsonUpdate jsonHelperClassJsonUpdate = JsonHelperFactory.CreateJsonUpdate();
+        public SaveConfig saveConfig;
         public string binPathGlobal;
 
-        public ExtensionFileParam()
+        public FileParam()
         {
             binPathGlobal = Path.GetDirectoryName(AppContext.BaseDirectory);
+            saveConfig = jsonHelperClassJsonReadSingleObj.ReadSingleObj<SaveConfig>(Path.Combine(binPathGlobal, "config.json"));
         }
         /// <summary>
         /// Définit la langue de l'application et met à jour le fichier de configuration.
@@ -24,28 +27,45 @@ namespace ControllerModel
         /// <param name="ExtensionFileCryptoSoft">Liste des extensions à modifier.</param>
         public void SetExtensionFileCryptoSoft(string[] ExtensionFileCryptoSoft)
         {
-            SaveConfig SaveConfig = jsonHelperClassJsonReadSingleObj.ReadSingleObj<SaveConfig>(Path.Combine(binPathGlobal, "config.json"));
-            SaveConfig.ExtensionFileCrypt = ExtensionFileCryptoSoft;
-            jsonHelperClassJsonUpdate.UpdateSingleObj(Path.Combine(binPathGlobal, "config.json"), SaveConfig);
+            saveConfig.ExtensionFileCrypt = ExtensionFileCryptoSoft;
+            jsonHelperClassJsonUpdate.UpdateSingleObj(Path.Combine(binPathGlobal, "config.json"), saveConfig);
         }
 
         public string[] getListExtensionFilesCryptoSoft()
         {
-            SaveConfig SaveConfig = jsonHelperClassJsonReadSingleObj.ReadSingleObj<SaveConfig>(Path.Combine(binPathGlobal, "config.json"));
-            return SaveConfig.ExtensionFileCrypt;
+            return saveConfig.ExtensionFileCrypt;
         }
 
         public void SetExtensionPriorityFile(string[] ExtensionPriorityFile)
         {
-            SaveConfig SaveConfig = jsonHelperClassJsonReadSingleObj.ReadSingleObj<SaveConfig>(Path.Combine(binPathGlobal, "config.json"));
-            SaveConfig.ExtensionPriorityFile = ExtensionPriorityFile;
-            jsonHelperClassJsonUpdate.UpdateSingleObj(Path.Combine(binPathGlobal, "config.json"), SaveConfig);
+            saveConfig.ExtensionPriorityFile = ExtensionPriorityFile;
+            jsonHelperClassJsonUpdate.UpdateSingleObj(Path.Combine(binPathGlobal, "config.json"), saveConfig);
         }
 
         public string[] getListExtensionPriorityFiles()
         {
-            SaveConfig SaveConfig = jsonHelperClassJsonReadSingleObj.ReadSingleObj<SaveConfig>(Path.Combine(binPathGlobal, "config.json"));
-            return SaveConfig.ExtensionPriorityFile;
+            return saveConfig.ExtensionPriorityFile;
+        }
+
+        public string GetBlockingApp()
+        {
+            return saveConfig.BlockingApp;
+        }
+        public void SetBlockingApp(string app)
+        {
+            saveConfig.BlockingApp = app;
+            jsonHelperClassJsonUpdate.UpdateSingleObj(Path.Combine(binPathGlobal, "config.json"), saveConfig);
+        }
+
+        public int GetLargeFileThreshold()
+        {
+            return saveConfig.LargeFileThreshold;
+        }
+
+        public void SetLargeFileThreshold(int largeFileThreshold)
+        {
+            saveConfig.LargeFileThreshold = largeFileThreshold;
+            jsonHelperClassJsonUpdate.UpdateSingleObj(Path.Combine(binPathGlobal, "config.json"), saveConfig);
         }
     }
 }

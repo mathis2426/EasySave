@@ -14,6 +14,7 @@ namespace ControllerModel.JsonHelper
         public string[] ExtensionFileCrypt { get; set; }
         public string BlockingApp { get; set; }
         public string[] ExtensionPriorityFile { get; set; }
+        public int LargeFileThreshold { get; set; }
 
 
         /// <summary>
@@ -25,7 +26,8 @@ namespace ControllerModel.JsonHelper
         /// <param name="ExtensionFileCrypt">Extension des fichiers à crypter.</param>
         /// <param name="BlockingApp">Application de blocage.</param>
         /// <param name="ExtensionPriorityFile">Extension des fichiers prioritaires.</param>
-        public SaveConfig(string PathTologDaily, string PathTologStatus, string Language, string[] ExtensionFileCrypt, string[] ExtensionPriorityFile, string BlockingApp) 
+        /// <param name="largeFileThreshold">Size threshold for files considered large in KB.</param>
+        public SaveConfig(string PathTologDaily, string PathTologStatus, string Language, string[] ExtensionFileCrypt, string[] ExtensionPriorityFile, string BlockingApp, int largeFileThreshold) 
         { 
             this.PathToLogDaily = PathTologDaily;
             this.PathTologStatus = PathTologStatus;
@@ -33,6 +35,7 @@ namespace ControllerModel.JsonHelper
             this.ExtensionFileCrypt = ExtensionFileCrypt;
             this.ExtensionPriorityFile = ExtensionPriorityFile;
             this.BlockingApp = BlockingApp;
+            this.LargeFileThreshold = largeFileThreshold;
         }
 
     }

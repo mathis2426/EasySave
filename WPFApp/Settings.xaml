@@ -39,8 +39,11 @@
         <Button Content="{Binding DeletePriority}" Command="{Binding DeletePriorityExtensionCommand}" Margin="656,201,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="98" Height="28"/>
 
         <!-- Blocking App -->
-        <Label Content="{Binding BlockingApplication}" HorizontalAlignment="Left" Margin="461,264,0,0" VerticalAlignment="Top"/>
-        <TextBox Text="{Binding BlockingApp, UpdateSourceTrigger=LostFocus}" HorizontalAlignment="Left" Margin="605,269,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="{Binding BlockingApplication}" HorizontalAlignment="Left" Margin="461,245,0,0" VerticalAlignment="Top"/>
+        <TextBox Text="{Binding BlockingApp, UpdateSourceTrigger=LostFocus}" HorizontalAlignment="Left" Margin="605,250,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+
+        <Label Content="{Binding ThresholdSizeFile}" HorizontalAlignment="Left" Margin="461,286,0,0" VerticalAlignment="Top"/>
+        <TextBox Text="{Binding SizeFile, UpdateSourceTrigger=LostFocus}" HorizontalAlignment="Left" Margin="605,291,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
 
         <!-- Output text -->
         <TextBox Text="{Binding OutputText}" IsReadOnly="True" Margin="28,335,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="517" Height="53" TextChanged="TextBox_TextChanged_1"/>
