@@ -10,7 +10,7 @@
 
     <Grid RenderTransformOrigin="0.481,0.464" Background="White">
         <Button Content="Start Job" Command="{Binding StartCommand}" HorizontalAlignment="Left" Margin="37,269,0,0" VerticalAlignment="Top" Height="40" Width="114"/>
-        <Button Content="Pause Job" Command="{Binding StopCommand}" HorizontalAlignment="Left" Margin="440,269,0,0" VerticalAlignment="Top" Height="40" Width="114" RenderTransformOrigin="0.886,-0.4"/>
+        <Button Content="Pause Job" Command="{Binding PauseCommand}" HorizontalAlignment="Left" Margin="440,269,0,0" VerticalAlignment="Top" Height="40" Width="114" RenderTransformOrigin="0.886,-0.4"/>
         <Button Content="Resume Job" Command="{Binding ResumeCommand}" HorizontalAlignment="Left" Margin="238,269,0,0" VerticalAlignment="Top" Height="40" Width="115"/>
         <Button x:Name="ExitManageJob" Content="Exit" HorizontalAlignment="Left" Margin="619,356,0,0" VerticalAlignment="Top" Height="32" Width="133" Click="ButtonLeave_ClickManageJob"/>
         <TextBox x:Name="outputBox" Text="{Binding OutputString}" HorizontalAlignment="Left" Margin="37,345,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="517" Height="53"/>
@@ -28,5 +28,6 @@
         <ComboBox HorizontalAlignment="Left" Margin="675,18,0,0" VerticalAlignment="Top" Width="120"/>
         <TextBox HorizontalAlignment="Left" Margin="598,18,0,0" TextWrapping="Wrap" Text="Language" VerticalAlignment="Top" Width="72" TextChanged="TextBox_TextChanged" Height="20"/>
         <Rectangle HorizontalAlignment="Center" Height="450" Stroke="White" VerticalAlignment="Center" Width="800" Opacity="100" Fill="White" Panel.ZIndex="-1"/>
+        <Button Content="Stop Job" Command="{Binding StopCommand}" HorizontalAlignment="Left" Margin="634,269,0,0" VerticalAlignment="Top" Height="40" Width="114" RenderTransformOrigin="0.886,-0.4" />
     </Grid>
 </Page>

@@ -12,9 +12,7 @@ namespace ControllerModel.Logs2
     public enum StateEnumeration : byte
     {
         Inactive,
-        Active,
-        Error,
         In_progress,
-        End,
+        Paused,
     }
 }

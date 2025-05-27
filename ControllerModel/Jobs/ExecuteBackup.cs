@@ -14,6 +14,11 @@ namespace ControllerModel.Jobs
 {
     public class ExecuteBackup
     {
+
+        public delegate void StatusHandler(int status);
+        public event StatusHandler Status;
+        public delegate void ProgresseBarHandler(int progressBar);
+        public event ProgresseBarHandler ProgressBar;
         // Properties
         private readonly Daily _logDaily = new();
         private readonly State _state = new();
@@ -68,7 +73,9 @@ namespace ControllerModel.Jobs
 
             foreach (var job in JobList)
             {
-                Thread thread = new Thread(() => ExecuteJob(job));
+                var tokenSource = new CancellationTokenSource();
+                var pauseEvent = new ManualResetEventSlim(true);
+                Thread thread = new Thread(() => ExecuteJob(job, tokenSource.Token, pauseEvent));
                 thread.Start();
                 threads.Add(thread);
             }
@@ -81,7 +88,7 @@ namespace ControllerModel.Jobs
         /// </summary>
         /// <param name="job">Le job de sauvegarde à exécuter.</param>
         /// <returns>0 si la sauvegarde a réussi, 1 sinon (ex : chemin non valide).</returns>
-        public int ExecuteJob(JobObj job)
+        public int ExecuteJob(JobObj job, CancellationToken token, ManualResetEventSlim pauseEvent)
         {
             Console.WriteLine($"[START] Job {job.Name} démarré dans le thread {Thread.CurrentThread.ManagedThreadId}");
 
@@ -106,13 +113,23 @@ namespace ControllerModel.Jobs
             switch (job.Type)
             {
                 case JobType.Full:
-                    FullBackup(name, sourcePath, targetPath, totalFiles, totalFileSize, totalFilesLeft, fileEncryptionTimes);
+                    FullBackup(name, sourcePath, targetPath, totalFiles, totalFileSize, totalFilesLeft, fileEncryptionTimes, pauseEvent, token);
                     break;
                 case JobType.Differential:
-                    DifferentialBackup(name, sourcePath, targetPath, totalFiles, totalFileSize, totalFilesLeft, fileEncryptionTimes);
+                    DifferentialBackup(name, sourcePath, targetPath, totalFiles, totalFileSize, totalFilesLeft, fileEncryptionTimes, pauseEvent, token);
                     break;
             }
             stopwatch.Stop();
+            _state.SendParamToLog(
+                    name,
+                    sourcePath,
+                    targetPath,
+                    StateEnumeration.Inactive,
+                    totalFiles,
+                    totalFileSize,
+                    totalFilesLeft,
+                    100
+                );
 
             _logDaily.sendParamToLog(
                 name,
@@ -123,6 +140,8 @@ namespace ControllerModel.Jobs
                 DateTime.Now,
                 fileEncryptionTimes
             );
+            Status?.Invoke(0);
+            ProgressBar?.Invoke(100);
             Console.WriteLine($"[END] Job {name} terminé en {stopwatch.ElapsedMilliseconds} ms");
             return 0;
         }
@@ -139,14 +158,31 @@ namespace ControllerModel.Jobs
         /// <param name="totalFiles">Nombre total de fichiers à sauvegarder.</param>
         /// <param name="totalFileSize">Taille totale des fichiers à sauvegarder en octets.</param>
         /// <param name="totalFilesLeft">Nombre de fichiers restant à traiter.</param>
-        public void FullBackup(string name, string sourcePath, string targetPath, int totalFiles, long totalFileSize, int totalFilesLeft, Dictionary<string, long> fileEncryptionTimes)
+        public void FullBackup(string name, string sourcePath, string targetPath, int totalFiles, long totalFileSize, int totalFilesLeft, Dictionary<string, long> fileEncryptionTimes, ManualResetEventSlim pauseEvent, CancellationToken token)
         {
+
+            token.ThrowIfCancellationRequested();
+
             foreach (string file in Directory.GetFiles(targetPath))
             {
+               
                 File.Delete(file);
             }
             foreach (var file in Directory.GetFiles(sourcePath))
             {
+                if (!pauseEvent.IsSet)
+                {
+
+                    Debug.WriteLine("Le job est en pause. Libération des ressources...");
+                    Status?.Invoke(2);
+                    pauseEvent.Wait();
+                }
+                else if (token.IsCancellationRequested)
+                {
+                    Status?.Invoke(0);
+                    token.ThrowIfCancellationRequested();
+                }
+
                 string fileName = Path.GetFileName(file);
                 string targetFile = Path.Combine(targetPath, fileName);
                 long timeToEncrypt = 0;
@@ -170,7 +206,11 @@ namespace ControllerModel.Jobs
                     processCryptoSoft.WaitForExit();
                     encryptTimer.Stop();
                     timeToEncrypt = encryptTimer.ElapsedMilliseconds;
-
+                    if (token.IsCancellationRequested)
+                    {
+                        Status?.Invoke(0);
+                        token.ThrowIfCancellationRequested();
+                    }
                     //Console.WriteLine("Process terminé");
                 }
                 else
@@ -192,6 +232,14 @@ namespace ControllerModel.Jobs
                     totalFilesLeft,
                     progression
                 );
+                if (token.IsCancellationRequested)
+                {
+                    Status?.Invoke(0);
+                    token.ThrowIfCancellationRequested();
+                }
+
+                Status?.Invoke(1);
+                ProgressBar?.Invoke(progression);
             }
 
         }
@@ -206,10 +254,26 @@ namespace ControllerModel.Jobs
         /// <param name="totalFiles">Nombre total de fichiers à analyser.</param>
         /// <param name="totalFileSize">Taille totale des fichiers à analyser en octets.</param>
         /// <param name="totalFilesLeft">Nombre de fichiers restant à traiter.</param>
-        public void DifferentialBackup(string name, string sourcePath, string targetPath, int totalFiles, long totalFileSize, int totalFilesLeft, Dictionary<string, long> fileEncryptionTimes)
+        public void DifferentialBackup(string name, string sourcePath, string targetPath, int totalFiles, long totalFileSize, int totalFilesLeft, Dictionary<string, long> fileEncryptionTimes, ManualResetEventSlim pauseEvent, CancellationToken token)
         {
+            
+            
             foreach (string sourceFilePath in Directory.GetFiles(sourcePath))
             {
+                if (!pauseEvent.IsSet)
+                {
+
+                    Debug.WriteLine("Le job est en pause. Libération des ressources...");
+                    Status?.Invoke(2);
+                    pauseEvent.Wait();
+                }else if (token.IsCancellationRequested)
+                {
+                    Status?.Invoke(0);
+                    token.ThrowIfCancellationRequested();
+                }
+                
+                Thread.Sleep(500);
+                
                 string fileName = Path.GetFileName(sourceFilePath);
                 string destFilePath = Path.Combine(targetPath, fileName);
 
@@ -233,7 +297,11 @@ namespace ControllerModel.Jobs
 
                         encryptTimer.Stop();
                         timeToEncrypt = encryptTimer.ElapsedMilliseconds;
-
+                        if (token.IsCancellationRequested)
+                        {
+                            Status?.Invoke(0);
+                            token.ThrowIfCancellationRequested();
+                        }
                         Console.WriteLine("Process terminé");
                     }
                     else
@@ -256,6 +324,13 @@ namespace ControllerModel.Jobs
                     totalFilesLeft,
                     progression
                 );
+                if (token.IsCancellationRequested)
+                {
+                    Status?.Invoke(0);
+                    token.ThrowIfCancellationRequested();
+                }
+                Status?.Invoke(1);
+                ProgressBar?.Invoke(progression);
             }
         }
     }

@@ -11,9 +11,12 @@ namespace ControllerModel.Jobs
         /// </summary>
         public List<JobObj> JobList = new();
 
+        public static Dictionary<int, (Thread Thread, CancellationTokenSource TokenSource, ManualResetEventSlim PauseEvent)> threadsByJob = [];
+
+
         private readonly BackupJob _backupJob = new();
         private readonly ExecuteBackup _executeBackup = new();
-
+        public ExecuteBackup ExecuteBackup { get { return _executeBackup; } }
         public JsonHelperFactory JsonHelperFactory = new();
         public JsonHelperClassJsonUpdate JsonHelperClassJsonUpdate = JsonHelperFactory.CreateJsonUpdate();
 
@@ -42,7 +45,7 @@ namespace ControllerModel.Jobs
         /// Crée un nouveau job avec les paramètres fournis, l'ajoute à la liste,
         /// puis met à jour le fichier JSON des jobs.
         /// </summary>
-        /// <param name="name">Nom du job.</param>
+        /// <param name="name">Nom du job.</param   
         /// <param name="sourcePath">Chemin source pour la sauvegarde.</param>
         /// <param name="targetPath">Chemin cible pour la sauvegarde.</param>
         /// <param name="type">Type de job.</param>
@@ -82,8 +85,28 @@ namespace ControllerModel.Jobs
                 _executeBackup.ExecuteJobAll(JobList);
                 return 0;
             }
-            int jobexit = _executeBackup.ExecuteJob(JobList[jobNum-1]);
-            if(jobexit == 0) { return 0; }
+
+            var tokenSource = new CancellationTokenSource();
+            var pauseEvent = new ManualResetEventSlim(true);
+
+            Thread thread = new Thread(() =>
+            {
+                try
+                {
+                    _executeBackup.ExecuteJob(JobList[jobNum - 1], tokenSource.Token, pauseEvent);
+                }
+                catch (OperationCanceledException)
+                {
+                    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH
+                }
+                finally { threadsByJob.Remove(jobNum); }
+            });
+
+            threadsByJob[jobNum] = (thread, tokenSource, pauseEvent);
+
+            thread.Start();
+
+            if(0 == 0) { return 0; }
             else { return 1; }
 
 
@@ -104,7 +127,22 @@ namespace ControllerModel.Jobs
             }
             else
             {
-                _executeBackup.ExecuteJob(JobList[indexJob]);
+                var tokenSource = new CancellationTokenSource();
+                var pauseEvent = new ManualResetEventSlim(true);
+
+                Thread thread = new Thread(() =>
+                {
+                    try
+                    {
+                        _executeBackup.ExecuteJob(JobList[indexJob], tokenSource.Token, pauseEvent);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH
+                    }
+
+                });
+
             }
         }
 
