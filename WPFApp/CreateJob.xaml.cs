@@ -85,6 +85,20 @@ namespace WPFApp
             return true;
         }
 
+        public bool ArePathsDifferent(System.Windows.Controls.TextBox sourcePathTextBox, System.Windows.Controls.TextBox targetPathTextBox)
+        {
+            string source = sourcePathTextBox.Text.Trim();
+            string target = targetPathTextBox.Text.Trim();
+
+            if (string.Equals(source.Trim(), target.Trim(), StringComparison.OrdinalIgnoreCase))
+            {
+                System.Windows.MessageBox.Show("Le chemin source et le chemin de destination doivent être différents.", "Erreur de validation", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+
+            return true;
+        }
+
         // Méthode auxiliaire
         private bool IsValidExistingDirectory(string path)
         {
@@ -110,6 +124,9 @@ namespace WPFApp
                 return;
 
             if (!ArePathsValid(SourcePath, TargetPath))
+                return;
+
+            if (!ArePathsDifferent(SourcePath, TargetPath))
                 return;
 
             _jobManager.JobCreation(name, source, target, selectedType);
