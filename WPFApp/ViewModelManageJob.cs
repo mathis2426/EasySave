@@ -48,18 +48,45 @@ namespace WPFApp
             _outputFileString = _job.TargetPath;
             _typeBackupString = "Job type : " + _job.Type.ToString();
             _inputJobID = _job.Id;
-            _stateString = 0;
-            Controller.ExecuteBackup.Status += (int status) => {
-                this.OnPropertyChanged(null);
-                StateString = JobManager.threadsByJob[Job.Id].ButtonStatus; 
-                
-            };
-            Controller.ExecuteBackup.ProgressBar += (int progressBar) => {
-                this.OnPropertyChanged(null);
-                ProgressValue = JobManager.threadsByJob[Job.Id].progressBarPercent;
-            };
 
-        }   
+            
+
+            if (JobManager.threadsByJob.TryGetValue(_job.Id, out var jobData))
+            {
+                _stateString = jobData.ButtonStatus;
+                _progressValue = jobData.progressBarPercent;
+            }
+            else
+            {
+                _stateString = 0;
+                _progressValue = 0;
+            }
+
+            if (!ExecuteBackup.ProgressDelegatesByJobId.ContainsKey(_job.Id))
+                ExecuteBackup.ProgressDelegatesByJobId[_job.Id] = null;
+
+            ExecuteBackup.ProgressDelegatesByJobId[_job.Id] += OnProgressChanged;
+
+            if (!ExecuteBackup.StatusDelegatesByJobId.ContainsKey(_job.Id))
+                ExecuteBackup.StatusDelegatesByJobId[_job.Id] = null;
+
+            ExecuteBackup.StatusDelegatesByJobId[_job.Id] += OnStatusChanged;
+        }
+
+        private void OnProgressChanged(double progress)
+        {
+            OutputString = $"Changement de la barre de progress {progress}";
+            ProgressValue = progress;
+            ProgressValue = JobManager.threadsByJob[_job.Id].progressBarPercent;
+            this.OnPropertyChanged(nameof(ProgressValue));
+        }
+
+        private void OnStatusChanged(int status)
+        {
+            StateString = status;
+            StateString = JobManager.threadsByJob[_job.Id].ButtonStatus;
+            this.OnPropertyChanged(nameof(StateString));
+        }
         public string InputString
         {
             get => _inputString; // getter
