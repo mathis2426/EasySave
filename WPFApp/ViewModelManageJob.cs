@@ -144,9 +144,6 @@ namespace WPFApp
             {
                 _outputFileString = value;
                 OnPropertyChanged(nameof(OutputFileString));
-                StartCommand?.RaiseCanExecuteChanged();
-                StopCommand?.RaiseCanExecuteChanged();
-                StartCommand?.RaiseCanExecuteChanged();
             }
         }
 

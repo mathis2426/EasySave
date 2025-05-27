@@ -82,6 +82,7 @@ namespace ControllerModel.Jobs
         /// <returns>Returns 0 if the backup went well, otherwise 1.</returns>
         public int LaunchBackup(int jobNum)
         {
+
             if (jobNum == 0)
             {
                 _executeBackup.ExecuteJobAll(JobList);
@@ -108,9 +109,7 @@ namespace ControllerModel.Jobs
 
             thread.Start();
 
-            if(0 == 0) { return 0; }
-            else { return 1; }
-
+            return 0;
 
         }
 
