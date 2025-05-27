@@ -8,6 +8,7 @@ using System.Diagnostics;
 using ControllerModel.Logs2;
 using ControllerModel.JsonHelper;
 using System.Reflection;
+using System.Collections.Concurrent;
 
 
 
@@ -21,8 +22,8 @@ namespace ControllerModel.Jobs
         public delegate void ProgresseBarHandler(double progressBar);
         public event ProgresseBarHandler ProgressBar;
 
-        public static Dictionary<int, ProgresseBarHandler> ProgressDelegatesByJobId = [];
-        public static Dictionary<int, StatusHandler> StatusDelegatesByJobId = [];
+        public static ConcurrentDictionary<int, ProgresseBarHandler> ProgressDelegatesByJobId = [];
+        public static ConcurrentDictionary<int, StatusHandler> StatusDelegatesByJobId = [];
 
         // Properties
         private readonly Daily _logDaily = new();
@@ -92,10 +93,20 @@ namespace ControllerModel.Jobs
             {
                 var tokenSource = new CancellationTokenSource();
                 var pauseEvent = new ManualResetEventSlim(true);
-                Thread thread = new Thread(() => ExecuteJob(job, tokenSource.Token, pauseEvent));
+                Thread thread = new Thread(() =>
+                {
+                    try
+                    {
+                        ExecuteJob(job, tokenSource.Token, pauseEvent);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH
+                    }
+                    finally { JobManager.threadsByJob.Remove(job.Id); }
+                });
 
-
-
+                JobManager.threadsByJob[job.Id] = (thread, tokenSource, pauseEvent, 1, 0);
                 thread.Start();
                 threads.Add(thread);
             }
