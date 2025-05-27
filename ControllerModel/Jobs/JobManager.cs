@@ -11,8 +11,10 @@ namespace ControllerModel.Jobs
         /// </summary>
         public List<JobObj> JobList = new();
 
-        public static Dictionary<int, (Thread Thread, CancellationTokenSource TokenSource, ManualResetEventSlim PauseEvent)> threadsByJob = [];
+        
+        public static Dictionary<int, (Thread Thread, CancellationTokenSource TokenSource, ManualResetEventSlim PauseEvent, int ButtonStatus, double progressBarPercent)> threadsByJob = [];
 
+       
 
         private readonly BackupJob _backupJob = new();
         private readonly ExecuteBackup _executeBackup = new();
@@ -102,7 +104,7 @@ namespace ControllerModel.Jobs
                 finally { threadsByJob.Remove(jobNum); }
             });
 
-            threadsByJob[jobNum] = (thread, tokenSource, pauseEvent);
+            threadsByJob[jobNum] = (thread, tokenSource, pauseEvent, 1, 0);
 
             thread.Start();
 

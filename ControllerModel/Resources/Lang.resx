@@ -318,9 +318,6 @@
   <data name="DeleteJob" xml:space="preserve">
     <value>Delete job</value>
   </data>
-  <data name="ManageJob" xml:space="preserve">
-    <value>Manage job</value>
-  </data>
   <data name="BackupType" xml:space="preserve">
     <value>Type of backup:</value>
   </data>
@@ -344,5 +341,42 @@
   </data>
   <data name="ThresholdSizeFile" xml:space="preserve">
     <value>Large file threshold</value>
+  </data>
+  <data name="ManageJob" xml:space="preserve">
+    <value>Manage job</value>
+    <comment>Manage job</comment>
+  </data>
+  <data name="ID" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="SourcePath" xml:space="preserve">
+    <value>Source path</value>
+  </data>
+  <data name="TargetPath" xml:space="preserve">
+    <value>Target path</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="ValidateLabel" xml:space="preserve">
+    <value>Validate</value>
+  </data>
+  <data name="start_job" xml:space="preserve">
+    <value>Start Job</value>
+  </data>
+  <data name="pause_job" xml:space="preserve">
+    <value>Pause Job</value>
+  </data>
+  <data name="resume_job" xml:space="preserve">
+    <value>Resume Job</value>
+  </data>
+  <data name="priority_files" xml:space="preserve">
+    <value>Priority files</value>
+  </data>
+  <data name="percentage_completed" xml:space="preserve">
+    <value>Completed percentage</value>
+  </data>
+  <data name="stop_job" xml:space="preserve">
+    <value>Stop Job</value>
   </data>
 </root>
