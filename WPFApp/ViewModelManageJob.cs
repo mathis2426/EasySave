@@ -57,6 +57,9 @@ namespace WPFApp
             _outputFileString = _job.TargetPath;
             _inputJobID = _job.Id;
             _selectedLanguage = languageManager.saveConfigObj.Language;
+            _nameString = _job.Name;
+            _typeBackupString = _job.Type.ToString();
+
 
 
 
