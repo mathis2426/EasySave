@@ -41,8 +41,6 @@
                             </TextBlock>
                         </Grid>
                     </Border>
-                    
-
                 </ItemsControl.Items>
             </ItemsControl>
         </ScrollViewer>
