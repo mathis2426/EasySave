@@ -48,10 +48,6 @@
         <!-- Output text -->
         <TextBox Text="{Binding OutputText}" IsReadOnly="True" Margin="28,335,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="517" Height="53" TextChanged="TextBox_TextChanged_1"/>
 
-        <!-- Combobox and label -->
-        <Label Content="{Binding Language}" HorizontalAlignment="Left" Margin="546,18,0,0" VerticalAlignment="Top"/>
-        <ComboBox  ItemsSource="{Binding AvailableLanguages}" SelectedItem="{Binding SelectedLanguage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="610,20,0,0" VerticalAlignment="Top" Width="120"/>
-
         <!-- Exit Button -->
         <Button x:Name="ExitCreateJob" Content="{Binding Exit}" HorizontalAlignment="Left" Margin="604,356,0,0" VerticalAlignment="Top" Height="32" Width="132" Click="ExitCreateJob_Click"/>
     </Grid>

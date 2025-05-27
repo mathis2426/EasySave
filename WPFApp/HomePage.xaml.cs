@@ -36,7 +36,7 @@ namespace WPFApp
 
         private void ButtonLeave_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.GoBack();
+            Environment.Exit(0);
         }
         private void ButtonCreateJob_Click(object sender, RoutedEventArgs e)
         {

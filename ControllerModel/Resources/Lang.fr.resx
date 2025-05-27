@@ -313,13 +313,10 @@
     <value>Nombre</value>
   </data>
   <data name="CreateJob" xml:space="preserve">
-    <value>Crer un travail</value>
+    <value>Créer un travail</value>
   </data>
   <data name="DeleteJob" xml:space="preserve">
-    <value>Suprimer un travail</value>
-  </data>
-  <data name="ManageJob" xml:space="preserve">
-    <value>Gerer un travail</value>
+    <value>Supprimer un travail</value>
   </data>
   <data name="BackupType" xml:space="preserve">
     <value>Type de travail:</value>
@@ -344,5 +341,41 @@
   </data>
   <data name="ThresholdSizeFile" xml:space="preserve">
     <value>Seuil fichiers volumineux</value>
+  </data>
+  <data name="ManageJob" xml:space="preserve">
+    <value>&#x8;Gérer un travail</value>
+  </data>
+  <data name="ID" xml:space="preserve">
+    <value>N°</value>
+  </data>
+  <data name="SourcePath" xml:space="preserve">
+    <value>Chemin source</value>
+  </data>
+  <data name="TargetPath" xml:space="preserve">
+    <value>Chemin de destination</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="ValidateLabel" xml:space="preserve">
+    <value>Valider</value>
+  </data>
+  <data name="start_job" xml:space="preserve">
+    <value>Démarrer le travai</value>
+  </data>
+  <data name="pause_job" xml:space="preserve">
+    <value>Mettre en pause </value>
+  </data>
+  <data name="resume_job" xml:space="preserve">
+    <value>Reprendre le job</value>
+  </data>
+  <data name="priority_files" xml:space="preserve">
+    <value>Fichiers prioritaires</value>
+  </data>
+  <data name="percentage_completed" xml:space="preserve">
+    <value>Pourcentage complété</value>
+  </data>
+  <data name="stop_job" xml:space="preserve">
+    <value>Arreter le travail</value>
   </data>
 </root>

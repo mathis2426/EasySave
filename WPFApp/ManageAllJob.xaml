@@ -22,8 +22,6 @@
         <TextBox HorizontalAlignment="Left" Text="{Binding NameString}" Margin="94,12,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="158" TextChanged="TextBox_TextChanged"></TextBox>
         <Label Content="Type" HorizontalAlignment="Left" Margin="37,33,0,0" VerticalAlignment="Top" Width="45" Height="26"/>
         <TextBox HorizontalAlignment="Left" Text="{Binding TypeBackupString}" Margin="94,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="158"></TextBox>
-        <ComboBox HorizontalAlignment="Left" Margin="675,18,0,0" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Margin="598,18,0,0" TextWrapping="Wrap" Text="Language" VerticalAlignment="Top" Width="72" TextChanged="TextBox_TextChanged" Height="20"/>
         <Rectangle HorizontalAlignment="Center" Height="450" Stroke="White" VerticalAlignment="Center" Width="800" Opacity="100" Fill="White" Panel.ZIndex="-1"/>
         <Button Content="Stop" Command="{Binding StopCommand}" HorizontalAlignment="Left" Margin="634,283,0,0" VerticalAlignment="Top" Height="40" Width="114" RenderTransformOrigin="0.886,-0.4" />
 

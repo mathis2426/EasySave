@@ -14,18 +14,18 @@
         <Button x:Name="DeleteJob" Command="{Binding DeleteJobCommand}" Content="{Binding DeleteJobName}" HorizontalAlignment="Left" Margin="591,192,0,0" VerticalAlignment="Top" Height="33" Width="133"/>
         <Button x:Name="Exit" Content="{Binding Exit}" HorizontalAlignment="Left" Margin="619,356,0,0" VerticalAlignment="Top" Height="32" Width="133" Click="ButtonLeave_Click"/>
         <Button x:Name="ManageJob" Content="{Binding ManageJobName}" HorizontalAlignment="Left" Margin="591,270,0,0" VerticalAlignment="Top" Click="ButtonManageJob_Click" Height="33" Width="133"/>
-        <ListView x:Name="TaskList" ItemsSource="{Binding JobsList}" SelectedItem="{Binding SelectedJob}" Margin="37,50,298,147">
+        <ListView x:Name="TaskList" ItemsSource="{Binding JobsList}" SelectedItem="{Binding SelectedJob}" Margin="50,51,0,0" Width="500" Height="250" HorizontalAlignment="Left" VerticalAlignment="Top">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID" Width="50" DisplayMemberBinding="{Binding Id}"/>
-                    <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Name}"/>
-                    <GridViewColumn Header="Source path" Width="105" DisplayMemberBinding="{Binding SourcePath}"/>
-                    <GridViewColumn Header="Target path" Width="105" DisplayMemberBinding="{Binding TargetPath}"/>
-                    <GridViewColumn Header="Type" Width="100" DisplayMemberBinding="{Binding Type}"/>
+                    <GridViewColumn Header="{Binding ID}" Width="50" DisplayMemberBinding="{Binding Id}"/>
+                    <GridViewColumn Header="{Binding Name}" Width="100" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="{Binding SourcePath}" Width="105" DisplayMemberBinding="{Binding SourcePath}"/>
+                    <GridViewColumn Header="{Binding TargetPath}" Width="105" DisplayMemberBinding="{Binding TargetPath}"/>
+                    <GridViewColumn Header="{Binding Type}" Width="100" DisplayMemberBinding="{Binding Type}"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBox Text="{Binding OutputText}" IsReadOnly="True" Margin="0,335,233,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="517" Height="53"/>
+        <TextBox Text="{Binding OutputText}" IsReadOnly="True" Margin="50,335,0,0" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Width="517" Height="53"/>
 
         <!-- Language -->
         <Label Content="{Binding Language}" HorizontalAlignment="Left" Margin="527,18,0,0" VerticalAlignment="Top"/>
