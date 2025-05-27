@@ -182,7 +182,7 @@ namespace ControllerModel.Jobs
             return ExtensionFileParam.getListExtensionPriorityFiles();
         }
 
-        public string GetBlockingApp()
+        /*public string GetBlockingApp()
         {
             return ExtensionFileParam.GetBlockingApp();
         }
@@ -190,9 +190,9 @@ namespace ControllerModel.Jobs
         public void SetBlockingApp(string app)
         {
             ExtensionFileParam.SetBlockingApp(app);
-        }
+        }*/
 
-        public int GetLargeFileThreshold()
+        /*public int GetLargeFileThreshold()
         {
             SaveConfigObj = JsonHelperFactory.CreateJsonReadSingleObj().ReadSingleObj<SaveConfig>(_pathToConfig);
             return SaveConfigObj.LargeFileThreshold;
@@ -202,6 +202,6 @@ namespace ControllerModel.Jobs
         {
             SaveConfigObj.LargeFileThreshold = largeFileThreshold;
             JsonHelperClassJsonUpdate.UpdateSingleObj(_pathToConfig, SaveConfigObj);
-        }
+        }*/
     }
 }

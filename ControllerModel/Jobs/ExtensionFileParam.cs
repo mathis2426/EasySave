@@ -47,7 +47,7 @@ namespace ControllerModel
             return saveConfig.ExtensionPriorityFile;
         }
 
-        public string GetBlockingApp()
+        /*public string GetBlockingApp()
         {
             return saveConfig.BlockingApp;
         }
@@ -66,6 +66,6 @@ namespace ControllerModel
         {
             saveConfig.LargeFileThreshold = largeFileThreshold;
             jsonHelperClassJsonUpdate.UpdateSingleObj(Path.Combine(binPathGlobal, "config.json"), saveConfig);
-        }
+        }*/
     }
 }

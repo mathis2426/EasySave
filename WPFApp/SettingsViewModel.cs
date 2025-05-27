@@ -34,10 +34,10 @@ namespace WPFApp
                 canExecute: () => SelectedExtension != null
             );
 
-            BlockingApp = _jobManager.GetBlockingApp();
+            //BlockingApp = _jobManager.GetBlockingApp();
             _selectedLanguage = languageManager.saveConfigObj.Language;
 
-            SizeFile = _jobManager.GetLargeFileThreshold();
+            //SizeFile = _jobManager.GetLargeFileThreshold();
 
             //SizeMax =
 
@@ -239,7 +239,7 @@ namespace WPFApp
                 OutputText = $"Erreur lors de la suppression prioritaire : {ex.Message}";
             }
         }
-        private string _blockingApp;
+    /*    private string _blockingApp;
         public string BlockingApp
         {
             get => _blockingApp;
@@ -271,7 +271,7 @@ namespace WPFApp
                 _jobManager.SetLargeFileThreshold(_sizeFile);
                 OnPropertyChanged();
             }
-        }
+        }*/
 
         private string _selectedLanguage;
         public string SelectedLanguage
