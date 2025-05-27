@@ -23,7 +23,7 @@ using System.IO;
 namespace WPFApp
 {
     /// <summary>
-    /// Logique d'interaction pour CreateJob.xaml
+    /// Interaction logic for CreateJob.xaml
     /// </summary>
     public partial class CreateJob : Page
     {
@@ -85,7 +85,21 @@ namespace WPFApp
             return true;
         }
 
-        // Méthode auxiliaire
+        public bool ArePathsDifferent(System.Windows.Controls.TextBox sourcePathTextBox, System.Windows.Controls.TextBox targetPathTextBox)
+        {
+            string source = sourcePathTextBox.Text.Trim();
+            string target = targetPathTextBox.Text.Trim();
+
+            if (string.Equals(source.Trim(), target.Trim(), StringComparison.OrdinalIgnoreCase))
+            {
+                System.Windows.MessageBox.Show("Le chemin source et le chemin de destination doivent être différents.", "Erreur de validation", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+
+            return true;
+        }
+
+        // Auxiliary method
         private bool IsValidExistingDirectory(string path)
         {
             try
@@ -112,6 +126,9 @@ namespace WPFApp
             if (!ArePathsValid(SourcePath, TargetPath))
                 return;
 
+            if (!ArePathsDifferent(SourcePath, TargetPath))
+                return;
+
             _jobManager.JobCreation(name, source, target, selectedType);
 
             _mainFrame.Navigate(new HomePage(_mainFrame, _jobManager));
@@ -136,7 +153,7 @@ namespace WPFApp
                         var result = dialog.ShowDialog();
                         if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
                         {
-                            SourcePath.Text = dialog.SelectedPath;  // Met à jour la TextBox SourcePath
+                            SourcePath.Text = dialog.SelectedPath;  // Updates the SourcePath TextBox
                         }
                     }
                 }
@@ -150,7 +167,7 @@ namespace WPFApp
                         var result = dialog.ShowDialog();
                         if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
                         {
-                            TargetPath.Text = dialog.SelectedPath;  // Met à jour la TextBox TargetPath
+                            TargetPath.Text = dialog.SelectedPath;  // Updates TargetPath TextBox
                         }
                     }
                 }

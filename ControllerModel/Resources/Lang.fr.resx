@@ -273,4 +273,76 @@
   <data name="language_sucessfull" xml:space="preserve">
     <value>Changement de langue réussi</value>
   </data>
+  <data name="ExtensionsName" xml:space="preserve">
+    <value>Noms des extensions</value>
+  </data>
+  <data name="BlockingApplication" xml:space="preserve">
+    <value>Application bloquante</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Quitter</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Ajouter</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Supprimer</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Langue</value>
+  </data>
+  <data name="AddExtension" xml:space="preserve">
+    <value>Ajout d'extension</value>
+  </data>
+  <data name="DeleteExtension" xml:space="preserve">
+    <value>Suppression d'extension</value>
+  </data>
+  <data name="PriorityExtension" xml:space="preserve">
+    <value>Extension prioritaire</value>
+  </data>
+  <data name="AddPriority" xml:space="preserve">
+    <value>Ajout de priorité</value>
+  </data>
+  <data name="DeletePriority" xml:space="preserve">
+    <value>Suppression de priorité</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nom</value>
+  </data>
+  <data name="Number" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="CreateJob" xml:space="preserve">
+    <value>Crer un travail</value>
+  </data>
+  <data name="DeleteJob" xml:space="preserve">
+    <value>Suprimer un travail</value>
+  </data>
+  <data name="ManageJob" xml:space="preserve">
+    <value>Gerer un travail</value>
+  </data>
+  <data name="BackupType" xml:space="preserve">
+    <value>Type de travail:</value>
+  </data>
+  <data name="select_source" xml:space="preserve">
+    <value>Selectioner un chemin de source:</value>
+  </data>
+  <data name="select_target" xml:space="preserve">
+    <value>Selectioner un chemin de destination:</value>
+  </data>
+  <data name="Console" xml:space="preserve">
+    <value>Console</value>
+  </data>
+  <data name="Validate" xml:space="preserve">
+    <value>Valider</value>
+  </data>
+  <data name="Browse" xml:space="preserve">
+    <value>Naviguer</value>
+  </data>
+  <data name="Percentage" xml:space="preserve">
+    <value>Pourcentage de complétion</value>
+  </data>
+  <data name="ThresholdSizeFile" xml:space="preserve">
+    <value>Seuil fichiers volumineux</value>
+  </data>
 </root>

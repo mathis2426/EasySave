@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 namespace WPFApp
 {
     /// <summary>
-    /// Logique d'interaction pour Page1.xaml
+    /// Page1.xaml interaction logic
     /// </summary>
     public partial class Settings : Page
     {
@@ -28,19 +28,19 @@ namespace WPFApp
             DataContext = settingsViewModel;
         }
 
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
+        {
+
+        }
         private void ExitCreateJob_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
         }
 
-        private void ExtensionsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

@@ -8,41 +8,51 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Settings">
 
-    <Grid Background="White">
-
-        <ListView x:Name="ExtensionsList" ItemsSource="{Binding Extensions}" SelectedItem="{Binding SelectedExtension}" Margin="50,50,547,150">
+    <Grid Background="White" Margin="0,0,-21,0">
+        <!-- List of normal extensions -->
+        <ListView x:Name="ExtensionsList" ItemsSource="{Binding Extensions}" SelectedItem="{Binding SelectedExtension}" Margin="28,50,0,0" Width="200" Height="250" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Center">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ExtensionsName" Width="200" DisplayMemberBinding="{Binding Name}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-
-   
-        <ListView x:Name="PriorityExtensionsList" ItemsSource="{Binding PriorityExtensions}" SelectedItem="{Binding SelectedPriorityExtension}" Margin="270,50,341,150">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="PriorityExtension" Width="200" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="{Binding ExtensionsName}" Width="200" DisplayMemberBinding="{Binding Name}"/>
                 </GridView>
             </ListView.View>
         </ListView>
 
 
-        <TextBox Text="{Binding NewExtensionName, UpdateSourceTrigger=PropertyChanged}" Margin="479,133,152,289" Width="169" Height="28"/>
-        <Button Content="Add Extension" Command="{Binding AddExtensionCommand}" Margin="678,133,24,289" Width="98" Height="28" Click="Button_Click"/>
-        <Button Content="Delete Extension" Command="{Binding DeleteExtensionCommand}" Margin="678,175,24,247" Width="98" Height="28"/>
+        <!-- New list: priority extensions (right) -->
+        <ListView x:Name="PriorityExtensionsList" ItemsSource="{Binding PriorityExtensions}" SelectedItem="{Binding SelectedPriorityExtension}" Margin="236,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="200" Height="250">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="{Binding PriorityExtension}" Width="200" DisplayMemberBinding="{Binding Name}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
 
+        <!-- Field to add an extension -->
+        <TextBox Text="{Binding NewExtensionName, UpdateSourceTrigger=PropertyChanged}" Margin="457,63,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="169" Height="28"/>
+        <Button Content="{Binding AddExtensionName}" Command="{Binding AddExtensionCommand}" Margin="656,63,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="98" Height="28"/>
+        <Button Content="{Binding DeleteExtensionName}" Command="{Binding DeleteExtensionCommand}" Margin="656,105,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="98" Height="28"/>
 
-        <TextBox Text="{Binding NewPriorityExtension, UpdateSourceTrigger=PropertyChanged}" Margin="479,242,152,180" Width="169" Height="28"/>
-        <Button Content="Add Priority" Command="{Binding AddPriorityExtensionCommand}" Margin="678,242,24,180" Width="98" Height="28"/>
-        <Button Content="Delete Priority" Command="{Binding DeletePriorityExtensionCommand}" Margin="678,287,24,135" Width="98" Height="28"/>
+        <!-- Field to add a priority extension -->
+        <TextBox Text="{Binding NewPriorityExtension, UpdateSourceTrigger=PropertyChanged}" Margin="457,156,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="169" Height="28" TextChanged="TextBox_TextChanged"/>
+        <Button Content="{Binding AddPriority}" Command="{Binding AddPriorityExtensionCommand}" Margin="656,156,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="98" Height="28"/>
+        <Button Content="{Binding DeletePriority}" Command="{Binding DeletePriorityExtensionCommand}" Margin="656,201,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="98" Height="28"/>
 
+        <!-- Blocking App -->
+        <Label Content="{Binding BlockingApplication}" HorizontalAlignment="Left" Margin="461,245,0,0" VerticalAlignment="Top"/>
+        <TextBox Text="{Binding BlockingApp, UpdateSourceTrigger=LostFocus}" HorizontalAlignment="Left" Margin="605,250,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
 
-        <TextBox Text="{Binding OutputText}" IsReadOnly="True" Margin="50,335,233,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="517" Height="53"/>
-        <ComboBox HorizontalAlignment="Left" Margin="632,20,0,0" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Margin="555,20,0,0" TextWrapping="Wrap" Text="Language" VerticalAlignment="Top" Width="72" Height="20"/>
+        <Label Content="{Binding ThresholdSizeFile}" HorizontalAlignment="Left" Margin="461,286,0,0" VerticalAlignment="Top"/>
+        <TextBox Text="{Binding SizeFile, UpdateSourceTrigger=LostFocus}" HorizontalAlignment="Left" Margin="605,291,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
 
+        <!-- Output text -->
+        <TextBox Text="{Binding OutputText}" IsReadOnly="True" Margin="28,335,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="517" Height="53" TextChanged="TextBox_TextChanged_1"/>
 
-        <Button x:Name="ExitCreateJob" Content="Exit" HorizontalAlignment="Left" Margin="643,356,0,0" VerticalAlignment="Top" Height="32" Width="133" Click="ExitCreateJob_Click"/>
+        <!-- Combobox and label -->
+        <Label Content="{Binding Language}" HorizontalAlignment="Left" Margin="546,18,0,0" VerticalAlignment="Top"/>
+        <ComboBox  ItemsSource="{Binding AvailableLanguages}" SelectedItem="{Binding SelectedLanguage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="610,20,0,0" VerticalAlignment="Top" Width="120"/>
+
+        <!-- Exit Button -->
+        <Button x:Name="ExitCreateJob" Content="{Binding Exit}" HorizontalAlignment="Left" Margin="604,356,0,0" VerticalAlignment="Top" Height="32" Width="132" Click="ExitCreateJob_Click"/>
     </Grid>
 </Page>

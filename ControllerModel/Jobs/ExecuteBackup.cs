@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -57,16 +57,16 @@ namespace ControllerModel.Jobs
             {
                 lock (_lockPriorityFile)
                 {
-                    // ajouter un mutex => 0 to * = mutex | * to 0 = release
+                    // add a mutex => 0 to * = mutex | * to 0 = release
                     _priorityFileProperty = (object)value;
                 }
             }
         }
 
         /// <summary>
-        /// Exécute la sauvegarde pour tous les jobs présents dans la liste.
+        /// Runs the backup for all jobs in the list.
         /// </summary>
-        /// <param name="JobList">Liste des jobs de sauvegarde à exécuter.</param>
+        /// <param name="JobList">List of backup jobs to run.</param>
         public void ExecuteJobAll(List<JobObj> JobList)
         {
             List<Thread> threads = new List<Thread>();
@@ -82,18 +82,38 @@ namespace ControllerModel.Jobs
         }
 
         /// <summary>
-        /// Exécute une sauvegarde pour un job donné.
-        /// Vérifie l'existence des chemins source et cible, mesure le temps d'exécution,
-        /// et loggue les informations liées au job.
+        /// Runs a backup for a given job.
+        /// Checks the existence of source and target paths, measures execution time,
+        /// and logs job information.
         /// </summary>
         /// <param name="job">Le job de sauvegarde à exécuter.</param>
         /// <returns>0 si la sauvegarde a réussi, 1 sinon (ex : chemin non valide).</returns>
         public int ExecuteJob(JobObj job, CancellationToken token, ManualResetEventSlim pauseEvent)
         {
-            Console.WriteLine($"[START] Job {job.Name} démarré dans le thread {Thread.CurrentThread.ManagedThreadId}");
-
-            // Simulate file transfer
+            if (_saveConfig.BlockingApp != null && _saveConfig.BlockingApp != "")
+            {
+                Process[] processes = Process.GetProcessesByName(_saveConfig.BlockingApp);
+                if (processes.Length > 0)
+                {
+                    Console.WriteLine($"Fermer le process {_saveConfig.BlockingApp}");
+                    while (processes.Length > 0)
+                    {
+                        processes = Process.GetProcessesByName(_saveConfig.BlockingApp);
+                    }
+                }
+            }
             string sourcePath = job.SourcePath;
+            foreach (var file in Directory.GetFiles(sourcePath))
+            {
+                if (file.Contains(_saveConfig.BlockingApp) && file.EndsWith("exe"))
+                {
+                    Console.WriteLine($"Application {_saveConfig.BlockingApp} detecté demarage annulé");
+                    return 1;
+                }
+            }
+
+            Console.WriteLine("Execute job");
+            // Simulate file transfer
             string targetPath = job.TargetPath;
             string name = job.Name;
 
@@ -148,9 +168,9 @@ namespace ControllerModel.Jobs
         // Backup methods
 
         /// <summary>
-        /// Effectue une sauvegarde complète : supprime tous les fichiers dans la cible
-        /// et copie tous les fichiers du source vers la cible.
-        /// Met à jour la progression dans l'état.
+        /// Performs a full backup: deletes all files in the target
+        /// and copies all files from the source to the target.
+        /// Updates the progress in the report.
         /// </summary>
         /// <param name="name">Nom du job.</param>
         /// <param name="sourcePath">Chemin source des fichiers à sauvegarder.</param>
@@ -245,8 +265,8 @@ namespace ControllerModel.Jobs
         }
 
         /// <summary>
-        /// Effectue une sauvegarde différentielle : copie uniquement les fichiers modifiés ou nouveaux.
-        /// Met à jour la progression dans l'état.
+        /// Performs a differential backup: copies only modified or new files.
+        /// Updates the progress in the report.
         /// </summary>
         /// <param name="name">Nom du job.</param>
         /// <param name="sourcePath">Chemin source des fichiers à sauvegarder.</param>

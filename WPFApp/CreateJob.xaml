@@ -12,27 +12,27 @@
         <StackPanel Orientation="Vertical" Margin="20">
             <Label Content="Enter the name of the job" HorizontalAlignment="Left" Margin="0,15,0,0" VerticalAlignment="Top" Width="165"/>
             <TextBox x:Name="JobName" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="396" Height="25"/>
-           
+
             <Label Content="Type of backup" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top" Width="165"/>
             <ComboBox x:Name="TypeComboBox" HorizontalAlignment="Left" Width="396" RenderTransformOrigin="0.51,0.602"/>
-            
+
             <Label Content="Select a source path" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top" Width="165"/>
             <TextBox x:Name="SourcePath" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="396" Height="25"/>
-            
+
             <Label Content="Select a target path" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top" Width="165"/>
             <TextBox x:Name="TargetPath" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="396" Height="25"/>
-            
+
             <Label Content="Console" HorizontalAlignment="Left" Margin="0,40,0,0" VerticalAlignment="Top" Width="165"/>
             <TextBox x:Name="ConsoleBox" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="517" Height="50"/>
         </StackPanel>
 
-        <StackPanel Orientation="Vertical" Margin="439,200,250,150" RenderTransformOrigin="0.485,-0.072">
+        <StackPanel Orientation="Vertical" Margin="439,200,0,0" RenderTransformOrigin="0.485,-0.072">
             <Button Name="ButtonSourcePath" Tag="SourcePath" Content="Browse" HorizontalAlignment="Left" Margin="0,0,0,45" Click="ButtonPath_ClickJobCreation" Width="110" Height="25"/>
             <Button Name="ButtonTargetPath" Tag="TargetPath" Content="Browse" HorizontalAlignment="Left" Click="ButtonPath_ClickJobCreation" Width="110" Height="25"/>
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" Margin="581,10,20,388">
-            <Label Content="Language" Margin="0,5,0,0" Width="72" Height="25"/>
+        <StackPanel Orientation="Horizontal" Margin="580,5,0,0">
+            <Label Content="Language" HorizontalAlignment="Left" Margin="0,18,0,0" VerticalAlignment="Top" Width="72" Height="30"/>
             <ComboBox x:Name="LanguageComboBox" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.51,0.602"/>
         </StackPanel>
 
