@@ -16,12 +16,12 @@ namespace ControllerModel.JsonHelper
         private readonly JsonHelperClassBasics _jsonHelperClassBasicsForLogger = new();
 
         /// <summary>
-        /// Écrit une seule entrée de journal dans un fichier JSON.
-        /// Si le fichier contient déjà des entrées, la nouvelle est ajoutée à la suite.
+        /// Writes a single log entry to a JSON file.
+        /// If the file already contains entries, the new one is added next.
         /// </summary>
-        /// <typeparam name="T">Type de l'objet journalisé.</typeparam>
-        /// <param name="path">Chemin du fichier JSON.</param>
-        /// <param name="obj">Objet à ajouter au journal.</param>
+        /// <typeparam name="T">Type of the object being logged.</typeparam>
+        /// <param name="path">Path of the JSON file.</param>
+        /// <param name="obj">Object to be added to the log.</param>
         public void WriteLog<T> (string path,T obj)
         {
             List<T> ListObject = _jsonHelperClassBasicsForLogger.ReadJsonList<T>(path);
@@ -30,11 +30,11 @@ namespace ControllerModel.JsonHelper
         }
 
         /// <summary>
-        /// Méthode non implémentée pour écrire une liste complète d'objets dans le journal.
+        /// Unimplemented method for writing a complete list of objects to the log.
         /// </summary>
-        /// <typeparam name="T">Type des objets.</typeparam>
-        /// <param name="path">Chemin du fichier JSON.</param>
-        /// <param name="list">Liste d'objets à écrire.</param>
+        /// <typeparam name="T">Type of objects.</typeparam>
+        /// <param name="path">Path of JSON file.</param>
+        /// <param name="list">List of objects to write.</param>
         public void WriteLogList<T>(string path, List<T> list)
         { 
         }

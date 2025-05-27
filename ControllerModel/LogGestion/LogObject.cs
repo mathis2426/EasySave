@@ -21,16 +21,16 @@ namespace ControllerModel.Logs2
 
 
         /// <summary>
-        /// Constructeur utilisé pour la désérialisation JSON.
+        /// Constructor used for JSON deserialization.
         /// </summary>
-        /// <param name="Name">Nom du job.</param>
-        /// <param name="FileSource">Chemin source.</param>
-        /// <param name="FileTarget">Chemin de destination.</param>
-        /// <param name="DesPath">Chemin du fichier de log.</param>
-        /// <param name="FileSize">Taille totale des fichiers transférés.</param>
-        /// <param name="FileTransferTime">Temps de transfert en ms.</param>
-        /// <param name="Time">Date et heure du transfert.</param>
-        /// <param name="EncryptionTimes">Dictionnaire des temps de chiffrement.</param>"
+        /// <param name="Name">Job name.</param>
+        /// <param name="FileSource">Source path.</param>
+        /// <param name="FileTarget">Destination path.</param>
+        /// <param name="DesPath">Log file path. </param>
+        /// <param name="FileSize">Total size of files transferred.</param>
+        /// <param name="FileTransferTime">Transfer time in ms.</param>
+        /// <param name="Time">Transfer date and time.</param>
+        /// <param name="EncryptionTimes">Dictionary of encryption times.</param>"
         [JsonConstructor]
         public LogObject(string Name, string FileSource, string FileTarget, string DesPath, double FileSize, long FileTransferTime, DateTime Time, Dictionary<string, long> encryptionTimes)
         {
@@ -45,9 +45,9 @@ namespace ControllerModel.Logs2
         }
 
         /// <summary>
-        /// Retourne l'objet courant.
+        /// Returns the current object.
         /// </summary>
-        /// <returns>Instance actuelle de <see cref="LogObject"/>.</returns>
+        /// <returns>Current instance of <see cref="LogObject"/>.</returns>
         public LogObject getLog()
         {
             return this;

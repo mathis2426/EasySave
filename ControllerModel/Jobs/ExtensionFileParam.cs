@@ -19,9 +19,9 @@ namespace ControllerModel
             binPathGlobal = Path.GetDirectoryName(AppContext.BaseDirectory);
         }
         /// <summary>
-        /// Définit la langue de l'application et met à jour le fichier de configuration.
+        /// Sets the application language and updates the configuration file.
         /// </summary>
-        /// <param name="ExtensionFileCryptoSoft">Liste des extensions à modifier.</param>
+        /// <param name="ExtensionFileCryptoSoft">List of extensions to modify.</param>
         public void SetExtensionFileCryptoSoft(string[] ExtensionFileCryptoSoft)
         {
             SaveConfig SaveConfig = jsonHelperClassJsonReadSingleObj.ReadSingleObj<SaveConfig>(Path.Combine(binPathGlobal, "config.json"));

@@ -15,16 +15,15 @@ namespace ControllerModel.JsonHelper
         public string BlockingApp { get; set; }
         public string[] ExtensionPriorityFile { get; set; }
 
-
         /// <summary>
-        /// Initialise une nouvelle instance de la classe <see cref="SaveConfig"/>.
+        /// Initializes a new instance of the <see cref="SaveConfig"/> class.
         /// </summary>
-        /// <param name="PathTologDaily">Chemin du log journalier.</param>
-        /// <param name="PathTologStatus">Chemin du log de statut.</param>
-        /// <param name="Language">Code de langue (culture).</param>
-        /// <param name="ExtensionFileCrypt">Extension des fichiers à crypter.</param>
-        /// <param name="BlockingApp">Application de blocage.</param>
-        /// <param name="ExtensionPriorityFile">Extension des fichiers prioritaires.</param>
+        /// <param name="PathTologDaily">Daily log path.</param>
+        /// <param name="PathTologStatus">Status log path.</param>
+        /// <param name="Language">Language code (culture). </param>
+        /// <param name="ExtensionFileCrypt">Extension of files to encrypt.</param>
+        /// <param name="BlockingApp">Blocking application.</param>
+        /// <param name="ExtensionPriorityFile">Extension of priority files.</param>
         public SaveConfig(string PathTologDaily, string PathTologStatus, string Language, string[] ExtensionFileCrypt, string[] ExtensionPriorityFile, string BlockingApp) 
         { 
             this.PathToLogDaily = PathTologDaily;

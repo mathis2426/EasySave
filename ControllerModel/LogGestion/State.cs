@@ -19,8 +19,8 @@ namespace ControllerModel.Logs2
         private static List<StateObject> _stateObjList = new List<StateObject>();
 
         /// <summary>
-        /// Initialise une nouvelle instance de la classe <see cref="State"/>.
-        /// Lit les objets d'état existants depuis le fichier JSON.
+        /// Initializes a new instance of the <see cref="State"/> class.
+        /// Reads existing state objects from the JSON file.
         /// </summary>
         public State() 
         {
@@ -34,16 +34,16 @@ namespace ControllerModel.Logs2
         }
 
         /// <summary>
-        /// Ajoute une nouvelle entrée ou modifie un état existant avec les paramètres spécifiés.
+        /// Adds a new entry or modifies an existing state with the specified parameters.
         /// </summary>
-        /// <param name="name">Nom de la tâche.</param>
-        /// <param name="fileSource">Chemin source du fichier.</param>
-        /// <param name="fileTarget">Chemin cible du fichier.</param>
-        /// <param name="state">État actuel de la tâche.</param>
-        /// <param name="totalFileToCopy">Nombre total de fichiers à copier.</param>
-        /// <param name="totalFileSize">Taille totale des fichiers.</param>
-        /// <param name="filesLeftToDo">Nombre de fichiers restants à copier.</param>
-        /// <param name="progression">Progression en pourcentage.</param>
+        /// <param name="name">Task name.</param>
+        /// <param name="fileSource">File source path.</param>
+        /// <param name="fileTarget">File target path.</param>
+        /// <param name="state">Task current state. </param>
+        /// <param name="totalFileToCopy">Total number of files to copy.</param>
+        /// <param name="totalFileSize">Total size of files.</param>
+        /// <param name="filesLeftToDo">Number of remaining files to copy.</param>
+        /// <param name="progress">Progress in percentage.</param>
         public void SendParamToLog(
             string name,
             string fileSource,
@@ -61,7 +61,7 @@ namespace ControllerModel.Logs2
         }
 
         /// <summary>
-        /// Écrit la liste d'état actuelle dans le fichier de log JSON.
+        /// Writes the current status list to the JSON log file.
         /// </summary>
         public override void GenerateLog()
         {
@@ -70,10 +70,10 @@ namespace ControllerModel.Logs2
         }
 
         /// <summary>
-        /// Ajoute un nouvel état ou le supprime s’il existe déjà.
-        /// Utilisé principalement pour activer/désactiver des tâches.
+        /// Adds a new state or deletes it if it already exists.
+        /// Mainly used to activate/deactivate tasks.
         /// </summary>
-        /// <param name="jobObj">Objet représentant la tâche à ajouter ou supprimer.</param>
+        /// <param name="jobObj">Object representing the task to be added or deleted.</param>
         public void StateAddDelete(JobObj jobObj)
         {
             var existing = _stateObjList.FirstOrDefault(state => state.Name == jobObj.Name);
@@ -101,10 +101,10 @@ namespace ControllerModel.Logs2
         }
 
         /// <summary>
-        /// Modifie l’état d’un objet existant dans la liste.
+        /// Modifies the state of an existing object in the list.
         /// </summary>
-        /// <typeparam name="T">Type héritant de <see cref="StateObject"/>.</typeparam>
-        /// <param name="stateObject">Nouvel état à appliquer.</param>
+        /// <typeparam name="T">Type inheriting from <see cref="StateObject"/>.</typeparam>
+        /// <param name="stateObject">New state to apply.</param>
         public void StateModification<T>(T stateObject) where T : StateObject
         {
             var stateToModify = _stateObjList.FirstOrDefault(item => item.Name == stateObject.Name);
@@ -117,10 +117,10 @@ namespace ControllerModel.Logs2
         }
 
         /// <summary>
-        /// Vérifie si la valeur d’état spécifiée est valide.
+        /// Checks whether the specified state value is valid.
         /// </summary>
-        /// <param name="state">Valeur de l'énumération <see cref="StateEnumeration"/>.</param>
-        /// <returns>True si valide, false sinon.</returns>
+        /// <param name="state">Enumeration value <see cref="StateEnumeration"/>.</param>
+        /// <returns>True if valid, false otherwise.</returns>
         public bool VerifyState(StateEnumeration state)
         {
             return Enum.IsDefined(typeof(StateEnumeration), state);

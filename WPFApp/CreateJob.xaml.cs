@@ -23,7 +23,7 @@ using System.IO;
 namespace WPFApp
 {
     /// <summary>
-    /// Logique d'interaction pour CreateJob.xaml
+    /// Interaction logic for CreateJob.xaml
     /// </summary>
     public partial class CreateJob : Page
     {
@@ -99,7 +99,7 @@ namespace WPFApp
             return true;
         }
 
-        // Méthode auxiliaire
+        // Auxiliary method
         private bool IsValidExistingDirectory(string path)
         {
             try
@@ -153,7 +153,7 @@ namespace WPFApp
                         var result = dialog.ShowDialog();
                         if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
                         {
-                            SourcePath.Text = dialog.SelectedPath;  // Met à jour la TextBox SourcePath
+                            SourcePath.Text = dialog.SelectedPath;  // Updates the SourcePath TextBox
                         }
                     }
                 }
@@ -167,7 +167,7 @@ namespace WPFApp
                         var result = dialog.ShowDialog();
                         if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
                         {
-                            TargetPath.Text = dialog.SelectedPath;  // Met à jour la TextBox TargetPath
+                            TargetPath.Text = dialog.SelectedPath;  // Updates TargetPath TextBox
                         }
                     }
                 }

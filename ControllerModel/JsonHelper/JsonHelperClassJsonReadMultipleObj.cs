@@ -10,11 +10,11 @@ namespace ControllerModel.JsonHelper
         private readonly JsonHelperClassBasics _jsonHelperClassBasicsReadMultipleObj = new();
 
         /// <summary>
-        /// Lit un fichier JSON contenant une liste d'objets et retourne la liste désérialisée.
+        /// Reads a JSON file containing a list of objects and returns the deserialized list.
         /// </summary>
-        /// <typeparam name="T">Type des objets à lire.</typeparam>
-        /// <param name="PathToFileToUpdate">Chemin du fichier JSON à lire.</param>
-        /// <returns>Liste d'objets désérialisés du fichier JSON.</returns>
+        /// <typeparam name="T">Type of objects to read.</typeparam>
+        /// <param name="PathToFileToUpdate">Path of JSON file to read.</param>
+        /// <returns>Deserialized list of objects from JSON file.</returns>
         public List<T> ReadMultipleObj<T> (string PathToFileToUpdate)
         {
             return _jsonHelperClassBasicsReadMultipleObj.ReadJsonList<T>(PathToFileToUpdate);

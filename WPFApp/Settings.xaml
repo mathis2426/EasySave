@@ -9,7 +9,7 @@
       Title="Settings">
 
     <Grid Background="White" Margin="0,0,-21,0">
-        <!-- Liste des extensions normales -->
+        <!-- List of normal extensions -->
         <ListView x:Name="ExtensionsList" ItemsSource="{Binding Extensions}" SelectedItem="{Binding SelectedExtension}" Margin="28,50,0,0" Width="200" Height="250" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Center">
             <ListView.View>
                 <GridView>
@@ -19,7 +19,7 @@
         </ListView>
 
 
-        <!-- Nouvelle liste : extensions prioritaires (à droite) -->
+        <!-- New list: priority extensions (right) -->
         <ListView x:Name="PriorityExtensionsList" ItemsSource="{Binding PriorityExtensions}" SelectedItem="{Binding SelectedPriorityExtension}" Margin="236,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="200" Height="250">
             <ListView.View>
                 <GridView>
@@ -28,12 +28,12 @@
             </ListView.View>
         </ListView>
 
-        <!-- Champ pour ajouter une extension -->
+        <!-- Field to add an extension -->
         <TextBox Text="{Binding NewExtensionName, UpdateSourceTrigger=PropertyChanged}" Margin="457,63,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="169" Height="28"/>
         <Button Content="{Binding AddExtensionName}" Command="{Binding AddExtensionCommand}" Margin="656,63,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="98" Height="28"/>
         <Button Content="{Binding DeleteExtensionName}" Command="{Binding DeleteExtensionCommand}" Margin="656,105,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="98" Height="28"/>
 
-        <!-- Champ pour ajouter une extension prioritaire -->
+        <!-- Field to add a priority extension -->
         <TextBox Text="{Binding NewPriorityExtension, UpdateSourceTrigger=PropertyChanged}" Margin="457,156,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="169" Height="28" TextChanged="TextBox_TextChanged"/>
         <Button Content="{Binding AddPriority}" Command="{Binding AddPriorityExtensionCommand}" Margin="656,156,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="98" Height="28"/>
         <Button Content="{Binding DeletePriority}" Command="{Binding DeletePriorityExtensionCommand}" Margin="656,201,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="98" Height="28"/>

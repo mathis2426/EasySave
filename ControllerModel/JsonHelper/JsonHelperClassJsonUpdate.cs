@@ -11,24 +11,24 @@ namespace ControllerModel.JsonHelper
         private readonly JsonHelperClassBasics _jsonHelperClassBasicsForUpdate = new();
 
         /// <summary>
-        /// Met à jour un fichier JSON avec une liste d'objets.
-        /// Si le fichier existe, son contenu est remplacé.
+        /// Updates a JSON file with a list of objects.
+        /// If the file exists, its contents are replaced.
         /// </summary>
-        /// <typeparam name="T">Type des objets de la liste.</typeparam>
-        /// <param name="PathToFileToUpdate">Chemin du fichier JSON à mettre à jour.</param>
-        /// <param name="ListObj">Liste d'objets à écrire dans le fichier.</param>
+        /// <typeparam name="T">Type of objects in the list.</typeparam>
+        /// <param name="PathToFileToUpdate">Path of the JSON file to update.</param>
+        /// <param name="ListObj">List of objects to write to the file.</param>
         public void Update<T> (string PathToFileToUpdate, List<T> ListObj)
         {
             _jsonHelperClassBasicsForUpdate.CreateJsonList(PathToFileToUpdate, ListObj);
         }
 
         /// <summary>
-        /// Met à jour un fichier JSON avec un seul objet.
-        /// Si le fichier existe, son contenu est remplacé.
+        /// Updates a JSON file with a single object.
+        /// If the file exists, its contents are replaced.
         /// </summary>
-        /// <typeparam name="T">Type de l'objet.</typeparam>
-        /// <param name="PathToFileToUpdate">Chemin du fichier JSON à mettre à jour.</param>
-        /// <param name="Obj">Objet à écrire dans le fichier.</param>
+        /// <typeparam name="T">Type of object.</typeparam>
+        /// <param name="PathToFileToUpdate">Path of JSON file to update.</param>
+        /// <param name="Obj">Object to write to file.</param>
         public void UpdateSingleObj<T>(string PathToFileToUpdate, T Obj)
         {
             _jsonHelperClassBasicsForUpdate.CreateJson(PathToFileToUpdate, Obj);

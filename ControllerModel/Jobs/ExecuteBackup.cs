@@ -53,16 +53,16 @@ namespace ControllerModel.Jobs
             {
                 lock (_lockPriorityFile)
                 {
-                    // ajouter un mutex => 0 to * = mutex | * to 0 = release
+                    // add a mutex => 0 to * = mutex | * to 0 = release
                     _priorityFileProperty = (object)value;
                 }
             }
         }
 
         /// <summary>
-        /// Exécute la sauvegarde pour tous les jobs présents dans la liste.
+        /// Runs the backup for all jobs in the list.
         /// </summary>
-        /// <param name="JobList">Liste des jobs de sauvegarde à exécuter.</param>
+        /// <param name="JobList">List of backup jobs to run.</param>
         public void ExecuteJobAll(List<JobObj> JobList)
         {
             List<Thread> threads = new List<Thread>();
@@ -76,12 +76,12 @@ namespace ControllerModel.Jobs
         }
 
         /// <summary>
-        /// Exécute une sauvegarde pour un job donné.
-        /// Vérifie l'existence des chemins source et cible, mesure le temps d'exécution,
-        /// et loggue les informations liées au job.
+        /// Runs a backup for a given job.
+        /// Checks the existence of source and target paths, measures execution time,
+        /// and logs job information.
         /// </summary>
-        /// <param name="job">Le job de sauvegarde à exécuter.</param>
-        /// <returns>0 si la sauvegarde a réussi, 1 sinon (ex : chemin non valide).</returns>
+        /// <param name="job">The backup job to run.</param>
+        /// <returns>0 if the backup was successful, 1 otherwise (e.g. invalid path).</returns>
         public int ExecuteJob(JobObj job)
         {
             if (_saveConfig.BlockingApp != null && _saveConfig.BlockingApp != "")
@@ -150,16 +150,16 @@ namespace ControllerModel.Jobs
         // Backup methods
 
         /// <summary>
-        /// Effectue une sauvegarde complète : supprime tous les fichiers dans la cible
-        /// et copie tous les fichiers du source vers la cible.
-        /// Met à jour la progression dans l'état.
+        /// Performs a full backup: deletes all files in the target
+        /// and copies all files from the source to the target.
+        /// Updates the progress in the report.
         /// </summary>
-        /// <param name="name">Nom du job.</param>
-        /// <param name="sourcePath">Chemin source des fichiers à sauvegarder.</param>
-        /// <param name="targetPath">Chemin cible pour la sauvegarde.</param>
-        /// <param name="totalFiles">Nombre total de fichiers à sauvegarder.</param>
-        /// <param name="totalFileSize">Taille totale des fichiers à sauvegarder en octets.</param>
-        /// <param name="totalFilesLeft">Nombre de fichiers restant à traiter.</param>
+        /// <param name="name">Job name.</param>
+        /// <param name="sourcePath">Source path for files to be backed up.</param>
+        /// <param name="targetPath">Target path for backup. </param>
+        /// <param name="totalFiles">Total number of files to be backed up.</param>
+        /// <param name="totalFileSize">Total size of files to be backed up in bytes.</param>
+        /// <param name="totalFilesLeft">Number of files remaining to be processed.</param>
         public void FullBackup(string name, string sourcePath, string targetPath, int totalFiles, long totalFileSize, int totalFilesLeft, Dictionary<string, long> fileEncryptionTimes)
         {
             foreach (string file in Directory.GetFiles(targetPath))
@@ -218,15 +218,15 @@ namespace ControllerModel.Jobs
         }
 
         /// <summary>
-        /// Effectue une sauvegarde différentielle : copie uniquement les fichiers modifiés ou nouveaux.
-        /// Met à jour la progression dans l'état.
+        /// Performs a differential backup: copies only modified or new files.
+        /// Updates the progress in the report.
         /// </summary>
-        /// <param name="name">Nom du job.</param>
-        /// <param name="sourcePath">Chemin source des fichiers à sauvegarder.</param>
-        /// <param name="targetPath">Chemin cible pour la sauvegarde.</param>
-        /// <param name="totalFiles">Nombre total de fichiers à analyser.</param>
-        /// <param name="totalFileSize">Taille totale des fichiers à analyser en octets.</param>
-        /// <param name="totalFilesLeft">Nombre de fichiers restant à traiter.</param>
+        /// <param name="name">Job name.</param>
+        /// <param name="sourcePath">Source path for files to be backed up. </param>
+        /// <param name="targetPath">Target path for backup.</param>
+        /// <param name="totalFiles">Total number of files to scan.</param>
+        /// <param name="totalFileSize">Total size of files to scan in bytes.</param>
+        /// <param name="totalFilesLeft">Number of files remaining to process.</param>
         public void DifferentialBackup(string name, string sourcePath, string targetPath, int totalFiles, long totalFileSize, int totalFilesLeft, Dictionary<string, long> fileEncryptionTimes)
         {
             foreach (string sourceFilePath in Directory.GetFiles(sourcePath))

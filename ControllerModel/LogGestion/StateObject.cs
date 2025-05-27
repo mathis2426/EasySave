@@ -18,7 +18,7 @@ namespace ControllerModel.Logs2
         public float Progression { get; set; }
         public string DesPath { get; set; }
 
-        // Constructeur principal
+        // Main contractor
         public StateObject(string Name, string FileSource, string FileTarget, StateEnumeration State, int TotalFileToCopy, double TotalFileSize, int FilesLeftToDo, float Progression, string DesPath)
         {
             this.Name = Name;
@@ -33,9 +33,9 @@ namespace ControllerModel.Logs2
         }
 
         /// <summary>
-        /// Renvoie cette instance (utile si tu souhaites forcer une interface commune ou une méthode fluide)
+        /// Returns this instance (useful if you want to force a common interface or fluid method)
         /// </summary>
-        /// <returns>Cette instance de StateObject</returns>
+        /// <returns>This instance of StateObject</returns>
         public StateObject GetLog()
         {
             return this;

@@ -7,7 +7,7 @@ namespace ControllerModel.Jobs
     public class JobManager
     {
         /// <summary>
-        /// Liste des jobs de sauvegarde actuellement chargés.
+        /// List of backup jobs currently loaded.
         /// </summary>
         public List<JobObj> JobList = new();
 
@@ -25,8 +25,8 @@ namespace ControllerModel.Jobs
         private readonly string _pathToConfig = "";
 
         /// <summary>
-        /// Initialise un nouveau gestionnaire de jobs,
-        /// charge les jobs existants depuis le fichier JSON.
+        /// Initializes a new job manager,
+        /// loads existing jobs from the JSON file.
         /// </summary>
         public JobManager() 
         {
@@ -39,13 +39,13 @@ namespace ControllerModel.Jobs
         }
 
         /// <summary>
-        /// Crée un nouveau job avec les paramètres fournis, l'ajoute à la liste,
-        /// puis met à jour le fichier JSON des jobs.
+        /// Creates a new job with the parameters provided, adds it to the list,
+        /// then updates the jobs JSON file.
         /// </summary>
-        /// <param name="name">Nom du job.</param>
-        /// <param name="sourcePath">Chemin source pour la sauvegarde.</param>
-        /// <param name="targetPath">Chemin cible pour la sauvegarde.</param>
-        /// <param name="type">Type de job.</param>
+        /// <param name="name">Job name. </param>
+        /// <param name="sourcePath">Source path for backup.</param>
+        /// <param name="targetPath">Target path for backup.</param>
+        /// <param name="type">Job type.</param>
         public void JobCreation(string name, string sourcePath, string targetPath, JobType type)
         {
             int nextId = Enumerable.Range(1, JobList.Count + 1)
@@ -58,10 +58,10 @@ namespace ControllerModel.Jobs
         }
 
         /// <summary>
-        /// Supprime un job identifié par son index dans la liste,
-        /// met à jour la liste et le fichier JSON correspondant.
+        /// Deletes a job identified by its index in the list,
+        /// updates the list and the corresponding JSON file.
         /// </summary>
-        /// <param name="jobNum">Index du job à supprimer.</param>
+        /// <param name="jobNum">Index of the job to be deleted.</param>
         public void JobDeletion(int jobNum)
         {
             _backupJob.DeleteJob(JobList[jobNum]);
@@ -70,11 +70,11 @@ namespace ControllerModel.Jobs
         }
 
         /// <summary>
-        /// Lance la sauvegarde d'un job spécifique ou de tous les jobs.
-        /// Si jobNum vaut 0, exécute tous les jobs.
+        /// Starts the backup of a specific job or all jobs.
+        /// If jobNum is 0, runs all jobs.
         /// </summary>
-        /// <param name="jobNum">Index du job à exécuter (1-based), ou 0 pour tous les jobs.</param>
-        /// <returns>Retourne 0 si la sauvegarde s'est bien déroulée, sinon 1.</returns>
+        /// <param name="jobNum">Index of the job to run (1-based), or 0 for all jobs.</param>
+        /// <returns>Returns 0 if the backup went well, otherwise 1.</returns>
         public int LaunchBackup(int jobNum)
         {
             if( jobNum == 0)
@@ -90,10 +90,10 @@ namespace ControllerModel.Jobs
         }
 
         /// <summary>
-        /// Lance la sauvegarde d'un job par son nom depuis la ligne de commande.
-        /// Affiche un message si le job n'est pas trouvé.
+        /// Starts saving a job by name from the command line.
+        /// Displays a message if the job is not found.
         /// </summary>
-        /// <param name="job">Nom du job à exécuter.</param>
+        /// <param name="job">Name of the job to run.</param>
         public void LaunchBackupCommandLine(string job)
         {
             int indexJob = JobList.FindIndex(x => x.Name == job);
@@ -109,16 +109,16 @@ namespace ControllerModel.Jobs
         }
 
         /// <summary>
-        /// Met à jour le fichier de configuration avec les paramètres d'extension de fichier.
+        /// Updates the configuration file with the file extension parameters.
         /// </summary>
-        /// <param name="extensionFile">Liste des extensions a crypter</param>
+        /// <param name="extensionFile">List of extensions to encrypt</param>
         public void UpdateExtensionFileCryptoSoft(string[] extensionFile)
         {
             ExtensionFileParam.SetExtensionFileCryptoSoft(extensionFile);
         }
 
         /// <summary>
-        /// Récupère la liste des extensions de fichiers à crypter depuis le fichier de configuration.
+        /// Retrieves the list of file extensions to be encrypted from the configuration file.
         /// </summary>
         /// <returns></returns>
         public string[] getListExtensionFilesCryptoSoft()
@@ -127,16 +127,16 @@ namespace ControllerModel.Jobs
         }
 
         /// <summary>
-        /// Met à jour le fichier de configuration avec les priorités d'extension de fichier.
+        /// Updates the configuration file with file extension priorities.
         /// </summary>
-        /// <param name="extensionPriorityFile">Liste des extensions prioritaires</param>
+        /// <param name="extensionPriorityFile">List of priority extensions</param>
         public void UpdateExtensionPriorityFile(string[] extensionPriorityFile)
         {
             ExtensionFileParam.SetExtensionPriorityFile(extensionPriorityFile);
         }
 
         /// <summary>
-        /// Récupère la liste des extensions prioritaires de fichiers depuis le fichier de configuration.
+        /// Retrieves the list of priority file extensions from the configuration file.
         /// </summary>
         /// <returns></returns>
         public string[] getListExtensionPriorityFiles()
