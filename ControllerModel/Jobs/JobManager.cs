@@ -103,7 +103,7 @@ namespace ControllerModel.Jobs
                 }
                 catch (OperationCanceledException)
                 {
-                    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH
+                    threadsByJob.Remove(jobNum);
                 }
                 finally { threadsByJob.Remove(jobNum); }
             });
@@ -173,9 +173,9 @@ namespace ControllerModel.Jobs
                     {
                         _executeBackup.ExecuteJob(JobList[indexJob], tokenSource.Token, pauseEvent);
                     }
-                    catch (OperationCanceledException)
+                    catch (OperationCanceledException e)
                     {
-                        //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH
+                        throw e;
                     }
 
                 });
