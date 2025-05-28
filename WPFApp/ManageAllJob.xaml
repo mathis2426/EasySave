@@ -9,10 +9,10 @@
       Title="ManageJob">
 
     <Grid RenderTransformOrigin="0.481,0.464" Background="White">
-        <Button Content="Start all" Command="{Binding StartCommand}" HorizontalAlignment="Left" Margin="37,317,0,0" VerticalAlignment="Top" Height="40" Width="114"/>
-        <Button Content="Pause" Command="{Binding PauseCommand}" HorizontalAlignment="Left" Margin="440,317,0,0" VerticalAlignment="Top" Height="40" Width="114" RenderTransformOrigin="0.886,-0.4"/>
-        <Button Content="Resume" Command="{Binding ResumeCommand}" HorizontalAlignment="Left" Margin="238,317,0,0" VerticalAlignment="Top" Height="40" Width="115"/>
-        <Button x:Name="ExitManageJob" Content="Exit" HorizontalAlignment="Left" Margin="624,382,0,0" VerticalAlignment="Top" Height="32" Width="134" Click="ButtonLeave_ClickManageAllJob"/>
+        <Button Content="{Binding Start}" Command="{Binding StartCommand}" HorizontalAlignment="Left" Margin="37,317,0,0" VerticalAlignment="Top" Height="40" Width="114"/>
+        <Button Content="{Binding Pause}" Command="{Binding PauseCommand}" HorizontalAlignment="Left" Margin="440,317,0,0" VerticalAlignment="Top" Height="40" Width="114" RenderTransformOrigin="0.886,-0.4"/>
+        <Button Content="{Binding Resume}" Command="{Binding ResumeCommand}" HorizontalAlignment="Left" Margin="238,317,0,0" VerticalAlignment="Top" Height="40" Width="115"/>
+        <Button x:Name="Exit" Content="{Binding ExitLabel}" HorizontalAlignment="Left" Margin="624,382,0,0" VerticalAlignment="Top" Height="32" Width="134" Click="ButtonLeave_ClickManageAllJob"/>
         <TextBox x:Name="outputBox" Text="{Binding OutputString}" HorizontalAlignment="Left" Margin="37,372,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="517" Height="53"/>
         
         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,10,177">
@@ -21,20 +21,20 @@
                     <DataTemplate>
                         <Border BorderBrush="Black" BorderThickness="1" Margin="0,0,0,10" Padding="10" Width="798" Height="99">
                             <Grid Height="100">
-                                <Label Content="Name" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="45" Height="26"/>
+                                <Label Content="{Binding NameLabel}" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="45" Height="26"/>
                                 <TextBox Text="{Binding NameString}" Margin="45,4,376,0" VerticalAlignment="Top" Width="158"/>
 
-                                <Label Content="Type" HorizontalAlignment="Left" Margin="0,25,0,0" VerticalAlignment="Top" Width="45" Height="26"/>
+                                <Label Content="{Binding Type}" HorizontalAlignment="Left" Margin="0,25,0,0" VerticalAlignment="Top" Width="45" Height="26"/>
                                 <TextBox Text="{Binding TypeBackupString}" Margin="45,31,376,0" VerticalAlignment="Top" Width="158"/>
 
-                                <Button Content="Resume Job" Command="{Binding ResumeCommand}" Margin="494,46,196,0" VerticalAlignment="Top" Width="87"/>
-                                <Button Content="Pause Job" Command="{Binding PauseCommand}" Margin="599,46,101,0" VerticalAlignment="Top" Width="77"/>
-                                <Button Content="Stop Job" Command="{Binding StopCommand}" Margin="698,46,10,0" VerticalAlignment="Top" Width="69"/>
+                                <Button Content="{Binding Resume}" Command="{Binding ResumeCommand}" Margin="494,46,196,0" VerticalAlignment="Top" Width="87"/>
+                                <Button Content="{Binding Pause}" Command="{Binding PauseCommand}" Margin="599,46,101,0" VerticalAlignment="Top" Width="77"/>
+                                <Button Content="{Binding Stop}" Command="{Binding StopCommand}" Margin="698,46,10,0" VerticalAlignment="Top" Width="69"/>
 
                                 <ProgressBar Value="{Binding ProgressValue}" Minimum="0" Maximum="100" Height="20" Margin="494,10,10,0" VerticalAlignment="Top"/>
 
                                 <TextBlock Margin="349,0,300,73" Width="128" Height="18" VerticalAlignment="Bottom">
-                    <Run Text="Percentage"/><Run Language="fr-fr" Text=" completed"/>
+                    <Run Text="Completion"/><Run Language="fr-fr" Text=" "/>
                                 </TextBlock>
 
                                 
@@ -46,6 +46,6 @@
         </ScrollViewer>
 
         <Rectangle HorizontalAlignment="Center" Height="450" Stroke="White" VerticalAlignment="Center" Width="800" Opacity="100" Fill="White" Panel.ZIndex="-1"/>
-        <Button Content="Stop" Command="{Binding StopCommand}" HorizontalAlignment="Left" Margin="634,317,0,0" VerticalAlignment="Top" Height="40" Width="114" RenderTransformOrigin="0.886,-0.4" />
+        <Button Content="{Binding Stop}" Command="{Binding StopCommand}" HorizontalAlignment="Left" Margin="634,317,0,0" VerticalAlignment="Top" Height="40" Width="114" RenderTransformOrigin="0.886,-0.4" />
     </Grid>
 </Page>

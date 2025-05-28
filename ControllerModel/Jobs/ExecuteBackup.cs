@@ -194,7 +194,7 @@ namespace ControllerModel.Jobs
                     StateEnumeration.Inactive,
                     totalFiles,
                     totalFileSize,
-                    totalFilesLeft,
+                    0,
                     100
                 );
 

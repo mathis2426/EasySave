@@ -90,7 +90,7 @@ namespace WPFApp
         public string CreateJob => languageManager.Get("CreateJob");
         public string DeleteJobName => languageManager.Get("DeleteJob");
         public string ManageJobName => languageManager.Get("ManageJob");
-        public string ManageAllJobName => "All jobs";
+        public string ManageAllJobName => languageManager.Get("ManageAllJobName");
         public string ID => languageManager.Get("ID");
         public string Name => languageManager.Get("Name");
         public string SourcePath => languageManager.Get("SourcePath");

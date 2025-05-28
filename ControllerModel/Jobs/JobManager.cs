@@ -25,7 +25,7 @@ namespace ControllerModel.Jobs
         public JsonHelperClassJsonUpdate JsonHelperClassJsonUpdate = JsonHelperFactory.CreateJsonUpdate();
         public JsonHelperClassJsonReadSingleObj jsonReadSingleObj = JsonHelperFactory.CreateJsonReadSingleObj();
 
-        public FileParam ExtensionFileParam = new();
+        public FileParam ExtensionFileParam;
 
         public SaveConfig SaveConfigObj;
 
@@ -44,6 +44,8 @@ namespace ControllerModel.Jobs
             _pathToConfig = Path.Combine(binPath, "config.json");
             JsonHelperClassJsonReadMultipleObj jsonHelperClassJsonReadMultipleObj = new JsonHelperClassJsonReadMultipleObj();
             JobList = jsonHelperClassJsonReadMultipleObj.ReadMultipleObj<JobObj>(_pathToJob);
+            FileParam ExtensionFileParamtemp = new(_executeBackup._saveConfig);
+            ExtensionFileParam = ExtensionFileParamtemp;
         }
 
         /// <summary>
@@ -85,32 +87,12 @@ namespace ControllerModel.Jobs
         /// <returns>Returns 0 if the backup went well, otherwise 1.</returns>
         public int LaunchBackup(int jobNum)
         {
-
-            if (jobNum == 0)
-            {
-                _executeBackup.ExecuteJobAll(JobList);
-                return 0;
-            }
-
             var tokenSource = new CancellationTokenSource();
             var pauseEvent = new ManualResetEventSlim(true);
 
-            Thread thread = new Thread(() =>
-            {
-                try
-                {
-                    _executeBackup.ExecuteJob(JobList[jobNum - 1], tokenSource.Token, pauseEvent);
-                }
-                catch (OperationCanceledException)
-                {
-                    threadsByJob.Remove(jobNum);
-                }
-                finally { threadsByJob.Remove(jobNum); }
-            });
-            threadsByJob[jobNum] = (thread, tokenSource, pauseEvent, 1, 0);
-            thread.Start();
             string appToDetect = _executeBackup._saveConfig.BlockingApp;
-            if (appToDetect != null && appToDetect !="") {
+            if (appToDetect != null && appToDetect != "")
+            {
                 Thread monitoringThread = new Thread(() =>
                 {
                     while (!tokenSource.Token.IsCancellationRequested)
@@ -133,10 +115,32 @@ namespace ControllerModel.Jobs
 
                         Thread.Sleep(50);
                     }
-                    
+
                 });
                 monitoringThread.Start();
-            }        
+                }
+                if (jobNum == 0)
+            {
+                _executeBackup.ExecuteJobAll(JobList);
+                return 0;
+            }
+
+            
+
+            Thread thread = new Thread(() =>
+            {
+                try
+                {
+                    _executeBackup.ExecuteJob(JobList[jobNum - 1], tokenSource.Token, pauseEvent);
+                }
+                catch (OperationCanceledException)
+                {
+                    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH
+                }
+                finally { threadsByJob.Remove(jobNum); }
+            });
+            threadsByJob[jobNum] = (thread, tokenSource, pauseEvent, 1, 0);
+            thread.Start();         
             return 0;
 
         }

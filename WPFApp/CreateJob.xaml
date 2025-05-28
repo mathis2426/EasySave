@@ -13,14 +13,14 @@
             <Label Content="{Binding JobNameLabel}" Canvas.Left="0" Canvas.Top="15" Width="165"/>
             <TextBox Text="{Binding JobName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="0" Canvas.Top="40" Width="396" Height="25"/>
 
-            <Label Content="{Binding BackupTypeLabel}" Canvas.Left="0" Canvas.Top="80" Width="165"/>
+            <Label Content="{Binding BackupTypeLabel}" Canvas.Left="0" Canvas.Top="80" Width="396" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <ComboBox ItemsSource="{Binding JobTypes}" SelectedItem="{Binding SelectedJobType}" Canvas.Left="0" Canvas.Top="105" Width="396"/>
 
-            <Label Content="{Binding SourcePathLabel}" Canvas.Left="0" Canvas.Top="145" Width="165"/>
+            <Label Content="{Binding SourcePathLabel}" Canvas.Left="0" Canvas.Top="145" Width="396" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <TextBox Text="{Binding SourcePath, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="0" Canvas.Top="170" Width="396" Height="25"/>
             <Button Content="{Binding Browse}" Tag="SourcePath" Command="{Binding BrowseSourceCommand}" Canvas.Left="439" Canvas.Top="170" Width="110" Height="25"/>
 
-            <Label Content="{Binding TargetPathLabel}" Canvas.Left="0" Canvas.Top="210" Width="165"/>
+            <Label Content="{Binding TargetPathLabel}" Canvas.Left="0" Canvas.Top="210" Width="396" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <TextBox Text="{Binding TargetPath, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="0" Canvas.Top="235" Width="396" Height="25"/>
             <Button Content="{Binding Browse}" Tag="TargetPath" Command="{Binding BrowseTargetCommand}" Canvas.Left="439" Canvas.Top="235" Width="110" Height="25"/>
 
