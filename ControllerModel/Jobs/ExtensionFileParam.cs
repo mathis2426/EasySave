@@ -16,10 +16,10 @@ namespace ControllerModel
         public SaveConfig saveConfig;
         public string binPathGlobal;
 
-        public FileParam()
+        public FileParam(SaveConfig saveconfig)
         {
             binPathGlobal = Path.GetDirectoryName(AppContext.BaseDirectory);
-            saveConfig = jsonHelperClassJsonReadSingleObj.ReadSingleObj<SaveConfig>(Path.Combine(binPathGlobal, "config.json"));
+            saveConfig = saveconfig;
         }
         /// <summary>
         /// Sets the application language and updates the configuration file.

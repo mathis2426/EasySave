@@ -25,7 +25,7 @@ namespace ControllerModel.Jobs
         public JsonHelperClassJsonUpdate JsonHelperClassJsonUpdate = JsonHelperFactory.CreateJsonUpdate();
         public JsonHelperClassJsonReadSingleObj jsonReadSingleObj = JsonHelperFactory.CreateJsonReadSingleObj();
 
-        public FileParam ExtensionFileParam = new();
+        public FileParam ExtensionFileParam;
 
         public SaveConfig SaveConfigObj;
 
@@ -44,6 +44,8 @@ namespace ControllerModel.Jobs
             _pathToConfig = Path.Combine(binPath, "config.json");
             JsonHelperClassJsonReadMultipleObj jsonHelperClassJsonReadMultipleObj = new JsonHelperClassJsonReadMultipleObj();
             JobList = jsonHelperClassJsonReadMultipleObj.ReadMultipleObj<JobObj>(_pathToJob);
+            FileParam ExtensionFileParamtemp = new(_executeBackup._saveConfig);
+            ExtensionFileParam = ExtensionFileParamtemp;
         }
 
         /// <summary>
