@@ -94,8 +94,13 @@ namespace WPFApp
             if (!AreFieldsFilled() || !ArePathsValid() || !ArePathsDifferent())
                 return;
 
+            if (IsTargetPathAlreadyUsedForFullJob())
+            {
+                System.Windows.MessageBox.Show("Un job de type 'Full' utilise déjà ce chemin de destination.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             _jobManager.JobCreation(JobName.Trim(), SourcePath.Trim(), TargetPath.Trim(), SelectedJobType);
-            System.Windows.MessageBox.Show("Job created successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             _mainFrame.Navigate(new HomePage(_mainFrame, _jobManager));
         }
 
@@ -148,6 +153,14 @@ namespace WPFApp
             }
             return true;
         }
+
+        private bool IsTargetPathAlreadyUsedForFullJob()
+        {
+            return SelectedJobType == JobType.Full && _jobManager.JobList
+                .Any(job => job.Type == JobType.Full &&
+                            string.Equals(job.TargetPath.Trim(), TargetPath.Trim(), StringComparison.OrdinalIgnoreCase));
+        }
+
         public string ExitLabel => languageManager.Get("Exit");
         public string Browse => languageManager.Get("Browse");
         public string JobNameLabel => languageManager.Get("job_name");
