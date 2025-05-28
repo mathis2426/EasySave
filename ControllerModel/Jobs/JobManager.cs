@@ -1,6 +1,8 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics;
+using System.Reflection;
 using System.Runtime.ConstrainedExecution;
 using ControllerModel.JsonHelper;
+using ControllerModel.LanguagesHelper;
 
 namespace ControllerModel.Jobs
 {
@@ -21,6 +23,7 @@ namespace ControllerModel.Jobs
         public ExecuteBackup ExecuteBackup { get { return _executeBackup; } }
         public JsonHelperFactory JsonHelperFactory = new();
         public JsonHelperClassJsonUpdate JsonHelperClassJsonUpdate = JsonHelperFactory.CreateJsonUpdate();
+        public JsonHelperClassJsonReadSingleObj jsonReadSingleObj = JsonHelperFactory.CreateJsonReadSingleObj();
 
         public FileParam ExtensionFileParam = new();
 
@@ -104,11 +107,37 @@ namespace ControllerModel.Jobs
                 }
                 finally { threadsByJob.Remove(jobNum); }
             });
+            string appToDetect = _executeBackup._saveConfig.BlockingApp;
+            Thread monitoringThread = new Thread(() =>
+            {
+                while (!tokenSource.Token.IsCancellationRequested)
+                {
+                    var runningProcesses = Process.GetProcessesByName(appToDetect);
+                    if (runningProcesses.Length > 0)
+                    {
+                        foreach (var kvp in threadsByJob.Values)
+                        {
+                            kvp.PauseEvent.Reset();
+                        }
+                    }
+                    else
+                    {
+                        foreach (var kvp in threadsByJob.Values)
+                        {
+                            kvp.PauseEvent.Set();
+                        }
+                    }
+
+                        Thread.Sleep(1000);
+                }
+                
+
+            });
 
             threadsByJob[jobNum] = (thread, tokenSource, pauseEvent, 1, 0);
 
             thread.Start();
-
+            monitoringThread.Start();
             return 0;
 
         }
@@ -178,31 +207,31 @@ namespace ControllerModel.Jobs
         /// Retrieves the list of priority file extensions from the configuration file.
         /// </summary>
         /// <returns></returns>
+        
         public string[] getListExtensionPriorityFiles()
         {
             return ExtensionFileParam.getListExtensionPriorityFiles();
         }
-
-        /*public string GetBlockingApp()
+        public string GetBlockingApp()
         {
-            return ExtensionFileParam.GetBlockingApp();
+            return _executeBackup._saveConfig.BlockingApp;
         }
 
         public void SetBlockingApp(string app)
         {
-            ExtensionFileParam.SetBlockingApp(app);
-        }*/
+            _executeBackup._saveConfig.BlockingApp = app;
+            JsonHelperClassJsonUpdate.UpdateSingleObj(_pathToConfig, _executeBackup._saveConfig);
+        }
 
-        /*public int GetLargeFileThreshold()
+        public int GetLargeFileThreshold()
         {
-            SaveConfigObj = JsonHelperFactory.CreateJsonReadSingleObj().ReadSingleObj<SaveConfig>(_pathToConfig);
-            return SaveConfigObj.LargeFileThreshold;
+            return _executeBackup._saveConfig.LargeFileThreshold;
         }
 
         public void SetLargeFileThreshold(int largeFileThreshold)
         {
-            SaveConfigObj.LargeFileThreshold = largeFileThreshold;
-            JsonHelperClassJsonUpdate.UpdateSingleObj(_pathToConfig, SaveConfigObj);
-        }*/
+            _executeBackup._saveConfig.LargeFileThreshold = largeFileThreshold;
+            JsonHelperClassJsonUpdate.UpdateSingleObj(_pathToConfig, _executeBackup._saveConfig);
+        }
     }
 }
