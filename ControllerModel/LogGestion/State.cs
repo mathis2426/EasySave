@@ -30,6 +30,35 @@ namespace ControllerModel.Logs2
             _stateObjList = jsonList.ReadLogStatus<StateObject>(_pathToLog);
             JsonHelperClassJsonReadMultipleObj jsonHelperClassJsonReadMultipleObj = new JsonHelperClassJsonReadMultipleObj();
             List<JobObj> _JobList = jsonHelperClassJsonReadMultipleObj.ReadMultipleObj<JobObj>(Path.Combine(binPath, "job.json"));
+            List<StateObject> _newStateObjList = new List<StateObject>();
+
+            if (_JobList != null && _JobList.Count > 0)
+            {
+                foreach (var jobObj in _JobList)
+                {
+                    StateObject newState = new StateObject(
+                        jobObj.Name,
+                        jobObj.SourcePath,
+                        jobObj.TargetPath,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        _pathToLog
+                    );
+
+                    _newStateObjList.Add(newState);
+                }
+            }
+
+            if (_newStateObjList != _stateObjList) 
+            { 
+                _stateObjList = _newStateObjList;
+
+                JsonHelperClassJsonUpdate jsonHelperClassJsonUpdate = new JsonHelperClassJsonUpdate();
+                jsonHelperClassJsonUpdate.Update<StateObject>(_pathToLog, _stateObjList);
+            }
 
         }
 
@@ -88,7 +117,7 @@ namespace ControllerModel.Logs2
                     jobObj.Name,
                     jobObj.SourcePath,
                     jobObj.TargetPath,
-                    StateEnumeration.Inactive,
+                    0,
                     0,                        
                     0,                       
                     0,                        
@@ -107,11 +136,45 @@ namespace ControllerModel.Logs2
         /// <param name="stateObject">New state to apply.</param>
         public void StateModification<T>(T stateObject) where T : StateObject
         {
-            var stateToModify = _stateObjList.FirstOrDefault(item => item.Name == stateObject.Name);
-            if (stateToModify != null)
-            {
-               _stateObjList.Remove(stateToModify);
-               _stateObjList.Add(stateObject);
+            try {
+                var stateToModify = _stateObjList.FirstOrDefault(item => item.Name == stateObject.Name);
+                if (stateToModify != null)
+                {
+                   _stateObjList.Remove(stateToModify);
+                   _stateObjList.Add(stateObject);
+                }
+            }
+            catch (Exception ex){
+                string binPath = Path.GetDirectoryName(AppContext.BaseDirectory);
+                JsonHelperClassJsonReadMultipleObj jsonHelperClassJsonReadMultipleObj = new JsonHelperClassJsonReadMultipleObj();
+                List<JobObj> _JobList = jsonHelperClassJsonReadMultipleObj.ReadMultipleObj<JobObj>(Path.Combine(binPath, "job.json"));
+
+                List<StateObject> _newStateObjList = new List<StateObject>();
+
+                if (_JobList != null && _JobList.Count > 0)
+                {
+                    foreach (var jobObj in _JobList)
+                    {
+                        StateObject newState = new StateObject(
+                            jobObj.Name,
+                            jobObj.SourcePath,
+                            jobObj.TargetPath,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            _pathToLog
+                        );
+
+                        _newStateObjList.Add(newState);
+                    }
+                }
+
+                _stateObjList = _newStateObjList;
+                JsonHelperClassJsonUpdate jsonHelperClassJsonUpdate = new JsonHelperClassJsonUpdate();
+                jsonHelperClassJsonUpdate.Update<StateObject>(_pathToLog, _stateObjList);
+
             }
             GenerateLog();
         }

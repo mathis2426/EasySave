@@ -107,6 +107,8 @@ namespace ControllerModel.Jobs
                 }
                 finally { threadsByJob.Remove(jobNum); }
             });
+            threadsByJob[jobNum] = (thread, tokenSource, pauseEvent, 1, 0);
+            thread.Start();
             string appToDetect = _executeBackup._saveConfig.BlockingApp;
             Thread monitoringThread = new Thread(() =>
             {
@@ -134,9 +136,9 @@ namespace ControllerModel.Jobs
 
             });
 
-            threadsByJob[jobNum] = (thread, tokenSource, pauseEvent, 1, 0);
+            
 
-            thread.Start();
+            
             monitoringThread.Start();
             return 0;
 
