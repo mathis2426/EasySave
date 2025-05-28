@@ -110,36 +110,41 @@ namespace ControllerModel.Jobs
             threadsByJob[jobNum] = (thread, tokenSource, pauseEvent, 1, 0);
             thread.Start();
             string appToDetect = _executeBackup._saveConfig.BlockingApp;
-            Thread monitoringThread = new Thread(() =>
-            {
-                while (!tokenSource.Token.IsCancellationRequested)
+            if (appToDetect != null && appToDetect !="") {
+                Thread monitoringThread = new Thread(() =>
                 {
-                    var runningProcesses = Process.GetProcessesByName(appToDetect);
-                    if (runningProcesses.Length > 0)
+                    while (!tokenSource.Token.IsCancellationRequested)
                     {
-                        foreach (var kvp in threadsByJob.Values)
+                        var runningProcesses = Process.GetProcessesByName(appToDetect);
+                        if (runningProcesses.Length > 0)
                         {
-                            kvp.PauseEvent.Reset();
+                            foreach (var kvp in threadsByJob.Values)
+                            {
+                                kvp.PauseEvent.Reset();
+                            }
                         }
-                    }
-                    else
-                    {
-                        foreach (var kvp in threadsByJob.Values)
+                        else
                         {
-                            kvp.PauseEvent.Set();
+                            foreach (var kvp in threadsByJob.Values)
+                            {
+                                kvp.PauseEvent.Set();
+                            }
                         }
-                    }
 
                         Thread.Sleep(1000);
-                }
+                    }
+                    
+                });
+                monitoringThread.Start();
+            }
                 
 
-            });
-
             
 
             
-            monitoringThread.Start();
+
+            
+            
             return 0;
 
         }
