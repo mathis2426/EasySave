@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace ControllerModel.Logs2
 {
@@ -17,9 +18,15 @@ namespace ControllerModel.Logs2
         public double FileSize { get; set; }
         public long FileTransferTime { get; set; }
         public DateTime Time { get; set; }
+
+        [XmlIgnore]
+        [JsonPropertyName("encryptionTimes")]
         public Dictionary<string, long> EncryptionTimes { get; set; } = new Dictionary<string, long>();
 
-
+        public LogObject()
+        {
+            // Default constructor for XML
+        }
         /// <summary>
         /// Constructor used for JSON deserialization.
         /// </summary>
