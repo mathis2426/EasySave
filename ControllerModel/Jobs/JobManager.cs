@@ -131,20 +131,12 @@ namespace ControllerModel.Jobs
                             }
                         }
 
-                        Thread.Sleep(1000);
+                        Thread.Sleep(50);
                     }
                     
                 });
                 monitoringThread.Start();
-            }
-                
-
-            
-
-            
-
-            
-            
+            }        
             return 0;
 
         }
