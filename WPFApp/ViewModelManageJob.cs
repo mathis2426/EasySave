@@ -40,7 +40,7 @@ namespace WPFApp
         public CommandHandler PauseCommand { get; }
         public CommandHandler ResumeCommand { get; }
 
-        public string JobType => _job.Type.ToString();
+        public string JobType => _job.Type.ToString();  
         public string JobName => _job.Name;
         public string PriorityFile => string.Join("\t", languageManager.saveConfigObj.ExtensionPriorityFile); 
 
