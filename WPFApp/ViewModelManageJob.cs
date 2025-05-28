@@ -94,8 +94,13 @@ namespace WPFApp
             this.OnPropertyChanged(nameof(ProgressValue));
         }
 
+        public string Stop => languageManager.Get("Stop");
+        public string Pause => languageManager.Get("Pause");
+        public string Resume => languageManager.Get("Resume");
+        public string Start => languageManager.Get("Start");
+        public string Type => languageManager.Get("Type");
+        public string NameLabel => languageManager.Get("Name");
 
-            
         private void OnStatusChanged(int status)
         {
             StateString = status;

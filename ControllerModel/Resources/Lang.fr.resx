@@ -361,7 +361,7 @@
     <value>Valider</value>
   </data>
   <data name="start_job" xml:space="preserve">
-    <value>Démarrer le travai</value>
+    <value>Démarrer le travail</value>
   </data>
   <data name="pause_job" xml:space="preserve">
     <value>Mettre en pause </value>
@@ -377,5 +377,23 @@
   </data>
   <data name="stop_job" xml:space="preserve">
     <value>Arreter le travail</value>
+  </data>
+  <data name="LargeFile" xml:space="preserve">
+    <value>Fichier volumineux</value>
+  </data>
+  <data name="ManageAllJobName" xml:space="preserve">
+    <value>Tous les travaux</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Démarer</value>
+  </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="Resume" xml:space="preserve">
+    <value>Reprendre</value>
   </data>
 </root>

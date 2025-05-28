@@ -34,10 +34,10 @@ namespace WPFApp
                 canExecute: () => SelectedExtension != null
             );
 
-            //BlockingApp = _jobManager.GetBlockingApp();
+            BlockingApp = _jobManager.GetBlockingApp();
             _selectedLanguage = languageManager.saveConfigObj.Language;
 
-            //SizeFile = _jobManager.GetLargeFileThreshold();
+            SizeFile = _jobManager.GetLargeFileThreshold();
 
             //SizeMax =
 
@@ -74,6 +74,7 @@ namespace WPFApp
         public string AddPriority => languageManager.Get("AddPriority");
         public string DeletePriority => languageManager.Get("DeletePriority");
         public string MaxSizeFile => languageManager.Get("MaxSizeFile");
+        public string LargeFile => languageManager.Get("LargeFile");
 
 
         private void RefreshTranslations()
@@ -88,6 +89,7 @@ namespace WPFApp
             OnPropertyChanged(nameof(AddPriority));
             OnPropertyChanged(nameof(DeletePriority));
             OnPropertyChanged(nameof(MaxSizeFile));
+            OnPropertyChanged(nameof(LargeFile));
 
         }
         public ObservableCollection<ExtensionItem> PriorityExtensions { get; } = new ObservableCollection<ExtensionItem>();

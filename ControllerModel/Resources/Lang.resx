@@ -256,7 +256,7 @@
     <value>The maximum number of jobs has been reached</value>
   </data>
   <data name="All_job_executed" xml:space="preserve">
-    <value>All Job have been executed successfully!</value>
+    <value>All Jobs have been executed successfully!</value>
   </data>
   <data name="job_invalid" xml:space="preserve">
     <value>Error when starting the job</value>
@@ -378,5 +378,23 @@
   </data>
   <data name="stop_job" xml:space="preserve">
     <value>Stop Job</value>
+  </data>
+  <data name="LargeFile" xml:space="preserve">
+    <value>Large file</value>
+  </data>
+  <data name="ManageAllJobName" xml:space="preserve">
+    <value>All jobs</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="Resume" xml:space="preserve">
+    <value>Resume</value>
   </data>
 </root>

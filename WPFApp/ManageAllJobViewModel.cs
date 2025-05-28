@@ -5,11 +5,13 @@ using System.Linq;
 using System.Windows.Input;
 using WPFApp;
 using System.Windows.Threading;
+using ControllerModel.LanguagesHelper;
 
-public class ManageAllJobViewModel : INotifyPropertyChanged
+public class ManageAllJobViewModel : AbstractViewModel
 {
     private readonly JobManager _jobManager = new();
     public ObservableCollection<ViewModelManageJob> Jobs { get; set; } = new();
+    public LanguageManager languageManager = new();
 
     public ICommand StartCommand { get; }
     public ICommand PauseCommand { get; }
@@ -105,6 +107,12 @@ public class ManageAllJobViewModel : INotifyPropertyChanged
         OutputString = "Tous les jobs ont été arrêtés.";
         RefreshButtonStates();
     }
+    public string Stop => languageManager.Get("Stop");
+    public string Pause => languageManager.Get("Pause");
+    public string Resume => languageManager.Get("Resume");
+    public string Start => languageManager.Get("Start");
+    public string ExitLabel => languageManager.Get("Exit");
+
 
     private void RefreshButtonStates()
     {
@@ -113,9 +121,6 @@ public class ManageAllJobViewModel : INotifyPropertyChanged
         CommandManager.InvalidateRequerySuggested();
     }
 
-   
 
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected void OnPropertyChanged(string name) =>
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+
 }

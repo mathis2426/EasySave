@@ -9,7 +9,7 @@
       Title="ManageJob">
 
     <Grid RenderTransformOrigin="0.481,0.464" Background="White">
-        <Button Content="{Binding StartJobLabel}" Command="{Binding StartCommand}" HorizontalAlignment="Left" Margin="37,269,0,0" VerticalAlignment="Top" Height="40" Width="114"/>
+        <Button Content="{Binding StartJobLabel}" Command="{Binding StartCommand}" HorizontalAlignment="Left" Margin="37,269,0,0" VerticalAlignment="Top" Height="40" Width="119"/>
         <Button Content="{Binding PauseJobLabel}" Command="{Binding PauseCommand}" HorizontalAlignment="Left" Margin="440,269,0,0" VerticalAlignment="Top" Height="40" Width="114" RenderTransformOrigin="0.886,-0.4"/>
         <Button Content="{Binding ResumeJobLabel}" Command="{Binding ResumeCommand}" HorizontalAlignment="Left" Margin="238,269,0,0" VerticalAlignment="Top" Height="40" Width="115"/>
         <Button x:Name="ExitManageJob" Content="{Binding ExitLabel}" HorizontalAlignment="Left" Margin="619,356,0,0" VerticalAlignment="Top" Height="32" Width="133" Click="ButtonLeave_ClickManageJob"/>

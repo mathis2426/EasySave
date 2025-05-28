@@ -50,5 +50,6 @@
 
         <!-- Exit Button -->
         <Button x:Name="ExitCreateJob" Content="{Binding Exit}" HorizontalAlignment="Left" Margin="604,356,0,0" VerticalAlignment="Top" Height="32" Width="132" Click="ExitCreateJob_Click"/>
+        <Label Content="{Binding LargeFile}" HorizontalAlignment="Left" Margin="466,286,0,0" VerticalAlignment="Top" Height="29" Width="130"/>
     </Grid>
 </Page>
