@@ -39,8 +39,6 @@ namespace WPFApp
 
             SizeFile = _jobManager.GetLargeFileThreshold();
 
-            //SizeMax =
-
             AddPriorityExtensionCommand = new CommandHandler(
                 execute: AddPriorityExtension,
                 canExecute: () => !string.IsNullOrWhiteSpace(NewPriorityExtension)

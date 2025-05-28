@@ -283,7 +283,7 @@ namespace ControllerModel.Jobs
             // Process priority files first, then non-priority files
             foreach (var file in priorityFiles.Concat(nonPriorityFiles))
             {
-                Thread.Sleep(200);
+                //Thread.Sleep(5000);
                 if (!pauseEvent.IsSet)
                 {
 

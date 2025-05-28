@@ -89,7 +89,7 @@ namespace ControllerModel.Jobs
         {
             var tokenSource = new CancellationTokenSource();
             var pauseEvent = new ManualResetEventSlim(true);
-
+            int ok = 0;
             string appToDetect = _executeBackup._saveConfig.BlockingApp;
             if (appToDetect != null && appToDetect != "")
             {
@@ -103,14 +103,20 @@ namespace ControllerModel.Jobs
                             foreach (var kvp in threadsByJob.Values)
                             {
                                 kvp.PauseEvent.Reset();
+                                ok = 1;
                             }
                         }
                         else
                         {
-                            foreach (var kvp in threadsByJob.Values)
+                            if (ok == 1)
                             {
-                                kvp.PauseEvent.Set();
+                                ok = 0;
+                                foreach (var kvp in threadsByJob.Values)
+                                {
+                                    kvp.PauseEvent.Set();
+                                }
                             }
+                            
                         }
 
                         Thread.Sleep(50);
